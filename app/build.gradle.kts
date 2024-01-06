@@ -60,6 +60,10 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
 
+
+    implementation(project(":core:data:network"))
+    implementation(project(":core:data:datasource"))
+
     debugApi(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.testManifest)
     api(libs.androidx.compose.ui.tooling.preview)
