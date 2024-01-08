@@ -61,6 +61,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
 
 
+    implementation(project(":core:common"))
     implementation(project(":core:data:network"))
     implementation(project(":core:data:datasource"))
 
