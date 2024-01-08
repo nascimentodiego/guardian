@@ -23,7 +23,8 @@ internal fun Project.configureKotlinAndroid(
         compileOptions {
             sourceCompatibility = JavaVersion.VERSION_17
             targetCompatibility = JavaVersion.VERSION_17
-            isCoreLibraryDesugaringEnabled = true
+            // Unnecessary to AGP 8.2.1 without minSDK
+            // isCoreLibraryDesugaringEnabled = true
         }
 
         kotlinOptions {
@@ -48,7 +49,9 @@ internal fun Project.configureKotlinAndroid(
     val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
     dependencies {
-        add("coreLibraryDesugaring", libs.findLibrary("android.desugarJdkLibs").get())
+        // Unnecessary to AGP 8.2.1
+       // add("coreLibraryDesugaring", libs.findLibrary("android.desugarJdkLibs").get())
+        add("implementation", libs.findLibrary("kotlinx.datetime").get())
     }
 }
 

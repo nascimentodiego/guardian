@@ -1,12 +1,19 @@
 package br.com.bit.guardian.datasource.remote.response.report
 
+import br.com.bit.guardian.core.network.serializers.InstantSerializer
+import br.com.bit.guardian.datasource.serializers.DeviceTypeSerializer
+import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class ReportItemResponse(
-    @SerialName("date") val date:String,
-    @SerialName("device") val deviceType:String,
+    @SerialName("date")
+    @Serializable(InstantSerializer::class)
+    val date:Instant,
+    @SerialName("device")
+    @Serializable(with = DeviceTypeSerializer::class)
+    val deviceType:DeviceType,
     @SerialName("user") val userEmail:String
 )
 
