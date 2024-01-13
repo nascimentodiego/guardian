@@ -3,32 +3,43 @@ package br.com.bit.guardian.app
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.bit.guardian.app.model.ReportState
-import br.com.bit.guardian.core.network.retrofit.GuardianNetwork
-import br.com.bit.guardian.datasource.remote.DeviceRemoteDataSourceImpl
-import br.com.bit.guardian.datasource.remote.api.ReportsNetworkApi
-import br.com.bit.guardian.datasource.remote.response.report.ReportItemResponse
+import br.com.bit.guardian.app.model.ReportsUiState
+import br.com.bit.guardian.core.common.result.Result
+import br.com.bit.guardian.core.common.result.asResult
+import br.com.bit.guardian.core.domain.usecase.GetReportsUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainViewModel: ViewModel() {
+@HiltViewModel
+class MainViewModel @Inject constructor(
+    private val useCase: GetReportsUseCase
+) : ViewModel() {
+    private val _uiState = MutableStateFlow<ReportsUiState?>(null)
+    val uiState: StateFlow<ReportsUiState?> = _uiState.asStateFlow()
 
-    private val api = GuardianNetwork().retrofit.create(ReportsNetworkApi::class.java)
-    private val datasource = DeviceRemoteDataSourceImpl(api)
-
-    private val _uiState = MutableStateFlow<ReportState?>(null)
-    val uiState: StateFlow<ReportState?> = _uiState.asStateFlow()
-
-
-    fun getReport(){
+    fun getReport() {
         viewModelScope.launch {
-            val response = datasource.getReports().first()
+            useCase()
+                .asResult()
+                .map { result ->
+                    _uiState.emit(
+                        when (result) {
+                            is Result.Success -> {
+                                val list = result.data.map { ReportState(it) }
+                                ReportsUiState.Success(list)
+                            }
 
-
-
-            _uiState.emit(ReportState(response))
+                            is Result.Loading -> ReportsUiState.Loading
+                            is Result.Error -> ReportsUiState.Error
+                        }
+                    )
+                }.collect()
         }
     }
-
 }

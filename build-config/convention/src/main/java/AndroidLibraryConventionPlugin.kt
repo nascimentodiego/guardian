@@ -16,6 +16,7 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
                 apply("org.jetbrains.kotlin.android")
                 apply("guardian.android.application.ktlint")
                 apply("guardian.android.application.detekt")
+                apply("guardian.android.hilt")
             }
 
             extensions.configure<LibraryExtension> {
