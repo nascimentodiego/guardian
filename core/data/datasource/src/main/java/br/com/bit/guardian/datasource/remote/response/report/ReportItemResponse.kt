@@ -13,7 +13,7 @@ data class ReportItemResponse(
     val date:Instant,
     @SerialName("device")
     @Serializable(with = DeviceTypeSerializer::class)
-    val deviceType:DeviceType,
+    val deviceType:DeviceTypeResponse,
     @SerialName("user") val userEmail:String
 )
 

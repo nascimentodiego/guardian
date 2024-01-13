@@ -15,6 +15,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                 apply("guardian.android.application.ktlint")
                 apply("guardian.android.application.jacoco")
                 apply("guardian.android.application.detekt")
+                apply("guardian.android.hilt")
             }
 
             extensions.configure<ApplicationExtension> {

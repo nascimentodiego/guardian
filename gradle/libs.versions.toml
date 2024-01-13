@@ -5,7 +5,7 @@ ksp = "1.8.0-1.0.9"
 androidxActivity = "1.8.2"
 androidxAppCompat = "1.6.1"
 androidxCore = "1.12.0"
-androidxLifecycle = "2.6.2"
+androidxLifecycle = "2.7.0"
 androidxEspresso = "3.5.1"
 androidxTestCore = "1.5.0"
 androidxTestExt = "1.1.5"
@@ -14,15 +14,16 @@ androidxTestRunner = "1.5.2"
 androidxComposeUiManifest = "1.5.4"
 androidxComposeMaterial3 = "1.1.2"
 androidxComposeBom = "2023.10.01"
-androidxComposeCompiler = "1.4.7"
+androidxComposeCompiler = "1.5.8"
 junit4 = "4.13.2"
 jacoco = "0.8.9"
-kotlin = "1.8.21"
+kotlin = "1.9.22"
 kotlinxCoroutines = "1.7.1"
 kotlinxDatetime = "0.4.0"
 kotlinxSerializationJson = "1.6.2"
 ktlintVersion = "11.3.2"
 deteKtVersion = "1.23.0-RC3"
+hilt = "2.46"
 junit = "1.1.5"
 material = "1.11.0"
 secrets = "2.0.1"
@@ -60,7 +61,8 @@ retrofit-core = { group = "com.squareup.retrofit2", name = "retrofit", version.r
 retrofit-kotlin-serialization = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version.ref = "retrofitKotlinxSerializationJson" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinxDatetime" }
-
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 
 # Dependencies of the included build-config
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
@@ -82,3 +84,4 @@ ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintVersion" }
 deteKt = { id = "io.gitlab.arturbosch.detekt", version.ref = "deteKtVersion" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 secrets = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secrets" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }

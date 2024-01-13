@@ -9,6 +9,7 @@ class AndroidLibraryJacocoConventionPlugin : Plugin<Project> {
             with(pluginManager) {
                 apply("org.gradle.jacoco")
                 apply("com.android.library")
+                apply("guardian.android.hilt")
             }
             val extension = extensions.getByType<LibraryAndroidComponentsExtension>()
             configureJacoco(extension)

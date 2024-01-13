@@ -1,4 +1,4 @@
-package br.com.bit.guardian.datasource.remote
+package br.com.bit.guardian.datasource.remote.shared.device
 
 import br.com.bit.guardian.datasource.remote.response.report.ReportItemResponse
 

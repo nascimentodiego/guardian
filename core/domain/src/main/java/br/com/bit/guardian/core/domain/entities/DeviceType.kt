@@ -1,4 +1,4 @@
-package br.com.bit.guardian.datasource.remote.response.report
+package br.com.bit.guardian.core.domain.entities
 
 enum class DeviceType {
     BIT_GARAGE, BIT_PIR, BIT_CAM, UNKNOWN

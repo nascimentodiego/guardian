@@ -3,7 +3,9 @@ package br.com.bit.guardian.app
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Divider
@@ -17,17 +19,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.bit.guardian.app.model.ReportState
+import br.com.bit.guardian.app.model.ReportsUiState
 import br.com.bit.guardian.app.ui.theme.GuardianTheme
 import br.com.bit.guardian.core.common.formatters.toDateTimeFormat
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.datetime.Clock
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private val viewModel = MainViewModel()
+    private val viewModel: MainViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-
             val uiState = viewModel.uiState.collectAsState()
 
             LaunchedEffect(Unit) {
@@ -40,8 +44,25 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    uiState.value?.let {
-                        Greeting(it)
+                    uiState.value?.let { it ->
+                        when (it) {
+                            is ReportsUiState.Loading -> {
+                                Text(text = "Loading...")
+                            }
+
+                            is ReportsUiState.Success -> {
+                                Column {
+                                    it.reports.forEach { report ->
+                                        Text(text = "${report.date} - ${report.user} -  ${report.device}")
+                                        Spacer(modifier = Modifier.height(16.dp))
+                                    }
+                                }
+                            }
+
+                            is ReportsUiState.Error -> {
+                                Text(text = "Ocorreu um Error !")
+                            }
+                        }
                     }
                 }
             }
@@ -58,7 +79,7 @@ fun Greeting(state: ReportState, modifier: Modifier = Modifier) {
         )
         Divider(modifier = Modifier.height(25.dp))
         Text(
-            text = "from instant: " +  Clock.System.now().toDateTimeFormat(),
+            text = "from instant: " + Clock.System.now().toDateTimeFormat(),
             modifier = modifier
         )
         Divider(modifier = Modifier.height(25.dp))
@@ -87,6 +108,6 @@ fun Greeting(state: ReportState, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     GuardianTheme {
-       // Greeting("Android")
+        // Greeting("Android")
     }
 }

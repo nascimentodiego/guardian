@@ -64,6 +64,11 @@ gradlePlugin {
             id = "guardian.android.library.jacoco"
             implementationClass = "AndroidLibraryJacocoConventionPlugin"
         }
+
+        register("androidHilt"){
+            id = "guardian.android.hilt"
+            implementationClass = "AndroidHiltConventionPlugin"
+        }
     }
 }
 
