@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Divider
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,8 +19,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.bit.guardian.app.model.ReportState
 import br.com.bit.guardian.app.model.ReportsUiState
-import br.com.bit.guardian.app.ui.theme.GuardianTheme
 import br.com.bit.guardian.core.common.formatters.toDateTimeFormat
+import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.datetime.Clock
 
@@ -42,7 +41,7 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    color = GuardianTheme.colors.background
                 ) {
                     uiState.value?.let { it ->
                         when (it) {
@@ -53,7 +52,10 @@ class MainActivity : ComponentActivity() {
                             is ReportsUiState.Success -> {
                                 Column {
                                     it.reports.forEach { report ->
-                                        Text(text = "${report.date} - ${report.user} -  ${report.device}")
+                                        Text(
+                                            text = "${report.date} - ${report.user} -  ${report.device}",
+                                            style = GuardianTheme.typography.bodyMedium
+                                            )
                                         Spacer(modifier = Modifier.height(16.dp))
                                     }
                                 }
