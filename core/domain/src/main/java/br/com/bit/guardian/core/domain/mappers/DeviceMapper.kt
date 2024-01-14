@@ -7,14 +7,14 @@ import br.com.bit.guardian.core.domain.entities.DeviceType
 
 fun ReportItemData.toReportItem(): DeviceReportItem {
     return DeviceReportItem(
-        date = this.date,
-        deviceType = this.deviceType.toDeviceType(),
-        userEmail = this.userEmail
+        date = date,
+        deviceType = deviceType.toDeviceType(),
+        userEmail = userEmail
     )
 }
 
 fun DeviceTypeData.toDeviceType(): DeviceType {
     return runCatching {
-        DeviceType.valueOf(this.name)
+        DeviceType.valueOf(name)
     }.getOrElse { DeviceType.UNKNOWN }
 }

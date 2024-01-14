@@ -21,7 +21,8 @@ internal fun Project.configureAndroidCompose(
         }
 
         composeOptions {
-            kotlinCompilerExtensionVersion = libs.findVersion("androidxComposeCompiler").get().toString()
+            kotlinCompilerExtensionVersion =
+                libs.findVersion("androidxComposeCompiler").get().toString()
         }
 
         kotlinOptions {
@@ -32,6 +33,67 @@ internal fun Project.configureAndroidCompose(
             val bom = libs.findLibrary("androidx-compose-bom").get()
             add("implementation", platform(bom))
             add("androidTestImplementation", platform(bom))
+
+
+            add(
+                "api",
+                libs.findLibrary("androidx-appcompat").get()
+            )
+            add(
+                "api",
+                libs.findLibrary("androidx-core-ktx").get()
+            )
+            add(
+                "api",
+                libs.findLibrary("androidx-lifecycle-runtime-ktx").get()
+            )
+
+            add(
+                "debugApi",
+                libs.findLibrary("androidx-compose-ui-tooling").get()
+            )
+
+            add(
+                "debugApi",
+                libs.findLibrary("androidx-compose-ui-testManifest").get()
+            )
+
+            add(
+                "api",
+                libs.findLibrary("androidx-compose-ui-tooling-preview").get()
+            )
+            add(
+                "api",
+                libs.findLibrary("androidx-compose-ui-util").get()
+            )
+            add(
+                "api",
+                libs.findLibrary("androidx-compose-runtime").get()
+            )
+            add(
+                "api",
+                libs.findLibrary("androidx-compose-runtime").get()
+            )
+            add(
+                "api",
+                libs.findLibrary("androidx-compose-material3").get()
+            )
+            add(
+                "api",
+                libs.findLibrary("androidx-activity-compose").get()
+            )
+            add(
+                "testApi",
+                libs.findLibrary("androidx-compose-ui-test").get()
+            )
+            add(
+                "androidTestApi",
+                libs.findLibrary("androidx-compose-ui-test").get()
+            )
+            add(
+                "androidTestApi",
+                libs.findLibrary("androidx-test-espresso-core").get()
+            )
         }
     }
 }
