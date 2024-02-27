@@ -46,7 +46,10 @@ class MainActivity : ComponentActivity() {
                     uiState.value?.let { it ->
                         when (it) {
                             is ReportsUiState.Loading -> {
-                                Text(text = "Loading...")
+                                Text(
+                                    text = "Loading...",
+                                    style = GuardianTheme.typography.titleSmall
+                                )
                             }
 
                             is ReportsUiState.Success -> {

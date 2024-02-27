@@ -6,3 +6,7 @@ plugins {
 android {
     namespace = "br.com.bit.guardian.core.designsystem"
 }
+
+dependencies {
+    api(libs.shimmer)
+}

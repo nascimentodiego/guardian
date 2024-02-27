@@ -12,6 +12,8 @@ object GuardianIcon {
     // General
     val ArrowForward = Icons.Rounded.ArrowForward
     val ArrowBack = Icons.Rounded.ArrowBack
+    val ChevronRight = R.drawable.ds_ic_chevron_right
+    val ChevronLeft =  R.drawable.ds_ic_chevron_left
     val Close = R.drawable.ds_ic_close
     val Done = R.drawable.ds_ic_close
     val Logout = R.drawable.ds_ic_logout
