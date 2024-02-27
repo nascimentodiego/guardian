@@ -22,55 +22,53 @@ val Cabin = FontFamily(
 )
 
 val Typography = Typography(
-    //body
-    bodyLarge = TextStyle(
-        fontFamily = Lexend,
-        fontWeight = FontWeight.W300,
-        fontSize = 16.sp,
-        lineHeight = 24.sp,
-        letterSpacing = 0.5.sp
-    ),
-    bodyMedium = TextStyle(
-        fontFamily = Lexend,
-        fontWeight = FontWeight.Normal,
-        fontSize = 14.sp,
-        lineHeight = 22.sp
-    ),
+
+    // bodySmall (Paragraph Small)
     bodySmall = TextStyle(
         fontFamily = Lexend,
-        fontWeight = FontWeight.Normal,
-        fontSize = 8.sp,
-        lineHeight = 19.sp
+        fontWeight = FontWeight.W400,
+        fontSize = 12.sp,
+        lineHeight = 16.8.sp
     ),
-    // Label
-    labelLarge = TextStyle(
+
+    // bodyMedium (Paragraph)
+    bodyMedium = TextStyle(
         fontFamily = Lexend,
         fontWeight = FontWeight.W400,
         fontSize = 14.sp,
-        lineHeight = 24.sp,
-        letterSpacing = 0.5.sp
+        lineHeight = 19.6.sp
     ),
+
+    // headlineMedium (Paragraph Bold)
+    headlineMedium = TextStyle(
+        fontFamily = Lexend,
+        fontWeight = FontWeight.W700,
+        fontSize = 14.sp,
+        lineHeight = 19.6.sp
+    ),
+
+    // Label (Subtitle)
+    labelMedium = TextStyle(
+        fontFamily = Lexend,
+        fontWeight = FontWeight.W500,
+        fontSize = 16.sp,
+        lineHeight = 20.sp
+    ),
+
+    // Title Small
+    titleSmall = TextStyle(
+        fontFamily = Cabin,
+        fontWeight = FontWeight.W600,
+        fontSize = 16.sp,
+        lineHeight = 22.4.sp
+    ),
+
     // Title
     titleMedium = TextStyle(
         fontFamily = Lexend,
-        fontWeight = FontWeight.Normal,
-        fontSize = 22.sp,
-        lineHeight = 29.5.sp,
-        letterSpacing = 0.5.sp
-    ),
-    titleLarge = TextStyle(
-        fontFamily = Cabin,
-        fontWeight = FontWeight.Bold,
-        fontSize = 22.sp,
-        lineHeight = 29.5.sp,
-        letterSpacing = 0.5.sp
-    ),
-    // Display
-    displayMedium = TextStyle(
-        fontFamily = Lexend,
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
-        lineHeight = 24.sp
+        fontWeight = FontWeight.W500,
+        fontSize = 24.sp,
+        lineHeight = 33.6.sp
     )
 )
 
