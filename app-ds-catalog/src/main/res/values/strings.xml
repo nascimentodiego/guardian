@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">App Design System Catalog</string>
+    <string name="tab_title_color">Cores</string>
+    <string name="tab_title_typography">Typografia</string>
+    <string name="tab_title_dimens">Dimensões</string>
+    <string name="tab_title_components">Componentes</string>
+</resources>
