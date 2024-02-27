@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<<<<<<<< HEAD:core/designsystem/src/main/res/values-night/colors.xml
+    <color name="background">#FFddd7e4</color>
+========
+    <color name="ic_launcher_background">#F4511E</color>
+>>>>>>>> 377cf54c7f60766abe3f6f7e2feba1395b71b542:app-ds-catalog/src/main/res/values/ic_launcher_background.xml
+</resources>

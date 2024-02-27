@@ -75,6 +75,12 @@ internal val LightColorError = Color(0xFFEB5757)
 internal val LightColorDisable = Gray400
 
 
+internal val TextTitleLight = Color(0xFF000000)
+internal val TextSubtitleLight = Color(0xE6000000)
+internal val TextBodyLight = Color(0xCC000000)
+internal val TextDisableLight = Color(0x73000000)
+internal val TextInverseLight = Color(0xFFFFFFFF)
+
 // Colors Dark
 internal val Purple40Dark = Purple40 // Primary Dark
 internal val Gray50Dark = Color(0xFFF5F5F5) // OnPrimary Dark
@@ -90,6 +96,12 @@ internal val Gray04Dark = Color(0xFFF5F5F5) // OnTertiary Dark
 internal val GrayLight01Dark = Black // Surface Dark
 internal val GrayLight02Dark = Color(0xFF39383A) // Background Dark
 internal val GrayLight03Dark = Color(0xFFE3E3E6) // OnBackground Dark
+
+internal val TextTitleDark = Color(0xFFFFFFFF)
+internal val TextSubtitleDark = Color(0xE6FFFFFF)
+internal val TextBodyDark = Color(0xCCFFFFFF)
+internal val TextDisableDark = Color(0x73FFFFFF)
+internal val TextInverseDark = Color(0xFF242424)
 
 val GuardianLightColorScheme = lightColorScheme(
     primary = Purple40,
@@ -145,6 +157,12 @@ internal fun getColorScheme(darkTheme: Boolean) = AppColors(
     warning = if (darkTheme) LightColorWarning else LightColorWarning,
     success = if (darkTheme) LightColorSuccess else LightColorSuccess,
     disable = if (darkTheme) LightColorDisable else LightColorDisable,
+    textTitle = if (darkTheme) TextTitleDark else TextTitleLight,
+    textSubtitle = if (darkTheme) TextSubtitleDark else TextSubtitleLight,
+    textBody = if (darkTheme) TextBodyDark else TextBodyLight,
+    textDisable = if (darkTheme) TextDisableDark else TextDisableLight,
+    textInverse = if (darkTheme) TextInverseDark else TextInverseLight,
+
     isLight = !darkTheme,
     materialColors = if (darkTheme) GuardianDarkColorScheme else GuardianLightColorScheme
 )
@@ -154,6 +172,12 @@ class AppColors(
     val warning: Color,
     val success: Color,
     val disable: Color,
+    val textTitle: Color,
+    val textSubtitle: Color,
+    val textBody: Color,
+    val textDisable: Color,
+    val textInverse: Color,
+
     val isLight: Boolean,
     val materialColors: ColorScheme
 ) {
