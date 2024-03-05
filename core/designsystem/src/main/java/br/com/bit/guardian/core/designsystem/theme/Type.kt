@@ -69,7 +69,17 @@ val Typography = Typography(
         fontWeight = FontWeight.W500,
         fontSize = 24.sp,
         lineHeight = 33.6.sp
+    ),
+
+    //Title Large
+    titleLarge = TextStyle(
+        fontFamily = Cabin,
+        fontWeight = FontWeight.W700,
+        fontSize = 42.sp,
+        lineHeight = 33.6.sp
     )
+
+
 )
 
 internal val LocalAppTypography = staticCompositionLocalOf {

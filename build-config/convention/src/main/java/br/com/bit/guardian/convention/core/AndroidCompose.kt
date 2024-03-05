@@ -94,6 +94,14 @@ internal fun Project.configureAndroidCompose(
                 "androidTestApi",
                 libs.findLibrary("androidx-test-espresso-core").get()
             )
+            add(
+                "api",
+                libs.findLibrary("androidx-window").get()
+            )
+            add(
+                "api",
+                libs.findLibrary("androidx-compose-material3-windowSizeClass").get()
+            )
         }
     }
 }

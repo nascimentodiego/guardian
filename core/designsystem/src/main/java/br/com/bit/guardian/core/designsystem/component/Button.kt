@@ -1,13 +1,12 @@
 package br.com.bit.guardian.core.designsystem.component
 
-import android.widget.Space
+import androidx.annotation.StringRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -21,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import br.com.bit.guardian.core.designsystem.R
 import br.com.bit.guardian.core.designsystem.extension.ThemePreviews
@@ -83,12 +83,12 @@ fun LoadedButton(
 }
 
 @Composable
-fun SecondaryButton(
-    onClick: () -> Unit,
+fun SimpleButton(
     modifier: Modifier = Modifier,
+    @StringRes titleRes: Int,
+    onClick: () -> Unit,
     enabled: Boolean = true,
-    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
-    content: @Composable RowScope.() -> Unit,
+    contentPadding: PaddingValues = ButtonDefaults.ContentPadding
 ) {
     val borderColor = if (enabled)
         GuardianTheme.colors.onSecondary
@@ -105,9 +105,14 @@ fun SecondaryButton(
             disabledContainerColor = GuardianTheme.colors.background.copy(alpha = 0.9f),
             disabledContentColor = GuardianTheme.colors.onBackground.copy(alpha = 0.1f)
         ),
-        contentPadding = contentPadding,
-        content = content,
-    )
+        contentPadding = contentPadding
+    ) {
+        Text(
+            text = stringResource(id = titleRes),
+            style = GuardianTheme.typography.labelSmall,
+            color = GuardianTheme.colors.textTitle
+        )
+    }
 }
 
 @Composable
@@ -206,6 +211,17 @@ fun PrevButton(
         )
         Spacer(modifier = Modifier.width(GuardianTheme.dimens.spacingS))
         content.invoke(this)
+    }
+}
+
+@ThemePreviews
+@Composable
+fun SimpleButtonPreview() {
+    GuardianTheme {
+        SimpleButton(
+            titleRes = R.string.ds_button_try_again,
+            onClick = {}
+        )
     }
 }
 
