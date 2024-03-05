@@ -1,5 +1,7 @@
 package br.com.bit.guardian.core.designsystem.theme
 
+import androidx.compose.material3.windowsizeclass.WindowHeightSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.unit.Dp
@@ -20,4 +22,21 @@ object AppDims {
 
 internal val LocalAppDimens = staticCompositionLocalOf {
     AppDims
+}
+
+
+data class GuardianWindowSize(
+    val widthSizeClass: WindowWidthSizeClass,
+    val heightSizeClass: WindowHeightSizeClass
+) {
+    companion object {
+        val Compact = GuardianWindowSize(
+            WindowWidthSizeClass.Compact,
+            WindowHeightSizeClass.Compact
+        )
+    }
+}
+
+val LocalWindowSizeClass = staticCompositionLocalOf {
+    GuardianWindowSize(WindowWidthSizeClass.Compact, WindowHeightSizeClass.Compact)
 }
