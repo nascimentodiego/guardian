@@ -5,6 +5,7 @@ plugins {
     id("guardian.android.application.compose")
     id("guardian.android.application.jacoco")
     id("jacoco")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -65,6 +66,7 @@ dependencies {
     implementation(project(":core:data:repository"))
     implementation(project(":core:domain"))
     implementation(project(":core:designsystem"))
+    implementation(project(":feature:login"))
 
     debugApi(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.testManifest)

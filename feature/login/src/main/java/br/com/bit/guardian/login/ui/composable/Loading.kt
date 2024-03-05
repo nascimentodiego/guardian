@@ -1,4 +1,4 @@
-package br.com.bit.guardian.app.ui.login
+package br.com.bit.guardian.login.ui.composable
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -64,7 +64,7 @@ private fun GuardianIcon() {
 @Composable
 fun Title() {
     Text(
-        text = stringResource(id = br.com.bit.guardian.app.R.string.app_name),
+        text = stringResource(id = R.string.ds_app_name),
         style = GuardianTheme.typography.titleLarge,
         color = Color.White
     )
@@ -73,7 +73,7 @@ fun Title() {
 @Composable
 fun TitleLarge() {
     Text(
-        text = stringResource(id = br.com.bit.guardian.app.R.string.app_name),
+        text = stringResource(id = R.string.ds_app_name),
         style = GuardianTheme.typography.titleLarge,
         fontSize = 92.sp,
         color = Color.White

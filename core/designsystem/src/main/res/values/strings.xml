@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="ds_app_name">Guardian</string>
     <string name="ds_simple_error_title">Falha ao enviar a requisição !</string>
     <string name="ds_simple_error_description">Algo não esta certo, não estou passando bem.</string>
     <string name="ds_button_try_again">Tentar novamente</string>

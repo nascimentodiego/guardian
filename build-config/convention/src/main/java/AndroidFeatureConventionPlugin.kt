@@ -1,3 +1,4 @@
+import br.com.bit.guardian.convention.core.configureFeatureDependence
 import br.com.bit.guardian.convention.core.configureFlavors
 import com.android.build.gradle.LibraryExtension
 import org.gradle.api.Plugin
@@ -9,11 +10,13 @@ class AndroidFeatureConventionPlugin: Plugin<Project> {
         with(target) {
             pluginManager.apply {
                 apply("guardian.android.library")
+                apply("guardian.android.library.compose")
                 apply("guardian.android.library.jacoco")
             }
 
             extensions.configure<LibraryExtension> {
                 configureFlavors(this)
+                configureFeatureDependence(this)
 
                 defaultConfig {
                     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

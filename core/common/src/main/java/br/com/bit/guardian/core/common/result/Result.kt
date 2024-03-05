@@ -1,5 +1,6 @@
 package br.com.bit.guardian.core.common.result
 
+import android.util.Log
 import br.com.bit.guardian.core.common.network.exceptions.GuardianApiException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -18,5 +19,8 @@ fun <T> Flow<T>.asResult(): Flow<Result<T>> {
             Result.Success(it)
         }
         .onStart { emit(Result.Loading) }
-        .catch { emit(Result.Error(it as GuardianApiException)) }
+        .catch {
+            Log.e("GuardianApiException",it.message,it )
+            emit(Result.Error(it as GuardianApiException))
+        }
 }

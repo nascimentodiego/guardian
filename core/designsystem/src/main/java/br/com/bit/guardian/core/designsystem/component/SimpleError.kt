@@ -164,7 +164,7 @@ private fun SimpleErrorExpanded(
 fun SimpleErrorPreview() {
     GuardianTheme {
         SimpleError(
-            widthSizeClass = WindowWidthSizeClass.Expanded,
+            widthSizeClass = WindowWidthSizeClass.Compact,
             titleRes = R.string.ds_simple_error_title,
             descriptionRes = R.string.ds_simple_error_description
         ) {

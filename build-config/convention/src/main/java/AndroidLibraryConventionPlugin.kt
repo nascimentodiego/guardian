@@ -37,6 +37,8 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
                 add("implementation", libs.findLibrary("androidx.lifecycle.runtimeCompose").get())
                 add("implementation", libs.findLibrary("androidx.lifecycle.viewModelCompose").get())
                 add("implementation", libs.findLibrary("kotlinx.coroutines.android").get())
+                add("implementation", platform(libs.findLibrary("firebase-plataform-bom").get()))
+                add("api", libs.findLibrary("firebase-auth-ktx").get())
 
                 add("testImplementation", kotlin("test"))
                 add("testImplementation", project(":core:test"))
