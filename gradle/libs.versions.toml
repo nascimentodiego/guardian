@@ -32,6 +32,8 @@ retrofit = "2.9.0"
 retrofitKotlinxSerializationJson = "1.0.0"
 shimmerVersion = "1.2.0"
 windowVersion = "1.2.0"
+frebasePlataform = "32.7.3"
+googleService = "4.4.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidxCore" }
@@ -67,7 +69,8 @@ kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime",
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 shimmer = { group = "com.valentinilk.shimmer", name ="compose-shimmer", version.ref = "shimmerVersion"}
-
+firebase-plataform-bom = { group = "com.google.firebase", name ="firebase-bom", version.ref = "frebasePlataform" }
+firebase-auth-ktx = { module = "com.google.firebase:firebase-auth-ktx" }
 
 # Dependencies of the included build-config
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
@@ -92,3 +95,4 @@ deteKt = { id = "io.gitlab.arturbosch.detekt", version.ref = "deteKtVersion" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 secrets = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secrets" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+googleServices = { id = "com.google.gms.google-services", version.ref = "googleService" }
