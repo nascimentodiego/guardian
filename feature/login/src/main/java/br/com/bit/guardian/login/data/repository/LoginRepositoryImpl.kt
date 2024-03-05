@@ -12,9 +12,10 @@ import javax.inject.Inject
 
 class LoginRepositoryImpl @Inject constructor(
     private val dataSource: LoginDataSource
-):LoginRepository {
-    override fun createUser(email: String, password: String): Flow<User> = flow{
-        val response = dataSource.createUser(email,password)
-        emit(response.toUser())
+) : LoginRepository {
+    override fun createUser(email: String, password: String): Flow<User> = flow {
+        dataSource.createUser(email, password).collect {
+            emit(it.toUser())
+        }
     }.flowOn(Dispatchers.IO).handleNetworkError()
 }

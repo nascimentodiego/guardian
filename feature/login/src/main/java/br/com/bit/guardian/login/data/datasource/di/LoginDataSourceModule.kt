@@ -1,7 +1,7 @@
 package br.com.bit.guardian.login.data.datasource.di
 
 import br.com.bit.guardian.login.data.datasource.remote.LoginDataSource
-import br.com.bit.guardian.login.data.datasource.remote.service.LoginDataSourceImpl
+import br.com.bit.guardian.login.data.datasource.remote.firebase.LoginDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
