@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="login_btn_login">Logar</string>
+    <string name="login_btn_login">Entrar</string>
+    <string name="login_btn_create">Criar conta</string>
+
+    <string name="login_input_title_email">E-mail</string>
+    <string name="login_input_title_or">Ou</string>
+    <string name="login_input_title_password">Senha</string>
 </resources>

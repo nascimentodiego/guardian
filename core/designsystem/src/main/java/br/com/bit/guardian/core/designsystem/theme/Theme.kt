@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
+
 package br.com.bit.guardian.core.designsystem.theme
 
 import android.app.Activity
@@ -31,7 +33,6 @@ object GuardianTheme {
         get() = LocalAppTypography.current
 }
 
-@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun GuardianTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
@@ -64,8 +65,8 @@ fun GuardianTheme(
     ) {
         MaterialTheme(
             colorScheme = colorScheme.materialColors,
-            typography = Typography,
             shapes = GuardianShapes,
+            typography = Typography,
             content = content
         )
     }

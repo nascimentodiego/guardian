@@ -6,6 +6,6 @@ import br.com.bit.guardian.login.ui.composable.LoginScreen
 
 @Composable
 fun LoginRoute(viewModel: LoginViewModel) {
-    val uiState = viewModel.uiState.collectAsStateWithLifecycle()
-    LoginScreen(uiState)
+    val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
+    LoginScreen(uiState =  uiState)
 }

@@ -4,6 +4,7 @@ import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
@@ -220,7 +221,7 @@ class AppColors(
         get() = materialColors.outline
 }
 
-internal val LocalAppColors = staticCompositionLocalOf {
+internal val LocalAppColors = compositionLocalOf {
     defaultAppColors()
 }
 
