@@ -2,7 +2,6 @@ package br.com.bit.guardian.core.designsystem.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.runtime.compositionLocalOf
-import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -59,7 +58,7 @@ val Typography = Typography(
     // Title Small
     titleSmall = TextStyle(
         fontFamily = Cabin,
-        fontWeight = FontWeight.W600,
+        fontWeight = FontWeight.W500,
         fontSize = 16.sp,
         lineHeight = 22.4.sp
     ),
@@ -67,7 +66,7 @@ val Typography = Typography(
     // Title
     titleMedium = TextStyle(
         fontFamily = Lexend,
-        fontWeight = FontWeight.W500,
+        fontWeight = FontWeight.W600,
         fontSize = 24.sp,
         lineHeight = 33.6.sp
     ),
@@ -78,9 +77,23 @@ val Typography = Typography(
         fontWeight = FontWeight.W700,
         fontSize = 42.sp,
         lineHeight = 33.6.sp
+    ),
+
+    //Displayed Large
+    displayLarge = TextStyle(
+        fontFamily = Cabin,
+        fontWeight = FontWeight.W700,
+        fontSize = 42.sp,
+        lineHeight = 33.6.sp
+    ),
+
+    //Displayed Medium
+    displayMedium = TextStyle(
+        fontFamily = Cabin,
+        fontWeight = FontWeight.W500,
+        fontSize = 24.sp,
+        lineHeight = 33.6.sp
     )
-
-
 )
 
 internal val LocalAppTypography = compositionLocalOf {

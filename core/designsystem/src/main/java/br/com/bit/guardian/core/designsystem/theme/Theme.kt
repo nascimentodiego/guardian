@@ -14,7 +14,7 @@ import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
-import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 
 object GuardianTheme {
     val colors: AppColors
@@ -36,17 +36,24 @@ object GuardianTheme {
 @Composable
 fun GuardianTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
+    isStatusBarTranslucent: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = getColorScheme(darkTheme)
-
     val view = LocalView.current
-    if (!view.isInEditMode) {
-        SideEffect {
-            (view.context as Activity).window.statusBarColor = colorScheme.primary.toArgb()
-            ViewCompat.getWindowInsetsController(view)?.isAppearanceLightStatusBars = darkTheme
+
+    if (!isStatusBarTranslucent) {
+        if (!view.isInEditMode) {
+            SideEffect {
+                val window = (view.context as Activity).window
+                window.statusBarColor = colorScheme.primary.toArgb()
+                WindowCompat.getInsetsController(
+                    window, view
+                ).isAppearanceLightStatusBars = darkTheme
+            }
         }
     }
+
     val guardianWindowSize = if (!view.isInEditMode) {
         val windowWidthSizeClass = calculateWindowSizeClass((view.context as Activity))
         GuardianWindowSize(

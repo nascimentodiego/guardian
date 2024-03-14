@@ -20,9 +20,12 @@ fun LoginScreen(
     windowSizeClass: WindowSizeClass? = null
 ) {
     val widthSize = windowSizeClass?.widthSizeClass ?: LocalWindowSizeClass.current.widthSizeClass
-    val isWidthCompact = widthSize == WindowWidthSizeClass.Compact
+    val heightSize = windowSizeClass?.widthSizeClass ?: LocalWindowSizeClass.current.heightSizeClass
 
-    if (isWidthCompact) {
+    val isWidthCompact = widthSize == WindowWidthSizeClass.Compact
+    val isHeightExpanded = heightSize == WindowHeightSizeClass.Expanded
+
+    if (isWidthCompact || isHeightExpanded) {
         LoginCompactScreen(modifier,uiState)
     } else {
         LoginExpandedScreen(modifier,uiState)

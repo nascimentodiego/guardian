@@ -19,7 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import br.com.bit.guardian.core.designsystem.component.GuardianLogoSmall
+import br.com.bit.guardian.core.designsystem.component.GuardianLogoMedium
 import br.com.bit.guardian.core.designsystem.component.GuardianTitleLarge
 import br.com.bit.guardian.core.designsystem.component.LoadedTertiaryButton
 import br.com.bit.guardian.core.designsystem.extension.forceWhite
@@ -40,9 +40,9 @@ fun LoginCompactSuccess(uiState: UserLoginUiState?) {
                 .padding(mainPadding),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            GuardianLogoSmall(tintColor = Color.White)
+            GuardianLogoMedium(tintColor = Color.White)
             GuardianTitleLarge(color = Color.White)
-            Spacer(modifier = Modifier.height(GuardianTheme.dimens.spacingM))
+            Spacer(modifier = Modifier.height(GuardianTheme.dimens.spacingXL))
             OutlinedTextField(
                 value = "",
                 onValueChange = { },

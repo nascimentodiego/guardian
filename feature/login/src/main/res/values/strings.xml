@@ -6,4 +6,12 @@
     <string name="login_input_title_email">E-mail</string>
     <string name="login_input_title_or">Ou</string>
     <string name="login_input_title_password">Senha</string>
+
+    <string name="login_highlight_title_one">Bit ioT Plataform</string>
+    <string name="login_highlight_message_one">Uma plataformma de código aberto onde você encontra diversos projetos de ioT.</string>
+    <string name="login_highlight_title_two">Garage Door</string>
+    <string name="login_highlight_message_two">Controle a abertura e fechamos de portas de garagem usando esse dispósito. </string>
+    <string name="login_highlight_title_Three">Sensor de movimento</string>
+    <string name="login_highlight_message_Three">Detecta alterações no ambiente e alerta o Guardian App. Instale vários dispositivos em ambiente diferente e padronize as ações ao detectar mobimento.</string>
+
 </resources>

@@ -2,11 +2,13 @@ package br.com.bit.guardian.login.ui.composable.expanded
 
 import android.content.res.Configuration
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,6 +27,7 @@ fun LoginExpandedScreen(modifier: Modifier = Modifier, uiState: UserLoginUiState
         modifier = modifier
             .fillMaxSize()
             .background(GuardianTheme.colors.background)
+
     ) {
         Row(
             modifier = Modifier.fillMaxSize(),
@@ -34,14 +37,17 @@ fun LoginExpandedScreen(modifier: Modifier = Modifier, uiState: UserLoginUiState
                 modifier = Modifier
                     .fillMaxHeight()
                     .weight(1f)
-                    .backgroundGradientPrimary()//RoundedCornerShape(topEnd = 72.dp, bottomEnd = 72.dp)
+                    .backgroundGradientPrimary(), //RoundedCornerShape(topEnd = 72.dp, bottomEnd = 72.dp)
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
+                BitPlatformHighlight()
             }
             Box(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(GuardianTheme.dimens.spacingXS),
+                    .padding(GuardianTheme.dimens.spacingXS)
+                    .navigationBarsPadding(),
                 contentAlignment = Alignment.Center
             ) {
                 uiState?.let {

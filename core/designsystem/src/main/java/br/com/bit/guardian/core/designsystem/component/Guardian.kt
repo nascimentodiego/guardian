@@ -14,7 +14,7 @@ import br.com.bit.guardian.core.designsystem.R
 import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
 
 @Composable
-fun GuardianLogo(
+fun GuardianLogoLarge(
     modifier: Modifier = Modifier,
     tintColor: Color =GuardianTheme.colors.onBackground
 ) {
@@ -27,9 +27,22 @@ fun GuardianLogo(
 }
 
 @Composable
+fun GuardianLogoMedium(
+    modifier: Modifier = Modifier,
+    tintColor: Color =GuardianTheme.colors.onBackground
+) {
+    Icon(
+        modifier = modifier.size(128.dp),
+        painter = painterResource(id = R.drawable.ds_ic_guardian),
+        tint = tintColor,
+        contentDescription = null
+    )
+}
+
+@Composable
 fun GuardianLogoSmall(
     modifier: Modifier = Modifier,
-    iconSize:Dp = 128.dp,
+    iconSize:Dp = 72.dp,
     tintColor: Color = GuardianTheme.colors.onBackground
 ) {
     Icon(
@@ -40,6 +53,18 @@ fun GuardianLogoSmall(
     )
 }
 
+@Composable
+fun GuardianDisplayMedium(
+    modifier: Modifier = Modifier,
+    color: Color = GuardianTheme.colors.onBackground
+) {
+    Text(
+        modifier = modifier,
+        text = stringResource(id = R.string.ds_app_name),
+        style = GuardianTheme.typography.displayMedium,
+        color = color
+    )
+}
 
 @Composable
 fun GuardianTitleLarge(
@@ -49,20 +74,7 @@ fun GuardianTitleLarge(
     Text(
         modifier = modifier,
         text = stringResource(id = R.string.ds_app_name),
-        style = GuardianTheme.typography.titleLarge,
-        color = color
-    )
-}
-
-@Composable
-fun GuardianTitleSmall(
-    modifier: Modifier = Modifier,
-    color: Color = GuardianTheme.colors.onBackground
-) {
-    Text(
-        modifier = modifier,
-        text = stringResource(id = R.string.ds_app_name),
-        style = GuardianTheme.typography.titleSmall,
+        style = GuardianTheme.typography.displayLarge,
         color = color
     )
 }

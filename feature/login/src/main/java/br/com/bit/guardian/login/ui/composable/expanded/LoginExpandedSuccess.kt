@@ -20,8 +20,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import br.com.bit.guardian.core.designsystem.component.GuardianDisplayMedium
 import br.com.bit.guardian.core.designsystem.component.GuardianLogoSmall
-import br.com.bit.guardian.core.designsystem.component.GuardianTitleLarge
 import br.com.bit.guardian.core.designsystem.component.LoadedTertiaryButton
 import br.com.bit.guardian.core.designsystem.extension.isHeightCompact
 import br.com.bit.guardian.core.designsystem.extension.onBackgroundColor
@@ -49,14 +49,13 @@ fun LoginExpandedSuccess(uiState: UserLoginUiState?) {
                         tintColor = GuardianTheme.colors.onBackground,
                         iconSize = 72.dp
                     )
-                    GuardianTitleLarge(color = GuardianTheme.colors.onBackground)
+                    GuardianDisplayMedium(color = GuardianTheme.colors.onBackground)
                 }
 
             } else {
                 GuardianLogoSmall(tintColor = GuardianTheme.colors.onBackground)
-                GuardianTitleLarge(color = GuardianTheme.colors.onBackground)
+                GuardianDisplayMedium(color = GuardianTheme.colors.onBackground)
             }
-
             Spacer(modifier = Modifier.height(GuardianTheme.dimens.spacingM))
             OutlinedTextField(
                 value = "",
@@ -80,8 +79,6 @@ fun LoginExpandedSuccess(uiState: UserLoginUiState?) {
                 colors = OutlinedTextFieldDefaults.onBackgroundColor()
             )
             Spacer(modifier = Modifier.height(GuardianTheme.dimens.spacingXS))
-
-            Spacer(modifier = Modifier.height(GuardianTheme.dimens.spacingS))
             if (isCompact) {
                 Row {
                     LoadedTertiaryButton(

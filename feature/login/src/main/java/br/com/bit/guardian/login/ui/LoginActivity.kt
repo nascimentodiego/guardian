@@ -1,33 +1,35 @@
 package br.com.bit.guardian.login.ui
 
+import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
+import br.com.bit.guardian.login.ui.composable.LoginRoute
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class LoginActivity : ComponentActivity() {
     private val viewModel: LoginViewModel by viewModels()
 
+    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT),
+            navigationBarStyle = SystemBarStyle.dark(Color.TRANSPARENT)
+        )
         setContent {
-            GuardianTheme {
+            GuardianTheme(
+                isStatusBarTranslucent = true
+            ) {
                 LoginRoute(viewModel)
             }
         }
     }
-
-/*    public override fun onStart() {
-        val auth = Firebase.auth
-        super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
-        val currentUser = auth.currentUser
-        if (currentUser == null) {
-            Toast.makeText(this,"User logout",Toast.LENGTH_SHORT).show()
-        }
-    }*/
-
 }

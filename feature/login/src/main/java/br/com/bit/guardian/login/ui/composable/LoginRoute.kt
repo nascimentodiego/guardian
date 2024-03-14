@@ -1,8 +1,8 @@
-package br.com.bit.guardian.login.ui
+package br.com.bit.guardian.login.ui.composable
 
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import br.com.bit.guardian.login.ui.composable.LoginScreen
+import br.com.bit.guardian.login.ui.LoginViewModel
 
 @Composable
 fun LoginRoute(viewModel: LoginViewModel) {
