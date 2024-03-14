@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.bit.guardian.core.common.result.Result
 import br.com.bit.guardian.core.common.result.asResult
+import br.com.bit.guardian.login.domain.entities.User.Companion.Empty
 import br.com.bit.guardian.login.domain.usecase.CreateUserUseCase
 import br.com.bit.guardian.login.ui.model.UserLoginUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +20,7 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val useCase: CreateUserUseCase
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow<UserLoginUiState?>(null)
+    private val _uiState = MutableStateFlow<UserLoginUiState>( UserLoginUiState.Success(Empty))
     val uiState: StateFlow<UserLoginUiState?> = _uiState.asStateFlow()
 
     fun createNewUser(email:String,password:String) {

@@ -1,76 +1,43 @@
 package br.com.bit.guardian.login.ui.composable
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.material3.Text
+import androidx.compose.material3.windowsizeclass.WindowHeightSizeClass
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.geometry.center
-import androidx.compose.ui.graphics.RadialGradientShader
-import androidx.compose.ui.graphics.Shader
-import androidx.compose.ui.graphics.ShaderBrush
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
+import br.com.bit.guardian.core.designsystem.theme.LocalWindowSizeClass
+import br.com.bit.guardian.login.ui.composable.compact.LoginCompactScreen
+import br.com.bit.guardian.login.ui.composable.expanded.LoginExpandedScreen
 import br.com.bit.guardian.login.ui.model.UserLoginUiState
 
 @Composable
-fun LoginScreen(uiState: State<UserLoginUiState?>) {
-    val firstColor = GuardianTheme.colors.primary.copy(alpha = 0.9f)
-    val secondColor = GuardianTheme.colors.primary
+fun LoginScreen(
+    modifier: Modifier = Modifier,
+    uiState: UserLoginUiState?,
+    windowSizeClass: WindowSizeClass? = null
+) {
+    val widthSize = windowSizeClass?.widthSizeClass ?: LocalWindowSizeClass.current.widthSizeClass
+    val heightSize = windowSizeClass?.widthSizeClass ?: LocalWindowSizeClass.current.heightSizeClass
 
-    val largeRadialGradient = object : ShaderBrush() {
-        override fun createShader(size: Size): Shader {
-            val biggerDimension = maxOf(size.height, size.width)
-            return RadialGradientShader(
-                colors = listOf(
-                    firstColor, secondColor
-                ),
-                center = size.center,
-                radius = biggerDimension / 2f,
-                colorStops = listOf(0f, 0.95f)
-            )
-        }
+    val isWidthCompact = widthSize == WindowWidthSizeClass.Compact
+    val isHeightExpanded = heightSize == WindowHeightSizeClass.Expanded
+
+    if (isWidthCompact || isHeightExpanded) {
+        LoginCompactScreen(modifier,uiState)
+    } else {
+        LoginExpandedScreen(modifier,uiState)
     }
+}
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(brush = largeRadialGradient),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        uiState.value?.let { it ->
-            when (it) {
-                is UserLoginUiState.Loading -> {
-                    Text(
-                        text = "Loading...",
-                        style = GuardianTheme.typography.titleSmall
-                    )
-                }
-
-                is UserLoginUiState.Success -> {
-                    Column {
-                        it.user.run { ->
-                            Text(
-                                text = "$name - $email",
-                                style = GuardianTheme.typography.bodyMedium
-                            )
-                            Spacer(modifier = Modifier.height(16.dp))
-                        }
-                    }
-                }
-
-                is UserLoginUiState.Error -> {
-                    Text(text = "Ocorreu um Error !")
-                }
-            }
-        }
+@Composable
+@Preview
+fun LoginExpandedScreenPreview(
+    @PreviewParameter(LoginScreenProvider::class) uiState: UserLoginUiState
+) {
+    GuardianTheme {
+        LoginScreen(uiState = uiState)
     }
 }

@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -27,7 +28,8 @@ import br.com.bit.guardian.core.designsystem.theme.LocalWindowSizeClass
 
 @Composable
 fun LoadingScreen(modifier: Modifier = Modifier) {
-    if (LocalWindowSizeClass.current.widthSizeClass == WindowWidthSizeClass.Compact) {
+    val widthSize = LocalWindowSizeClass.current
+    if (widthSize.widthSizeClass == WindowWidthSizeClass.Compact) {
         Column(
             modifier = modifier,
             verticalArrangement = Arrangement.Center,

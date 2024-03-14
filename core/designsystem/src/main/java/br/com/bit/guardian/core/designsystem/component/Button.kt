@@ -83,6 +83,43 @@ fun LoadedButton(
 }
 
 @Composable
+fun LoadedTertiaryButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    isLoading: Boolean = false,
+    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
+    content: @Composable RowScope.() -> Unit
+) {
+    Button(
+        onClick = onClick,
+        modifier = modifier,
+        enabled = enabled,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = GuardianTheme.colors.tertiary,
+            disabledContainerColor = GuardianTheme.colors.tertiary.copy(alpha = 0.1f)
+        ),
+        contentPadding = contentPadding
+    ) {
+        if (isLoading) {
+            Row(modifier = Modifier.padding(1.dp)) {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .padding(GuardianTheme.dimens.spacingXS)
+                        .size(16.dp),
+                    color = GuardianTheme.colors.onPrimary,
+                    strokeWidth = 2.dp,
+                    trackColor = GuardianTheme.colors.primary
+                )
+            }
+            return@Button
+        }
+
+        content.invoke(this)
+    }
+}
+
+@Composable
 fun SimpleButton(
     modifier: Modifier = Modifier,
     @StringRes titleRes: Int,
@@ -214,7 +251,6 @@ fun PrevButton(
     }
 }
 
-@ThemePreviews
 @Composable
 fun SimpleButtonPreview() {
     GuardianTheme {
@@ -225,8 +261,6 @@ fun SimpleButtonPreview() {
     }
 }
 
-
-@ThemePreviews
 @Composable
 fun FinishButtonPreview() {
     GuardianTheme {
@@ -264,12 +298,14 @@ fun NextButtonPreview() {
     }
 }
 
+
+@ThemePreviews
 @Composable
 fun LoadedButtonPreview() {
     GuardianTheme {
         LoadedButton(
             modifier = Modifier.width(200.dp),
-            isLoading = true,
+            isLoading = false,
             onClick = {}
         ) {
             Text(text = "Send")
