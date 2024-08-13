@@ -1,5 +1,6 @@
 plugins {
-    id("guardian.android.library")
+    id("guardian.android.feature")
+    kotlin("plugin.serialization")
 }
 
 android {

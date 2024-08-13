@@ -8,7 +8,7 @@ import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.project
 
 internal fun Project.configureFeatureDependence(
-    commonExtension: CommonExtension<*, *, *, *, *>
+    commonExtension: CommonExtension<*, *, *, *, *, *>
 ) {
     commonExtension.apply {
         val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")

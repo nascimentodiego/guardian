@@ -3,5 +3,5 @@ plugins {
 }
 
 android {
-    namespace = "br.com.bit.guardian.garage"
+    namespace = "br.com.bit.guardian.feature.garage"
 }

@@ -4,5 +4,5 @@ plugins {
 
 
 android {
-    namespace = "br.com.bit.guardian.settings"
+    namespace = "br.com.bit.guardian.feature.settings"
 }

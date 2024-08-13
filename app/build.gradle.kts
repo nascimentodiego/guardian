@@ -66,7 +66,7 @@ dependencies {
     implementation(project(":core:data:repository"))
     implementation(project(":core:domain"))
     implementation(project(":core:designsystem"))
-    implementation(project(":feature:login"))
+    implementation(project(":feature:registration"))
 
     debugApi(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.testManifest)
