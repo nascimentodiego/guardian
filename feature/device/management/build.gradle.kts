@@ -1,5 +1,5 @@
 plugins {
-    id("guardian.android.library")
+    id("guardian.android.feature")
 }
 
 

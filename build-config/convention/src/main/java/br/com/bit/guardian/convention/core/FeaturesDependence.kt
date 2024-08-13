@@ -21,8 +21,8 @@ internal fun Project.configureFeatureDependence(
             add("implementation", project(":core:domain"))
             add("implementation", project(":core:designsystem"))
 
-//            add("implementation ", libs.findLibrary("firebase-plataform-bom").get())
-//            add("implementation ", libs.findLibrary("firebase-auth-kt").get())
+            add("implementation", platform(libs.findLibrary("firebase-plataform-bom").get()))
+            add("api", platform(libs.findLibrary("firebase-auth-ktx").get()))
         }
     }
 }

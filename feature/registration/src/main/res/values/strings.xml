@@ -1,4 +1,5 @@
 <resources>
+    <!-- Login Screen -->
     <string name="login_btn_login">Entrar</string>
     <string name="login_btn_create">Criar conta</string>
 
@@ -12,5 +13,18 @@
     <string name="login_highlight_message_two">Controle a abertura e fechamos de portas de garagem usando esse dispósito. </string>
     <string name="login_highlight_title_Three">Sensor de movimento</string>
     <string name="login_highlight_message_Three">Detecta alterações no ambiente e alerta o Guardian App. Instale vários dispositivos em ambiente diferente e padronize as ações ao detectar mobimento.</string>
+
+    <!-- Register Screen -->
+    <string name="login_register_screen">Criar nova conta</string>
+    <string name="login_input_email_invalid">E-mail inválido</string>
+    <string name="login_input_title_conf_password">Confirmar senha</string>
+    <string name="login_register_invalid_password">Senha inválida!</string>
+    <string name="login_register_rule_title">Regras para uma senha forte:</string>
+    <string name="login_register_rule_different_from_email">Deve ser diferente do email</string>
+    <string name="login_register_rule_min_character">Deve ter entre 8 e 30 caracteres</string>
+    <string name="login_register_rule_min_one_number">Pelo menos um número</string>
+    <string name="login_register_rule_min_one_capital_letter">Pelo menos uma letra maiúscula</string>
+    <string name="login_register_rule_special_character">Pelo menos um caracter especial (ex: !#@#$%)</string>
+    <string name="login_register_rule_confirm_pass">Você precisa confirmar sua senha</string>
 
 </resources>

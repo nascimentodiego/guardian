@@ -61,6 +61,9 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
 
+    implementation(platform(libs.firebase.plataform.bom))
+    implementation(libs.firebase.auth.ktx)
+
     implementation(project(":core:common"))
     implementation(project(":core:data:network"))
     implementation(project(":core:data:repository"))

@@ -28,7 +28,9 @@ class RegisterActivity : ComponentActivity() {
             GuardianTheme(
                 isStatusBarTranslucent = true
             ) {
-                RegisterRoute(viewModel)
+                RegisterRoute(viewModel) {
+                    finish()
+                }
             }
         }
     }
