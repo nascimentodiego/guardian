@@ -6,7 +6,10 @@ import br.com.bit.guardian.registration.ui.register.model.RegistrationRuleState
 
 class RegistrationScreenProvider : PreviewParameterProvider<RegisterUiState> {
     override val values = sequenceOf(
-        RegisterUiState.Success(
+        RegisterUiState.Idle(
+            RegistrationRuleState.Empty
+        ),
+        RegisterUiState.Loading(
             RegistrationRuleState.Empty
         )
     )

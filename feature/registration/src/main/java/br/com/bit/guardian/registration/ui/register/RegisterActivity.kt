@@ -3,6 +3,7 @@ package br.com.bit.guardian.registration.ui.register
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
@@ -28,9 +29,14 @@ class RegisterActivity : ComponentActivity() {
             GuardianTheme(
                 isStatusBarTranslucent = true
             ) {
-                RegisterRoute(viewModel) {
-                    finish()
-                }
+                RegisterRoute(
+                    viewModel,
+                    onError = { it ->
+                        Toast.makeText(baseContext, it, Toast.LENGTH_SHORT).show()
+                    }, onBackPress = {
+                        finish()
+                    }
+                )
             }
         }
     }

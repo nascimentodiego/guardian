@@ -29,7 +29,6 @@ data class RegistrationRuleState(
             ?.let { false } ?: run { true }
     )
 
-
     companion object {
         val Empty = RegistrationRuleState(
             email = "",
@@ -54,7 +53,9 @@ data class RegistrationRuleState(
 data class PasswordRuleItem(@StringRes val textRes: Int, val isSuccess: Boolean)
 
 
-
+sealed class Event{
+    data class Error(val msg:String):Event()
+}
 
 
 

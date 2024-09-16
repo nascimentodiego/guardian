@@ -147,7 +147,8 @@ fun LoginExpandedSuccess(uiState: UserLoginUiState?, callbacks: LoginListener) {
                 Spacer(modifier = Modifier.height(GuardianTheme.dimens.spacingS))
                 OutlinedButton(
                     modifier = Modifier.fillMaxWidth(),
-                    onClick = { /*TODO*/ }
+                onClick = { callbacks.onCreateUserClickListener()Gente, vamos marcar para segunda pela manha homologar esses ajuste
+                pq o dasdasdas}
                 ) {
                     Text(
                         text = stringResource(id = R.string.login_btn_create),

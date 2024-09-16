@@ -1,4 +1,4 @@
-package br.com.bit.guardian.registration.ui.register.composable
+package br.com.bit.guardian.registration.ui.register.composable.components
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,6 +19,7 @@ import br.com.bit.guardian.feature.registration.R
 
 @Composable
 fun PasswordTextField(
+    modifier: Modifier = Modifier,
     password: String,
     passwordVisible: Boolean = false,
     @StringRes label: Int = R.string.login_input_title_password,
@@ -28,7 +29,7 @@ fun PasswordTextField(
     onValueChange: (String) -> Unit
 ) = TextField(value = password,
     onValueChange = { onValueChange(it) },
-    modifier = Modifier.fillMaxWidth(),
+    modifier = modifier,
     label = { Text(stringResource(id = label)) },
     isError = isError,
     maxLines = 1,

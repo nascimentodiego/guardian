@@ -1,4 +1,4 @@
-package br.com.bit.guardian.registration.ui.register.composable
+package br.com.bit.guardian.registration.ui.register.composable.components
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Row

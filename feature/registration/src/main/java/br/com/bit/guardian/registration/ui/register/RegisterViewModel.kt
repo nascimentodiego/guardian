@@ -10,15 +10,19 @@ import br.com.bit.guardian.registration.domain.usecase.CreateUserUseCase
 import br.com.bit.guardian.registration.domain.usecase.EmailValidationUseCase
 import br.com.bit.guardian.registration.domain.usecase.PasswordValidationUseCase
 import br.com.bit.guardian.registration.ui.register.mappers.toUiPasswordError
+import br.com.bit.guardian.registration.ui.register.model.Event
 import br.com.bit.guardian.registration.ui.register.model.RegisterUiState
 import br.com.bit.guardian.registration.ui.register.model.RegistrationRuleState.Companion.Empty
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,6 +33,9 @@ class RegisterViewModel @Inject constructor(
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<RegisterUiState>(RegisterUiState.Idle(Empty))
     val uiState: StateFlow<RegisterUiState?> = _uiState.asStateFlow()
+
+    private val _eventChannel = Channel<Event>()
+    val events = _eventChannel.receiveAsFlow()
 
     fun createNewUser() {
         val ruleState = (_uiState.value as RegisterUiState.Idle).ruleState
@@ -50,6 +57,13 @@ class RegisterViewModel @Inject constructor(
                         }
                     )
                 }.collect()
+        }
+    }
+
+    fun sendEvent(){
+        viewModelScope.launch {
+            val uuid = UUID.randomUUID().toString()
+            _eventChannel.send(Event.Error(uuid))
         }
     }
 
