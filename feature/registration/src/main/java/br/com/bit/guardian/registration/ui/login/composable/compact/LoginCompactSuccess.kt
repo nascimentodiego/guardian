@@ -28,10 +28,15 @@ import br.com.bit.guardian.core.designsystem.extension.withState
 import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
 import br.com.bit.guardian.feature.registration.R
 import br.com.bit.guardian.registration.ui.login.LoginListener
-import br.com.bit.guardian.registration.ui.login.model.UserLoginUiState
+import br.com.bit.guardian.registration.ui.login.model.LoginIntent
+import br.com.bit.guardian.registration.ui.login.model.LoginUiState
 
 @Composable
-fun LoginCompactSuccess(uiState: UserLoginUiState?, callbacks: LoginListener) {
+fun LoginCompactSuccess(
+    uiState: LoginUiState,
+    intent: (events: LoginIntent) -> Unit,
+    callbacks: LoginListener
+) {
     BoxWithConstraints {
         val mainPadding =
             if (isWidthMedium()) GuardianTheme.dimens.spacingHX else GuardianTheme.dimens.spacingM
@@ -45,8 +50,10 @@ fun LoginCompactSuccess(uiState: UserLoginUiState?, callbacks: LoginListener) {
             GuardianTitleLarge(color = Color.White)
             Spacer(modifier = Modifier.height(GuardianTheme.dimens.spacingXL))
             OutlinedTextField(
-                value = "",
-                onValueChange = { },
+                value = uiState.userView.email,
+                onValueChange = {
+                    intent(LoginIntent.InputEmail(it))
+                },
                 modifier = Modifier.fillMaxWidth(),
                 label = { Text(stringResource(id = R.string.login_input_title_email)) },
                 isError = false,
@@ -57,8 +64,10 @@ fun LoginCompactSuccess(uiState: UserLoginUiState?, callbacks: LoginListener) {
                 colors = OutlinedTextFieldDefaults.forceWhite()
             )
             OutlinedTextField(
-                value = "",
-                onValueChange = { },
+                value = uiState.userView.password,
+                onValueChange = {
+                    intent(LoginIntent.InputPassword(it))
+                },
                 modifier = Modifier.fillMaxWidth(),
                 visualTransformation = PasswordVisualTransformation(),
                 label = { Text(stringResource(id = R.string.login_input_title_password)) },

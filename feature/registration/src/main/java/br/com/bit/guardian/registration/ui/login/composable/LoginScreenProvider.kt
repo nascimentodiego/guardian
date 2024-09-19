@@ -1,15 +1,16 @@
 package br.com.bit.guardian.registration.ui.login.composable
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import br.com.bit.guardian.registration.domain.entities.User
-import br.com.bit.guardian.registration.ui.login.model.UserLoginUiState
+import br.com.bit.guardian.registration.ui.login.model.LoginUiState
+import br.com.bit.guardian.registration.ui.login.model.UserView
 
-class LoginScreenProvider: PreviewParameterProvider<UserLoginUiState> {
+class LoginScreenProvider : PreviewParameterProvider<LoginUiState> {
     override val values = sequenceOf(
-        UserLoginUiState.Success(
-           User(
-                name = "Diego Figueredo do Nascimento",
-                email = "nascimento.diego@gmail.com"
+        LoginUiState.Idle(
+            UserView(
+                email = "nascimento.diego@gmail.com",
+                password = "d!@sdsafg!@425278",
+                isLoadingButton = false
             )
         )
     )

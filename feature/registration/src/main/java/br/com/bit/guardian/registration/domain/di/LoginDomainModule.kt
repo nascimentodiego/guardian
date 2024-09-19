@@ -4,6 +4,10 @@ import br.com.bit.guardian.registration.domain.usecase.CreateUserUseCase
 import br.com.bit.guardian.registration.domain.usecase.CreateUserUseCaseImpl
 import br.com.bit.guardian.registration.domain.usecase.EmailValidationUseCase
 import br.com.bit.guardian.registration.domain.usecase.EmailValidationUseCaseImpl
+import br.com.bit.guardian.registration.domain.usecase.IsUserLoggedUseCase
+import br.com.bit.guardian.registration.domain.usecase.IsUserLoggedUseCaseImpl
+import br.com.bit.guardian.registration.domain.usecase.LogInUseCase
+import br.com.bit.guardian.registration.domain.usecase.LogInUseCaseImpl
 import br.com.bit.guardian.registration.domain.usecase.PasswordValidationUseCase
 import br.com.bit.guardian.registration.domain.usecase.PasswordValidationUseCaseImpl
 import dagger.Binds
@@ -18,6 +22,16 @@ abstract class LoginDomainModule {
     abstract fun provideCreateUserUseCase(
         useCaseImpl: CreateUserUseCaseImpl
     ): CreateUserUseCase
+
+    @Binds
+    abstract fun provideLogInUseCase(
+        useCaseImpl: LogInUseCaseImpl
+    ): LogInUseCase
+
+    @Binds
+    abstract fun provideIsUserLoggedUseCase(
+        useCaseImpl: IsUserLoggedUseCaseImpl
+    ): IsUserLoggedUseCase
 
     @Binds
     abstract fun provideEmailValidationUseCase(

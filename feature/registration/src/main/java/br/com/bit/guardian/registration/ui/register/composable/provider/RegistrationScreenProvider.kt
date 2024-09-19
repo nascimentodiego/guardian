@@ -5,7 +5,7 @@ import br.com.bit.guardian.registration.ui.register.model.RegisterUiState
 import br.com.bit.guardian.registration.ui.register.model.RegistrationRuleState
 
 class RegistrationScreenProvider : PreviewParameterProvider<RegisterUiState> {
-    override val values = sequenceOf(
+    override val values: Sequence<RegisterUiState> = sequenceOf(
         RegisterUiState.Idle(
             RegistrationRuleState.Empty
         ),

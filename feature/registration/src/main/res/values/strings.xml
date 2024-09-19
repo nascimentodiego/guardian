@@ -26,5 +26,7 @@
     <string name="login_register_rule_min_one_capital_letter">Pelo menos uma letra maiúscula</string>
     <string name="login_register_rule_special_character">Pelo menos um caracter especial (ex: !#@#$%)</string>
     <string name="login_register_rule_confirm_pass">Você precisa confirmar sua senha</string>
+    <string name="login_register_success_msg">Usuário cadastrado com sucesso !</string>
+    <string name="login_register_error_msg">Não foi possível cadastrar o usuário !</string>
 
 </resources>

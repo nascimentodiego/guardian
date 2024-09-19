@@ -29,11 +29,15 @@ import br.com.bit.guardian.core.designsystem.extension.withState
 import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
 import br.com.bit.guardian.feature.registration.R
 import br.com.bit.guardian.registration.ui.login.LoginListener
-import br.com.bit.guardian.registration.ui.login.model.UserLoginUiState
-
+import br.com.bit.guardian.registration.ui.login.model.LoginIntent
+import br.com.bit.guardian.registration.ui.login.model.LoginUiState
 
 @Composable
-fun LoginExpandedSuccess(uiState: UserLoginUiState?, callbacks: LoginListener) {
+fun LoginExpandedSuccess(
+    uiState: LoginUiState,
+    intent: (events: LoginIntent) -> Unit,
+    callbacks: LoginListener
+) {
     BoxWithConstraints {
         val isCompact = isHeightCompact()
         val scroll = rememberScrollState()
@@ -59,8 +63,10 @@ fun LoginExpandedSuccess(uiState: UserLoginUiState?, callbacks: LoginListener) {
             }
             Spacer(modifier = Modifier.height(GuardianTheme.dimens.spacingM))
             OutlinedTextField(
-                value = "",
-                onValueChange = { },
+                value = uiState.userView.email,
+                onValueChange = {
+                    intent(LoginIntent.InputEmail(it))
+                },
                 modifier = Modifier.fillMaxWidth(),
                 label = { Text(stringResource(id = R.string.login_input_title_email)) },
                 isError = false,
@@ -71,8 +77,10 @@ fun LoginExpandedSuccess(uiState: UserLoginUiState?, callbacks: LoginListener) {
                 colors = OutlinedTextFieldDefaults.onBackgroundColor()
             )
             OutlinedTextField(
-                value = "",
-                onValueChange = { },
+                value = uiState.userView.password,
+                onValueChange = {
+                    intent(LoginIntent.InputPassword(it))
+                },
                 modifier = Modifier.fillMaxWidth(),
                 visualTransformation = PasswordVisualTransformation(),
                 label = { Text(stringResource(id = R.string.login_input_title_password)) },
@@ -84,7 +92,7 @@ fun LoginExpandedSuccess(uiState: UserLoginUiState?, callbacks: LoginListener) {
                 Row {
                     LoadedTertiaryButton(
                         enabled = true,
-                        isLoading = false,
+                        isLoading = uiState.userView.isLoadingButton,
                         onClick = { /*TODO*/ },
                         modifier = Modifier.weight(1f)
                     ) {
@@ -147,8 +155,7 @@ fun LoginExpandedSuccess(uiState: UserLoginUiState?, callbacks: LoginListener) {
                 Spacer(modifier = Modifier.height(GuardianTheme.dimens.spacingS))
                 OutlinedButton(
                     modifier = Modifier.fillMaxWidth(),
-                onClick = { callbacks.onCreateUserClickListener()Gente, vamos marcar para segunda pela manha homologar esses ajuste
-                pq o dasdasdas}
+                    onClick = { callbacks.onCreateUserClickListener() }
                 ) {
                     Text(
                         text = stringResource(id = R.string.login_btn_create),

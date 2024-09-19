@@ -33,7 +33,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -44,6 +43,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import br.com.bit.guardian.core.designsystem.component.SimpleError
 import br.com.bit.guardian.core.designsystem.component.TextTitleMedium
 import br.com.bit.guardian.core.designsystem.component.TextTitleSmall
 import br.com.bit.guardian.core.designsystem.extension.handleScreenBySize
@@ -57,52 +57,29 @@ import br.com.bit.guardian.registration.ui.register.composable.expanded.Register
 import br.com.bit.guardian.registration.ui.register.composable.provider.RegistrationScreenProvider
 import br.com.bit.guardian.registration.ui.register.model.PasswordRuleItem
 import br.com.bit.guardian.registration.ui.register.model.RegisterUiState
+import br.com.bit.guardian.registration.ui.register.model.RegistrationIntent
 
 @Composable
 fun RegisterScreen(
     modifier: Modifier = Modifier,
     uiState: RegisterUiState?,
-    putEmail: (String) -> Unit,
-    putPassword: (String) -> Unit,
-    putConfPassword: (String) -> Unit,
-    onClickRegisterUser: () -> Unit,
+    intent: (RegistrationIntent) -> Unit,
     onBackPressClickListener: () -> Unit
 ) {
-    val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
 
     uiState?.let {
         when (uiState) {
-            is RegisterUiState.Idle -> {
-                IdleState(
-                    uiState,
-                    modifier,
-                    snackbarHostState,
-                    putEmail,
-                    putPassword,
-                    putConfPassword,
-                    onClickRegisterUser,
-                    onBackPressClickListener
-                )
-            }
-
-            is RegisterUiState.Success -> {
-
-            }
-
             is RegisterUiState.Loading -> {
-
+                Loading()
             }
 
-            is RegisterUiState.Error -> {
+            else -> {
                 IdleState(
                     uiState,
+                    intent,
                     modifier,
                     snackbarHostState,
-                    putEmail,
-                    putPassword,
-                    putConfPassword,
-                    onClickRegisterUser,
                     onBackPressClickListener
                 )
             }
@@ -122,12 +99,9 @@ fun Loading() {
 @Composable
 fun IdleState(
     state: RegisterUiState,
+    intent: (RegistrationIntent) -> Unit,
     modifier: Modifier,
     snackbarHostState: SnackbarHostState,
-    putEmail: (String) -> Unit,
-    putPassword: (String) -> Unit,
-    putConfPassword: (String) -> Unit,
-    onClickRegisterUser: () -> Unit,
     onNavigationClickListener: () -> Unit
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
@@ -168,7 +142,7 @@ fun IdleState(
             enter = slideInVertically(initialOffsetY = { it * 2 }),
             exit = slideOutVertically(targetOffsetY = { it * 2 }),
         ) {
-            FloatingActionButton(onClick = { onClickRegisterUser.invoke() }) {
+            FloatingActionButton(onClick = { intent.invoke(RegistrationIntent.CreateUser) }) {
                 Icon(painterResource(id = GuardianIcon.AddUser), contentDescription = null)
             }
         }
@@ -189,20 +163,16 @@ fun IdleState(
             LocalWindowSizeClass.current.handleScreenBySize(compactScreen = {
                 RegisterCompactScreen(
                     state,
+                    intent,
                     passwordVisible,
-                    { passwordVisible = !passwordVisible },
-                    putEmail,
-                    putPassword,
-                    putConfPassword,
+                    { passwordVisible = !passwordVisible }
                 )
             }, expandedScreen = {
                 RegisterExpandedScreen(
                     state,
+                    intent,
                     passwordVisible,
                     { passwordVisible = !passwordVisible },
-                    putEmail,
-                    putPassword,
-                    putConfPassword,
                 )
             })
         }
@@ -235,10 +205,7 @@ fun LoginExpandedScreenPreview(
 ) {
     GuardianTheme {
         RegisterScreen(uiState = uiState,
-            putEmail = { _ -> },
-            putPassword = { _ -> },
-            putConfPassword = { _ -> },
-            onClickRegisterUser = {},
+            intent = {},
             onBackPressClickListener = {})
     }
 }

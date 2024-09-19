@@ -13,4 +13,20 @@ class LoginDataSourceImpl @Inject constructor(private val api: LoginNetworkApi) 
         flow {
             emit(api.createUser(UserLoginRequest(email, password)))
         }
+
+    override suspend fun signIn(email: String, password: String): Flow<UserLoginResponse> =
+        flow {
+            emit(api.signIn(UserLoginRequest(email, password)))
+        }
+
+    override suspend fun signOut(): Flow<Unit> =
+        flow {
+            emit(api.signOut())
+        }
+
+    override suspend fun isUserLogged(): Flow<Boolean> =
+        flow {
+            api.checkToken()
+            emit(true)
+        }
 }

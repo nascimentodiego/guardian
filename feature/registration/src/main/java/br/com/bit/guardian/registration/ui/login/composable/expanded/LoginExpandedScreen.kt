@@ -19,13 +19,16 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
 import br.com.bit.guardian.core.designsystem.theme.backgroundGradientPrimary
 import br.com.bit.guardian.registration.ui.login.LoginListener
+import br.com.bit.guardian.registration.ui.login.composable.LoadingScreen
 import br.com.bit.guardian.registration.ui.login.composable.LoginScreenProvider
-import br.com.bit.guardian.registration.ui.login.model.UserLoginUiState
+import br.com.bit.guardian.registration.ui.login.model.LoginIntent
+import br.com.bit.guardian.registration.ui.login.model.LoginUiState
 
 @Composable
 fun LoginExpandedScreen(
     modifier: Modifier = Modifier,
-    uiState: UserLoginUiState?,
+    uiState: LoginUiState?,
+    intent: (events: LoginIntent) -> Unit,
     callbacks: LoginListener
 ) {
     Box(
@@ -57,12 +60,10 @@ fun LoginExpandedScreen(
             ) {
                 uiState?.let {
                     when (uiState) {
-                        is UserLoginUiState.Loading -> {}
-                        is UserLoginUiState.Success -> {
-                            LoginExpandedSuccess(uiState = uiState, callbacks)
+                        is LoginUiState.Loading -> LoadingScreen()
+                        is LoginUiState.Idle -> {
+                            LoginExpandedSuccess(uiState = uiState, intent, callbacks)
                         }
-
-                        is UserLoginUiState.Error -> {}
                     }
                 }
             }
@@ -73,10 +74,10 @@ fun LoginExpandedScreen(
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_NO, device = Devices.TABLET)
 @Composable
 fun LoginExpandedScreenPreview(
-    @PreviewParameter(LoginScreenProvider::class) uiState: UserLoginUiState
+    @PreviewParameter(LoginScreenProvider::class) uiState: LoginUiState
 ) {
     GuardianTheme {
-        LoginExpandedScreen(uiState = uiState, callbacks = object : LoginListener {
+        LoginExpandedScreen(uiState = uiState, intent = {}, callbacks = object : LoginListener {
             override fun onCreateUserClickListener() {
                 TODO("Not yet implemented")
             }

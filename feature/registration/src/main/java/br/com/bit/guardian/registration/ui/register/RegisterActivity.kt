@@ -10,6 +10,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
+import br.com.bit.guardian.feature.registration.R
 import br.com.bit.guardian.registration.ui.register.composable.RegisterRoute
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,8 +32,14 @@ class RegisterActivity : ComponentActivity() {
             ) {
                 RegisterRoute(
                     viewModel,
-                    onError = { it ->
-                        Toast.makeText(baseContext, it, Toast.LENGTH_SHORT).show()
+                    onErrorListener = {
+                        val msg = applicationContext.getString(R.string.login_register_error_msg)
+                        Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
+                    },
+                    onSuccessFinishScreen = {
+                        val msg = applicationContext.getString(R.string.login_register_success_msg)
+                        Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
+                        finish()
                     }, onBackPress = {
                         finish()
                     }

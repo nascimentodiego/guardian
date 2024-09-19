@@ -20,15 +20,14 @@ import br.com.bit.guardian.registration.ui.register.composable.RegistrationRules
 import br.com.bit.guardian.registration.ui.register.composable.components.InputEmail
 import br.com.bit.guardian.registration.ui.register.composable.components.PasswordTextField
 import br.com.bit.guardian.registration.ui.register.model.RegisterUiState
+import br.com.bit.guardian.registration.ui.register.model.RegistrationIntent
 
 @Composable
 fun RegisterExpandedScreen(
     state: RegisterUiState,
+    intent: (RegistrationIntent) -> Unit,
     passwordVisible: Boolean = false,
-    visibilityClick: () -> Unit,
-    putEmail: (String) -> Unit,
-    putPassword: (String) -> Unit,
-    putConfPassword: (String) -> Unit
+    visibilityClick: () -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -41,9 +40,10 @@ fun RegisterExpandedScreen(
             Column {
                 InputEmail(
                     state,
-                    modifier = Modifier.fillMaxWidth(),
-                    putEmail
-                )
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    intent.invoke(RegistrationIntent.InputEmail(it))
+                }
                 Spacer(modifier = Modifier.height(GuardianTheme.dimens.spacingS))
                 PasswordTextField(
                     modifier = Modifier.fillMaxWidth(),
@@ -56,7 +56,7 @@ fun RegisterExpandedScreen(
                         visibilityClick.invoke()
                     }
                 ) {
-                    putPassword(it)
+                    intent.invoke(RegistrationIntent.InputPassword(it))
                 }
                 Spacer(modifier = Modifier.height(GuardianTheme.dimens.spacingS))
                 PasswordTextField(
@@ -70,7 +70,7 @@ fun RegisterExpandedScreen(
                         visibilityClick.invoke()
                     }
                 ) {
-                    putConfPassword(it)
+                    intent.invoke(RegistrationIntent.ConfirmPassword(it))
                 }
             }
 

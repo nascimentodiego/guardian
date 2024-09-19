@@ -1,10 +1,10 @@
 package br.com.bit.guardian.registration.ui.register.composable.components
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -14,6 +14,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import br.com.bit.guardian.core.designsystem.extension.GuardianTextColor
+import br.com.bit.guardian.core.designsystem.extension.forceWhite
 import br.com.bit.guardian.core.designsystem.icon.GuardianIcon
 import br.com.bit.guardian.feature.registration.R
 
@@ -54,5 +56,6 @@ fun PasswordTextField(
         IconButton(onClick = { visibilityClick.invoke() }) {
             Icon(painter = image, description)
         }
-    }
+    },
+    colors = OutlinedTextFieldDefaults.GuardianTextColor()
 )

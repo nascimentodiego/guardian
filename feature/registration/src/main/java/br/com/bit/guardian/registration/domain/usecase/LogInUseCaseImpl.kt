@@ -7,12 +7,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class CreateUserUseCaseImpl @Inject constructor(
+class LogInUseCaseImpl @Inject constructor(
     private val repository: LoginRepository
-) : CreateUserUseCase {
+) : LogInUseCase {
     override fun invoke(email: String, password: String): Flow<User> {
-        return repository.createUser(email, password).map {
-            it.toUser()
-        }
+      return repository.signIn(email, password).map {
+          it.toUser()
+      }
     }
 }
