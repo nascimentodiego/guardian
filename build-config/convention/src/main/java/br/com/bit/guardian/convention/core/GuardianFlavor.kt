@@ -18,7 +18,7 @@ enum class GuardianFlavor(val dimension: FlavorDimension, val applicationIdSuffi
 }
 
 fun Project.configureFlavors(
-    commonExtension: CommonExtension<*, *, *, *, *>,
+    commonExtension: CommonExtension<*, *, *, *, *, *>,
     flavorConfigurationBlock: ProductFlavor.(flavor: GuardianFlavor) -> Unit = {}
 ) {
     commonExtension.apply {

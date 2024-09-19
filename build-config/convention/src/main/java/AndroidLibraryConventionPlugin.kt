@@ -39,6 +39,7 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
                 add("implementation", libs.findLibrary("kotlinx.coroutines.android").get())
                 add("implementation", platform(libs.findLibrary("firebase-plataform-bom").get()))
                 add("api", libs.findLibrary("firebase-auth-ktx").get())
+                add("api", libs.findLibrary("androidx-datastore-datastore").get())
 
                 add("testImplementation", kotlin("test"))
                 add("testImplementation", project(":core:test"))

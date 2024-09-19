@@ -61,12 +61,15 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
 
+    implementation(platform(libs.firebase.plataform.bom))
+    implementation(libs.firebase.auth.ktx)
+
     implementation(project(":core:common"))
     implementation(project(":core:data:network"))
     implementation(project(":core:data:repository"))
     implementation(project(":core:domain"))
     implementation(project(":core:designsystem"))
-    implementation(project(":feature:login"))
+    implementation(project(":feature:registration"))
 
     debugApi(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.testManifest)

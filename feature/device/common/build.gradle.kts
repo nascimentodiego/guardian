@@ -1,7 +1,7 @@
 plugins {
-    id("guardian.android.library")
+    id("guardian.android.feature")
 }
 
 android {
-    namespace = "br.com.bit.guardian.common"
+    namespace = "br.com.bit.guardian.feature.common"
 }

@@ -1,5 +1,5 @@
 [versions]
-androidGradlePlugin = "8.2.1"
+androidGradlePlugin = "8.3.0"
 androidDesugarJdkLibs = "2.0.4"
 ksp = "1.8.0-1.0.9"
 androidxActivity = "1.8.2"
@@ -16,7 +16,7 @@ androidxComposeMaterial3 = "1.1.2"
 androidxComposeBom = "2023.10.01"
 androidxComposeCompiler = "1.5.8"
 junit4 = "4.13.2"
-jacoco = "0.8.9"
+jacoco = "0.8.8"
 kotlin = "1.9.22"
 kotlinxCoroutines = "1.7.1"
 kotlinxDatetime = "0.4.0"
@@ -34,11 +34,11 @@ shimmerVersion = "1.2.0"
 windowVersion = "1.2.0"
 frebasePlataform = "32.7.3"
 googleService = "4.4.1"
+datastoreVersion = "1.1.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidxCore" }
 androidx-lifecycle-runtime-ktx =  { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidxLifecycle" }
-android-desugarJdkLibs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "androidDesugarJdkLibs" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidxActivity" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidxAppCompat" }
 androidx-compose-runtime = { group = "androidx.compose.runtime", name = "runtime" }
@@ -53,6 +53,7 @@ androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-compose-ui-util = { group = "androidx.compose.ui", name = "ui-util" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidxComposeBom" }
+androidx-datastore-datastore = { group = "androidx.datastore", name = "datastore", version.ref = "datastoreVersion"}
 junit4 = { group = "junit", name = "junit", version.ref = "junit4" }
 androidx-test-core = { group = "androidx.test", name = "core", version.ref = "androidxTestCore" }
 androidx-test-ext = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "androidxTestExt" }

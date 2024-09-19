@@ -1,8 +1,8 @@
 plugins {
-    id("guardian.android.library")
+    id("guardian.android.feature")
 }
 
 
 android {
-    namespace = "br.com.bit.guardian.settings"
+    namespace = "br.com.bit.guardian.feature.settings"
 }

@@ -18,6 +18,12 @@ object GuardianIcon {
     val Done = R.drawable.ds_ic_close
     val Logout = R.drawable.ds_ic_logout
     val CheckCircle = R.drawable.ds_ic_check_circle
+    val UnCheckCircle = R.drawable.ds_ic_radio_button_unchecked
+    val Visibility = R.drawable.ds_ic_visibility
+    val VisibilityOff = R.drawable.ds_ic_visibility_off
+    val AddUser = R.drawable.ds_ic_person_add
+
+
 
     // Menu
     val Home = R.drawable.ds_ic_home

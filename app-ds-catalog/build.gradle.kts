@@ -31,6 +31,8 @@ dependencies {
     implementation(libs.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
+    implementation(platform(libs.firebase.plataform.bom))
+    implementation(platform(libs.firebase.auth.ktx))
     testImplementation(libs.junit4)
     androidTestImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.espresso.core)

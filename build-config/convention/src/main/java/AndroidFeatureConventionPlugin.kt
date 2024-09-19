@@ -5,7 +5,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 
-class AndroidFeatureConventionPlugin: Plugin<Project> {
+class AndroidFeatureConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             pluginManager.apply {
@@ -23,7 +23,7 @@ class AndroidFeatureConventionPlugin: Plugin<Project> {
                 }
 
                 buildTypes {
-                    getByName("debug"){
+                    getByName("debug") {
                         enableAndroidTestCoverage = true
                         enableUnitTestCoverage = true
                     }

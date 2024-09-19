@@ -4,20 +4,20 @@ import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.dependencies
 
-class AndroidHiltConventionPlugin:Plugin<Project> {
+class AndroidHiltConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
-       with(target){
-           with(pluginManager){
-               apply("dagger.hilt.android.plugin")
-               apply("org.jetbrains.kotlin.kapt")
-           }
+        with(target) {
+            with(pluginManager) {
+                apply("dagger.hilt.android.plugin")
+                apply("org.jetbrains.kotlin.kapt")
+            }
 
-           val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
-           dependencies {
-               "implementation"(libs.findLibrary("hilt.android").get())
-               "kapt"(libs.findLibrary("hilt.compiler").get())
-               "kaptAndroidTest"(libs.findLibrary("hilt.compiler").get())
-           }
-       }
+            val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
+            dependencies {
+                "implementation"(libs.findLibrary("hilt.android").get())
+                "kapt"(libs.findLibrary("hilt.compiler").get())
+                "kaptAndroidTest"(libs.findLibrary("hilt.compiler").get())
+            }
+        }
     }
 }
