@@ -42,8 +42,17 @@ class LoginRepositoryImpl @Inject constructor(
     }.flowOn(Dispatchers.IO).handleNetworkError()
 
     override fun signIn(email: String, password: String): Flow<User> = flow {
-        dataSource.signIn(email, password).collect {
-            emit(it.toUser())
+        dataSource.signIn(email, password).collect { userResponse ->
+            userDataSource.updateUSerPreference(
+                UserStorage(
+                    userResponse.uuid.orEmpty(),
+                    userResponse.name,
+                    userResponse.email,
+                    userResponse.photoUrl
+                )
+            ).first()
+
+            emit(userResponse.toUser())
         }
     }.flowOn(Dispatchers.IO).handleNetworkError()
 
@@ -54,7 +63,7 @@ class LoginRepositoryImpl @Inject constructor(
     }.flowOn(Dispatchers.IO).handleNetworkError()
 
     override fun isUserLogged(): Flow<Boolean> = flow {
-        dataSource.isUserLogged().first()
-        emit(true)
+        val result = dataSource.isUserLogged().first()
+        emit(result)
     }.flowOn(Dispatchers.IO).handleNetworkError()
 }

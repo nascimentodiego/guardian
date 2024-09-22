@@ -1,4 +1,4 @@
-package br.com.bit.guardian.registration.domain.usecase
+package br.com.bit.guardian.registration.domain.usecase.register
 
 import br.com.bit.guardian.registration.data.repository.LoginRepository
 import br.com.bit.guardian.registration.domain.entities.User
@@ -7,12 +7,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class LogInUseCaseImpl @Inject constructor(
+class CreateUserUseCaseImpl @Inject constructor(
     private val repository: LoginRepository
-) : LogInUseCase {
+) : CreateUserUseCase {
     override fun invoke(email: String, password: String): Flow<User> {
-      return repository.signIn(email, password).map {
-          it.toUser()
-      }
+        return repository.createUser(email, password).map {
+            it.toUser()
+        }
     }
 }

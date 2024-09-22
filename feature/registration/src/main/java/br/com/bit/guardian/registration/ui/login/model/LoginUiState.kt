@@ -13,9 +13,19 @@ sealed class LoginUiState(val userView: UserView = Empty) {
 }
 
 @Parcelize
-data class UserView(val email: String, val password: String, val isLoadingButton: Boolean) :
+data class UserView(
+    val email: String,
+    val password: String,
+    val isButtonEnabled: Boolean,
+    val isButtonLoading: Boolean
+) :
     Parcelable {
     companion object {
-        val Empty = UserView("", "", false)
+        val Empty = UserView(
+            email = "",
+            password = "",
+            isButtonEnabled = false,
+            isButtonLoading = false
+        )
     }
 }

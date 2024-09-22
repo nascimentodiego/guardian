@@ -45,7 +45,7 @@ fun LoginExpandedScreen(
                 modifier = Modifier
                     .fillMaxHeight()
                     .weight(1f)
-                    .backgroundGradientPrimary(), //RoundedCornerShape(topEnd = 72.dp, bottomEnd = 72.dp)
+                    .backgroundGradientPrimary(),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -78,13 +78,7 @@ fun LoginExpandedScreenPreview(
 ) {
     GuardianTheme {
         LoginExpandedScreen(uiState = uiState, intent = {}, callbacks = object : LoginListener {
-            override fun onCreateUserClickListener() {
-                TODO("Not yet implemented")
-            }
-
-            override fun onLoginClickListener(email: String, password: String) {
-                TODO("Not yet implemented")
-            }
+            override fun onCreateUserClickListener() {}
         })
     }
 }

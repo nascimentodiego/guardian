@@ -11,18 +11,21 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import br.com.bit.guardian.core.designsystem.component.GuardianDisplayMedium
 import br.com.bit.guardian.core.designsystem.component.GuardianLogoSmall
 import br.com.bit.guardian.core.designsystem.component.LoadedTertiaryButton
+import br.com.bit.guardian.core.designsystem.extension.guardianTextColor
 import br.com.bit.guardian.core.designsystem.extension.isHeightCompact
 import br.com.bit.guardian.core.designsystem.extension.onBackgroundColor
 import br.com.bit.guardian.core.designsystem.extension.withState
@@ -31,6 +34,8 @@ import br.com.bit.guardian.feature.registration.R
 import br.com.bit.guardian.registration.ui.login.LoginListener
 import br.com.bit.guardian.registration.ui.login.model.LoginIntent
 import br.com.bit.guardian.registration.ui.login.model.LoginUiState
+import br.com.bit.guardian.registration.ui.register.composable.components.OutlinedInputEmailText
+import br.com.bit.guardian.registration.ui.register.composable.components.OutlinedPasswordText
 
 @Composable
 fun LoginExpandedSuccess(
@@ -41,6 +46,7 @@ fun LoginExpandedSuccess(
     BoxWithConstraints {
         val isCompact = isHeightCompact()
         val scroll = rememberScrollState()
+        var passwordVisible by rememberSaveable { mutableStateOf(false) }
 
         Column(
             modifier = Modifier
@@ -62,38 +68,39 @@ fun LoginExpandedSuccess(
                 GuardianDisplayMedium(color = GuardianTheme.colors.onBackground)
             }
             Spacer(modifier = Modifier.height(GuardianTheme.dimens.spacingM))
-            OutlinedTextField(
-                value = uiState.userView.email,
-                onValueChange = {
+
+            OutlinedInputEmailText(
+                modifier = Modifier.fillMaxWidth(),
+                email = uiState.userView.email,
+                isError = false,
+                colors = OutlinedTextFieldDefaults.onBackgroundColor(),
+                putEmail = {
                     intent(LoginIntent.InputEmail(it))
                 },
+            )
+            OutlinedPasswordText(
                 modifier = Modifier.fillMaxWidth(),
-                label = { Text(stringResource(id = R.string.login_input_title_email)) },
+                password = uiState.userView.password,
+                passwordVisible = passwordVisible,
+                label = R.string.login_input_title_password,
+                supportingText = R.string.login_register_invalid_password,
                 isError = false,
-                supportingText = {
-//                if(true)
-//                Text(text = "email inválido !")
-                },
-                colors = OutlinedTextFieldDefaults.onBackgroundColor()
-            )
-            OutlinedTextField(
-                value = uiState.userView.password,
-                onValueChange = {
-                    intent(LoginIntent.InputPassword(it))
-                },
-                modifier = Modifier.fillMaxWidth(),
-                visualTransformation = PasswordVisualTransformation(),
-                label = { Text(stringResource(id = R.string.login_input_title_password)) },
-                supportingText = { },
-                colors = OutlinedTextFieldDefaults.onBackgroundColor()
-            )
+                colors = OutlinedTextFieldDefaults.guardianTextColor(),
+                iconColor = GuardianTheme.colors.textTitle,
+                visibilityClick = {
+                    passwordVisible = !passwordVisible
+                }
+            ) {
+                intent(LoginIntent.InputPassword(it))
+            }
+
             Spacer(modifier = Modifier.height(GuardianTheme.dimens.spacingXS))
             if (isCompact) {
                 Row {
                     LoadedTertiaryButton(
-                        enabled = true,
-                        isLoading = uiState.userView.isLoadingButton,
-                        onClick = { /*TODO*/ },
+                        enabled = uiState.userView.isButtonEnabled,
+                        isLoading = uiState.userView.isButtonLoading,
+                        onClick = {  intent(LoginIntent.Login) },
                         modifier = Modifier.weight(1f)
                     ) {
                         Text(
@@ -119,9 +126,9 @@ fun LoginExpandedSuccess(
                 }
             } else {
                 LoadedTertiaryButton(
-                    enabled = true,
-                    isLoading = false,
-                    onClick = { /*TODO*/ },
+                    enabled = uiState.userView.isButtonEnabled,
+                    isLoading =  uiState.userView.isButtonLoading,
+                    onClick = {  intent(LoginIntent.Login)  },
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(

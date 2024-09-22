@@ -1,8 +1,10 @@
 package br.com.bit.guardian.registration.ui.login
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
@@ -10,6 +12,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
 import br.com.bit.guardian.registration.ui.login.composable.LoginRoute
+import br.com.bit.guardian.registration.ui.register.RegisterActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -28,7 +31,15 @@ class LoginActivity : ComponentActivity() {
             GuardianTheme(
                 isStatusBarTranslucent = true
             ) {
-                LoginRoute(viewModel)
+                LoginRoute(viewModel,
+                    {
+                        startActivity(Intent(baseContext, RegisterActivity::class.java))
+                        finish()
+                    },
+                    {
+                        Toast.makeText(baseContext, "Deu bosta !", Toast.LENGTH_LONG).show()
+                    }
+                )
             }
         }
     }

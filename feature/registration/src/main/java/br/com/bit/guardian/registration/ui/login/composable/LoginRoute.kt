@@ -1,7 +1,6 @@
 package br.com.bit.guardian.registration.ui.login.composable
 
 import android.content.Intent
-import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 
@@ -13,7 +12,11 @@ import br.com.bit.guardian.registration.ui.login.model.LoginEvent
 import br.com.bit.guardian.registration.ui.register.RegisterActivity
 
 @Composable
-fun LoginRoute(viewModel: LoginViewModel) {
+fun LoginRoute(
+    viewModel: LoginViewModel,
+    onLoginSuccess: () -> Unit,
+    onLoginError: () -> Unit
+) {
     val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
     val events = viewModel.events.collectAsStateWithLifecycle(initialValue = null).value
     val context = LocalContext.current
@@ -21,10 +24,6 @@ fun LoginRoute(viewModel: LoginViewModel) {
     val listener = object : LoginListener {
         override fun onCreateUserClickListener() {
             context.startActivity(Intent(context, RegisterActivity::class.java))
-        }
-
-        override fun onLoginClickListener(email: String, password: String) {
-            viewModel.login(email, password)
         }
     }
 
@@ -36,11 +35,11 @@ fun LoginRoute(viewModel: LoginViewModel) {
         events?.let {
             when (it) {
                 is LoginEvent.Success -> {
-                    Toast.makeText(context, "Logou com Sucesso !", Toast.LENGTH_LONG).show()
+                    onLoginSuccess.invoke()
                 }
 
                 is LoginEvent.Error -> {
-                    Toast.makeText(context, "DeU erro!", Toast.LENGTH_LONG).show()
+                    onLoginError.invoke()
                 }
             }
         }
