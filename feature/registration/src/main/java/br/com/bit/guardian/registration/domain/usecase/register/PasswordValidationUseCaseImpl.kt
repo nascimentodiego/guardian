@@ -1,4 +1,4 @@
-package br.com.bit.guardian.registration.domain.usecase
+package br.com.bit.guardian.registration.domain.usecase.register
 
 import br.com.bit.guardian.registration.domain.entities.PasswordError
 import br.com.bit.guardian.registration.domain.entities.PasswordErrorType

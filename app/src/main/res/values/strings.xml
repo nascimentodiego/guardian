@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Guardian</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_devices">Dispositivos</string>
+    <string name="menu_logs">Atividades</string>
+    <string name="menu_settings">Configurações</string>
+
 </resources>

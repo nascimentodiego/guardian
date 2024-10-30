@@ -7,9 +7,9 @@ import br.com.bit.guardian.core.common.result.asResult
 import br.com.bit.guardian.core.ui.viewmodel.ViewModel
 import br.com.bit.guardian.registration.domain.entities.PasswordError
 import br.com.bit.guardian.registration.domain.entities.PasswordErrorType
-import br.com.bit.guardian.registration.domain.usecase.CreateUserUseCase
-import br.com.bit.guardian.registration.domain.usecase.EmailValidationUseCase
-import br.com.bit.guardian.registration.domain.usecase.PasswordValidationUseCase
+import br.com.bit.guardian.registration.domain.usecase.register.CreateUserUseCase
+import br.com.bit.guardian.registration.domain.usecase.register.EmailValidationUseCase
+import br.com.bit.guardian.registration.domain.usecase.register.PasswordValidationUseCase
 import br.com.bit.guardian.registration.ui.register.mappers.toUiPasswordError
 import br.com.bit.guardian.registration.ui.register.model.RegisterUiState
 import br.com.bit.guardian.registration.ui.register.model.RegistrationEvent
@@ -55,23 +55,25 @@ class RegisterViewModel @Inject constructor(
     }
 
     private fun createNewUser() {
-        val ruleState = _uiState.value!!.ruleState
-        val email = ruleState.email
-        val password = ruleState.password
+        uiState.withData {
+            val ruleState = it.ruleState
+            val email = it.ruleState.email
+            val password = it.ruleState.password
 
-        viewModelScope.launch {
-            useCase(email, password)
-                .asResult()
-                .map { result ->
-                    when (result) {
-                        is Result.Success -> sendSuccessEvent()
-                        is Result.Loading -> publish(RegisterUiState.Loading(ruleState))
-                        is Result.Error -> {
-                            publish(RegisterUiState.Idle(ruleState))
-                            sendEvent(RegistrationEvent.Error())
+            viewModelScope.launch {
+                useCase(email, password)
+                    .asResult()
+                    .map { result ->
+                        when (result) {
+                            is Result.Success -> sendSuccessEvent()
+                            is Result.Loading -> publish(RegisterUiState.Loading(ruleState))
+                            is Result.Error -> {
+                                publish(RegisterUiState.Idle(ruleState))
+                                sendEvent(RegistrationEvent.Error())
+                            }
                         }
-                    }
-                }.collect()
+                    }.collect()
+            }
         }
     }
 
@@ -84,26 +86,30 @@ class RegisterViewModel @Inject constructor(
     }
 
     private fun putPassword(password: String) {
-        val ruleState = (_uiState.value as RegisterUiState.Idle).ruleState
-        val confPassword = ruleState.passwordConfirm
-        val email = ruleState.email
+        uiState.withData {
+            val ruleState = (it as RegisterUiState.Idle).ruleState
+            val confPassword = ruleState.passwordConfirm
+            val email = ruleState.email
 
-        viewModelScope.launch {
-            passwordUseCase(password.trim(), confPassword, email).map { passwordErrorList ->
-                handlerPassword(password, confPassword, passwordErrorList)
-            }.collect()
+            viewModelScope.launch {
+                passwordUseCase(password.trim(), confPassword, email).map { passwordErrorList ->
+                    handlerPassword(password, confPassword, passwordErrorList)
+                }.collect()
+            }
         }
     }
 
     private fun putConfirmPassword(confPassword: String) {
-        val ruleState = (_uiState.value as RegisterUiState.Idle).ruleState
-        val password = ruleState.password
-        val email = ruleState.email
+        uiState.withData {
+            val ruleState = (it as RegisterUiState.Idle).ruleState
+            val password = ruleState.password
+            val email = ruleState.email
 
-        viewModelScope.launch {
-            passwordUseCase(password, confPassword, email).map { passwordErrorList ->
-                handlerPassword(password, confPassword, passwordErrorList)
-            }.collect()
+            viewModelScope.launch {
+                passwordUseCase(password, confPassword, email).map { passwordErrorList ->
+                    handlerPassword(password, confPassword, passwordErrorList)
+                }.collect()
+            }
         }
     }
 
@@ -112,14 +118,16 @@ class RegisterViewModel @Inject constructor(
     }
 
     private fun handlerEmail(email: String, isValid: Boolean) {
-        if (_uiState.value is RegisterUiState.Idle) {
-            val newState = (_uiState.value as RegisterUiState.Idle).ruleState.copy(
-                email = email,
-                invalidEmail = !isValid
-            )
-            val uiState = RegisterUiState.Idle(newState.mustEnableButton())
-            saveState(uiState)
-            publish(uiState)
+        uiState.withData {
+            if (it is RegisterUiState.Idle) {
+                val newState = it.ruleState.copy(
+                    email = email,
+                    invalidEmail = !isValid
+                )
+                val uiState = RegisterUiState.Idle(newState.mustEnableButton())
+                saveState(uiState)
+                publish(uiState)
+            }
         }
     }
 
@@ -128,20 +136,22 @@ class RegisterViewModel @Inject constructor(
         confirmPassword: String,
         passwordErrorList: List<PasswordError>
     ) {
-        val ruleState = (_uiState.value as RegisterUiState.Idle).ruleState
-        val newState = ruleState.copy(
-            password = password,
-            passwordConfirm = confirmPassword,
-            invalidPass = passwordErrorList.firstOrNull {
-                !it.isValid && it.type != PasswordErrorType.EQUALS_PASSWORD
-            }?.let { true } ?: run { false },
-            invalidConfPass = passwordErrorList.firstOrNull {
-                it.type == PasswordErrorType.EQUALS_PASSWORD
-            }?.isValid?.not() ?: false,
-            listOfPassError = passwordErrorList.map { it.toUiPasswordError() }
-        )
-        val uiState = RegisterUiState.Idle(newState.mustEnableButton())
-        saveState(uiState)
-        publish(uiState)
+        uiState.withData { state ->
+            val ruleState = (state as RegisterUiState.Idle).ruleState
+            val newState = ruleState.copy(
+                password = password,
+                passwordConfirm = confirmPassword,
+                invalidPass = passwordErrorList.firstOrNull {
+                    !it.isValid && it.type != PasswordErrorType.EQUALS_PASSWORD
+                }?.let { true } ?: run { false },
+                invalidConfPass = passwordErrorList.firstOrNull {
+                    it.type == PasswordErrorType.EQUALS_PASSWORD
+                }?.isValid?.not() ?: false,
+                listOfPassError = passwordErrorList.map { it.toUiPasswordError() }
+            )
+            val uiState = RegisterUiState.Idle(newState.mustEnableButton())
+            saveState(uiState)
+            publish(uiState)
+        }
     }
 }

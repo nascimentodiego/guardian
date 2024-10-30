@@ -36,13 +36,7 @@ fun LoginExpandedScreenPreview(
         LoginScreen(uiState = uiState,
             intent = {},
             callbacks = object : LoginListener {
-                override fun onCreateUserClickListener() {
-                    TODO("Not yet implemented")
-                }
-
-                override fun onLoginClickListener(email: String, password: String) {
-                    TODO("Not yet implemented")
-                }
+                override fun onCreateUserClickListener() {}
             })
     }
 }

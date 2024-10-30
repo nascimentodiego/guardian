@@ -1,8 +1,8 @@
-package br.com.bit.guardian.registration.domain.usecase
+package br.com.bit.guardian.registration.domain.usecase.register
 
 import br.com.bit.guardian.registration.domain.entities.User
 import kotlinx.coroutines.flow.Flow
 
-interface LogInUseCase {
+interface CreateUserUseCase {
     operator fun invoke(email: String, password: String): Flow<User>
 }

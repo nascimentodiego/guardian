@@ -55,9 +55,9 @@ fun LoadingScreen(modifier: Modifier = Modifier) {
 @Composable
 private fun GuardianIcon() {
     Icon(
-        modifier = Modifier.size(256.dp),
+        modifier = Modifier.size(128.dp),
         painter = painterResource(id = R.drawable.ds_ic_guardian),
-        tint = GuardianTheme.colors.onPrimary,
+        tint = GuardianTheme.colors.iconActiveColor,
         contentDescription = null
     )
 }
@@ -67,7 +67,7 @@ fun Title() {
     Text(
         text = stringResource(id = R.string.ds_app_name),
         style = GuardianTheme.typography.titleLarge,
-        color = Color.White
+        color =GuardianTheme.colors.iconActiveColor
     )
 }
 
@@ -77,7 +77,7 @@ fun TitleLarge() {
         text = stringResource(id = R.string.ds_app_name),
         style = GuardianTheme.typography.titleLarge,
         fontSize = 92.sp,
-        color = Color.White
+        color =GuardianTheme.colors.iconActiveColor
     )
 }
 

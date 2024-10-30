@@ -7,6 +7,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.style.TextOverflow.Companion.Ellipsis
 import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
 
 @Composable
@@ -55,12 +57,16 @@ fun TextBodySmall(
     @StringRes stringRes: Int,
     modifier: Modifier = Modifier,
     color: Color = GuardianTheme.colors.textBody,
-    textAlign: TextAlign? = null
+    textAlign: TextAlign? = null,
+    overflow: TextOverflow = TextOverflow.Clip,
+    maxLines:Int = Int.MAX_VALUE
 ) = Text(
     text = stringResource(id = stringRes),
     modifier = modifier,
     style = GuardianTheme.typography.bodySmall,
+    overflow = overflow,
     color = color,
+    maxLines = maxLines,
     textAlign = textAlign
 )
 

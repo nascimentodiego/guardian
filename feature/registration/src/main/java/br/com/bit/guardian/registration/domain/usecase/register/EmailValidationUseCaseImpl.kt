@@ -1,4 +1,4 @@
-package br.com.bit.guardian.registration.domain.usecase
+package br.com.bit.guardian.registration.domain.usecase.register
 
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject

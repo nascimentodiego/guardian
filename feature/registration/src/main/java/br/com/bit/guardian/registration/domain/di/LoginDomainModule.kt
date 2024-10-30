@@ -1,15 +1,17 @@
 package br.com.bit.guardian.registration.domain.di
 
-import br.com.bit.guardian.registration.domain.usecase.CreateUserUseCase
-import br.com.bit.guardian.registration.domain.usecase.CreateUserUseCaseImpl
-import br.com.bit.guardian.registration.domain.usecase.EmailValidationUseCase
-import br.com.bit.guardian.registration.domain.usecase.EmailValidationUseCaseImpl
-import br.com.bit.guardian.registration.domain.usecase.IsUserLoggedUseCase
-import br.com.bit.guardian.registration.domain.usecase.IsUserLoggedUseCaseImpl
-import br.com.bit.guardian.registration.domain.usecase.LogInUseCase
-import br.com.bit.guardian.registration.domain.usecase.LogInUseCaseImpl
-import br.com.bit.guardian.registration.domain.usecase.PasswordValidationUseCase
-import br.com.bit.guardian.registration.domain.usecase.PasswordValidationUseCaseImpl
+import br.com.bit.guardian.registration.domain.usecase.login.CheckLogInInputValidUseCase
+import br.com.bit.guardian.registration.domain.usecase.login.CheckLogInInputValidUseCaseImpl
+import br.com.bit.guardian.registration.domain.usecase.register.CreateUserUseCase
+import br.com.bit.guardian.registration.domain.usecase.register.CreateUserUseCaseImpl
+import br.com.bit.guardian.registration.domain.usecase.register.EmailValidationUseCase
+import br.com.bit.guardian.registration.domain.usecase.register.EmailValidationUseCaseImpl
+import br.com.bit.guardian.registration.domain.usecase.login.IsUserLoggedUseCase
+import br.com.bit.guardian.registration.domain.usecase.login.IsUserLoggedUseCaseImpl
+import br.com.bit.guardian.registration.domain.usecase.login.LogInUseCase
+import br.com.bit.guardian.registration.domain.usecase.login.LogInUseCaseImpl
+import br.com.bit.guardian.registration.domain.usecase.register.PasswordValidationUseCase
+import br.com.bit.guardian.registration.domain.usecase.register.PasswordValidationUseCaseImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -42,4 +44,9 @@ abstract class LoginDomainModule {
     abstract fun providePasswordValidationUseCase(
         useCaseImpl: PasswordValidationUseCaseImpl
     ): PasswordValidationUseCase
+
+    @Binds
+    abstract fun provideCheckInputLoginValidUseCase(
+        useCaseImpl: CheckLogInInputValidUseCaseImpl
+    ): CheckLogInInputValidUseCase
 }

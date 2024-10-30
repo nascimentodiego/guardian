@@ -10,7 +10,8 @@ class LoginScreenProvider : PreviewParameterProvider<LoginUiState> {
             UserView(
                 email = "nascimento.diego@gmail.com",
                 password = "d!@sdsafg!@425278",
-                isLoadingButton = false
+                isButtonLoading = false,
+                isButtonEnabled = false
             )
         )
     )

@@ -1,4 +1,4 @@
-package br.com.bit.guardian.registration.domain.usecase
+package br.com.bit.guardian.registration.domain.usecase.login
 
 import br.com.bit.guardian.registration.data.repository.LoginRepository
 import kotlinx.coroutines.flow.Flow

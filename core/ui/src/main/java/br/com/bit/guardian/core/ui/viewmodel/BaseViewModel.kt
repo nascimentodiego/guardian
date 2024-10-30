@@ -15,7 +15,7 @@ abstract class ViewModel<UiState, Event>(
     protected val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private val savedHandleKey = this@ViewModel::class.java.simpleName
-    protected val _uiState = MutableStateFlow<UiState?>(null)
+    private val _uiState = MutableStateFlow<UiState?>(null)
     val uiState: StateFlow<UiState?> = _uiState.asStateFlow()
 
     protected val _eventChannel = Channel<Event>()
@@ -40,9 +40,19 @@ abstract class ViewModel<UiState, Event>(
         if (savedStateHandle.contains(savedHandleKey)) {
             savedStateHandle.get<UiState>(savedHandleKey)?.let { publish(it) }
         }
-        return savedStateHandle.contains(savedHandleKey)
+        return hasScreenState()
     }
 
+    protected open fun hasScreenState() = savedStateHandle.contains(savedHandleKey)
+
     protected fun getSavedHandleState() = savedStateHandle.get<UiState>(savedHandleKey)
+
+    protected fun StateFlow<UiState?>.withData(func: (UiState) -> Unit) {
+        if (value != null)
+            func(value!!)
+    }
+
+    protected fun StateFlow<UiState?>.hasData(): Boolean = value != null
+
 
 }
