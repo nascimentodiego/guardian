@@ -27,7 +27,7 @@ val Typography = Typography(
     bodySmall = TextStyle(
         fontFamily = Lexend,
         fontWeight = FontWeight.W400,
-        fontSize = 12.sp,
+        fontSize = 10.sp,
         lineHeight = 16.8.sp
     ),
 

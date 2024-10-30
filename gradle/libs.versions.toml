@@ -1,5 +1,5 @@
 [versions]
-androidGradlePlugin = "8.3.0"
+androidGradlePlugin = "8.6.1"
 androidDesugarJdkLibs = "2.0.4"
 ksp = "1.8.0-1.0.9"
 androidxActivity = "1.8.2"
@@ -35,15 +35,16 @@ windowVersion = "1.2.0"
 frebasePlataform = "32.7.3"
 googleService = "4.4.1"
 datastoreVersion = "1.1.1"
+material3AdaptiveNavigationSuiteAndroid = "1.3.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidxCore" }
-androidx-lifecycle-runtime-ktx =  { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidxLifecycle" }
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidxLifecycle" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidxActivity" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidxAppCompat" }
 androidx-compose-runtime = { group = "androidx.compose.runtime", name = "runtime" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "androidxComposeMaterial3" }
-androidx-window = {group ="androidx.window", name="window-java", version.ref = "windowVersion"}
+androidx-window = { group = "androidx.window", name = "window-java", version.ref = "windowVersion" }
 androidx-compose-material3-windowSizeClass = { group = "androidx.compose.material3", name = "material3-window-size-class", version.ref = "androidxComposeMaterial3" }
 androidx-lifecycle-runtimeCompose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidxLifecycle" }
 androidx-lifecycle-viewModelCompose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "androidxLifecycle" }
@@ -52,8 +53,10 @@ androidx-compose-ui-testManifest = { group = "androidx.compose.ui", name = "ui-t
 androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-compose-ui-util = { group = "androidx.compose.ui", name = "ui-util" }
+androidx-material3-adaptive-navigation-suite-android = { group = "androidx.compose.material3", name = "material3-adaptive-navigation-suite-android", version.ref = "material3AdaptiveNavigationSuiteAndroid" }
+
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidxComposeBom" }
-androidx-datastore-datastore = { group = "androidx.datastore", name = "datastore", version.ref = "datastoreVersion"}
+androidx-datastore-datastore = { group = "androidx.datastore", name = "datastore", version.ref = "datastoreVersion" }
 junit4 = { group = "junit", name = "junit", version.ref = "junit4" }
 androidx-test-core = { group = "androidx.test", name = "core", version.ref = "androidxTestCore" }
 androidx-test-ext = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "androidxTestExt" }
@@ -69,8 +72,8 @@ kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-
 kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinxDatetime" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
-shimmer = { group = "com.valentinilk.shimmer", name ="compose-shimmer", version.ref = "shimmerVersion"}
-firebase-plataform-bom = { group = "com.google.firebase", name ="firebase-bom", version.ref = "frebasePlataform" }
+shimmer = { group = "com.valentinilk.shimmer", name = "compose-shimmer", version.ref = "shimmerVersion" }
+firebase-plataform-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "frebasePlataform" }
 firebase-auth-ktx = { module = "com.google.firebase:firebase-auth-ktx" }
 
 # Dependencies of the included build-config

@@ -11,6 +11,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
+import br.com.bit.guardian.core.ui.extensions.intentDeepLink
+import br.com.bit.guardian.core.ui.routes.HOME
 import br.com.bit.guardian.registration.ui.login.composable.LoginRoute
 import br.com.bit.guardian.registration.ui.register.RegisterActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,7 +35,7 @@ class LoginActivity : ComponentActivity() {
             ) {
                 LoginRoute(viewModel,
                     {
-                        startActivity(Intent(baseContext, RegisterActivity::class.java))
+                        startActivity(Intent(baseContext.intentDeepLink(HOME)))
                         finish()
                     },
                     {

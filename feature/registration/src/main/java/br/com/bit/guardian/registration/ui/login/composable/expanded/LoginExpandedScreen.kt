@@ -35,7 +35,6 @@ fun LoginExpandedScreen(
         modifier = modifier
             .fillMaxSize()
             .background(GuardianTheme.colors.background)
-
     ) {
         Row(
             modifier = Modifier.fillMaxSize(),
@@ -71,7 +70,7 @@ fun LoginExpandedScreen(
     }
 }
 
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO, device = Devices.TABLET)
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, device = Devices.TABLET)
 @Composable
 fun LoginExpandedScreenPreview(
     @PreviewParameter(LoginScreenProvider::class) uiState: LoginUiState
