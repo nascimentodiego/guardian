@@ -76,7 +76,7 @@ fun GuardianNavRail(
     })
 
     AnimatedVisibility(
-        visible = visible, modifier = Modifier.fillMaxSize(),
+        visible = visible,
         enter = fadeIn(initialAlpha = 0.0f) + slideInHorizontally(
             tween(
                 durationMillis = 600,
