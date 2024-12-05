@@ -59,7 +59,7 @@ val Typography = Typography(
     titleSmall = TextStyle(
         fontFamily = Cabin,
         fontWeight = FontWeight.W500,
-        fontSize = 16.sp,
+        fontSize = 14.sp,
         lineHeight = 22.4.sp
     ),
 

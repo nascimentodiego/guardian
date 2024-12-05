@@ -6,3 +6,6 @@ plugins {
 android {
     namespace = "br.com.bit.guardian.feature.reports"
 }
+dependencies {
+    implementation(project(":core:ui"))
+}
