@@ -71,6 +71,10 @@ dependencies {
     implementation(project(":core:designsystem"))
     implementation(project(":feature:registration"))
     implementation(libs.androidx.material3.adaptive.navigation.suite.android)
+    implementation(project(":core:ui"))
+    implementation(project(":feature:device:management"))
+    implementation(project(":feature:settings"))
+    implementation(project(":feature:reports"))
 
     debugApi(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.testManifest)

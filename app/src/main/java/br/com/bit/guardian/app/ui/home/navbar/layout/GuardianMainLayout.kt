@@ -8,6 +8,7 @@ import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.MeasurePolicy
 import androidx.compose.ui.layout.SubcomposeLayout
 import androidx.compose.ui.layout.layoutId
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastFirst
 import androidx.compose.ui.util.fastForEach
 import androidx.compose.ui.util.fastMap
@@ -90,13 +91,10 @@ fun GuardianRailLayout(
                 .fastFirst { it.layoutId == NavigationSuiteLayoutIdTag }
                 .measure(looseConstraints)
 
-        navigationRailPlaceable.width
-        navigationRailPlaceable.measuredWidth
-
         val contentPlaceable =
             measurables
                 .fastFirst { it.layoutId == ContentLayoutIdTag }
-                .measure(looseConstraints)
+                .measure(looseConstraints.copy(maxWidth = layoutWidth - navigationRailPlaceable.measuredWidth))
 
         layout(layoutWidth, layoutHeight) {
             contentPlaceable.placeRelative(navigationRailPlaceable.width, 0)
@@ -104,38 +102,9 @@ fun GuardianRailLayout(
         }
     }
 
-    /*
-        SubcomposeLayout(modifier = modifier) { constraints ->
-            val layoutWidth = constraints.maxWidth
-            val layoutHeight = constraints.maxHeight
-            val looseConstraints = constraints.copy(minWidth = 0, minHeight = 0)
-
-            subcompose(GuardianMainLayoutContent.NavigationRail) {
-
-            }
-
-            layout(layoutWidth, layoutHeight) {
-                val navRailPlaceables =
-                    subcompose(GuardianMainLayoutContent.NavigationRail) { navRail() }
-                        .fastMap { it.measure(looseConstraints) }
-
-                val navRailWidth = navRailPlaceables.fastMaxBy { it.width }?.width
-
-                val contentPlaceables =
-                    subcompose(GuardianMainLayoutContent.MainContent) {
-                        content()
-                    }.fastMap { it.measure(looseConstraints) }
-
-                contentPlaceables.fastForEach { it.place(layoutWidth - (navRailWidth ?: 0), 0) }
-                navRailPlaceables.fastForEach { it.place(0, 0) }
-            }
-
-        }
-    */
 }
 
 private enum class GuardianMainLayoutContent {
     MainContent,
-    NavigationRail,
     BottomBar
 }

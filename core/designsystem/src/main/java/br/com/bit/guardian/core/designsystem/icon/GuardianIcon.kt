@@ -30,6 +30,7 @@ object GuardianIcon {
     val Devices = R.drawable.ds_ic_device
     val Reports = R.drawable.ds_ic_reports
     val Settings = R.drawable.ds_ic_settings
+    val Phone = R.drawable.ds_ic_phone
 
     // Wifi
     val WifiManege = R.drawable.ds_ic_wifi_manage

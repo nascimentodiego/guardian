@@ -1,5 +1,7 @@
 package br.com.bit.guardian.app.ui.home
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.Surface
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
@@ -9,6 +11,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.window.core.layout.WindowWidthSizeClass
 import br.com.bit.guardian.app.ui.destination.AppDestinations
 import br.com.bit.guardian.app.ui.home.navbar.GuardianNavbar
@@ -33,7 +36,6 @@ fun GuardianNavigationSuiteScaffold(
             windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.MEDIUM
         ) {
             NavigationSuiteType.NavigationRail
-            NavigationSuiteType.NavigationRail
         } else {
             NavigationSuiteType.NavigationBar
         }
@@ -49,7 +51,10 @@ fun GuardianNavigationSuiteScaffold(
                             entries = AppDestinations.entries
                         ) { currentDestination = it }
                     },
-                    content = { content(currentDestination) }
+                    content = {
+                        Box(modifier = Modifier.background(Color.Red)) {  }
+                        content(currentDestination)
+                    }
                 )
         } else {
             GuardianBottomBarLayout(
