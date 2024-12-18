@@ -22,8 +22,9 @@ object GuardianIcon {
     val Visibility = R.drawable.ds_ic_visibility
     val VisibilityOff = R.drawable.ds_ic_visibility_off
     val AddUser = R.drawable.ds_ic_person_add
-
-
+    val Calendar = R.drawable.ds_ic_calendar
+    val Timer = R.drawable.ds_ic_timer
+    val Empty = R.drawable.ds_ic_empty_dashboar
 
     // Menu
     val Home = R.drawable.ds_ic_home

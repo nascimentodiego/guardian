@@ -6,7 +6,9 @@ import android.app.Activity
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Typography
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -15,6 +17,7 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import androidx.window.core.layout.WindowWidthSizeClass as WindowSize
 
 object GuardianTheme {
     val colors: AppColors
@@ -64,11 +67,24 @@ fun GuardianTheme(
         GuardianWindowSize.Compact
     }
 
+      val adaptiveInfo = currentWindowAdaptiveInfo()
+      val localAdaptiveContent = with(adaptiveInfo) {
+        if (windowPosture.isTabletop ||
+            windowSizeClass.windowWidthSizeClass == WindowSize.EXPANDED ||
+            windowSizeClass.windowWidthSizeClass == WindowSize.MEDIUM
+        ) {
+            WindowWidthSizeClass.Expanded
+        } else {
+            WindowWidthSizeClass.Compact
+        }
+    }
+
     CompositionLocalProvider(
         LocalAppColors provides colorScheme,
         LocalAppDimens provides AppDims,
         LocalAppTypography provides Typography,
-        LocalWindowSizeClass provides guardianWindowSize
+        LocalWindowSizeClass provides guardianWindowSize,
+        LocalAdaptiveContent provides localAdaptiveContent
     ) {
         MaterialTheme(
             colorScheme = colorScheme.materialColors,

@@ -41,11 +41,16 @@ val Typography = Typography(
 
     // headlineMedium (Paragraph Bold)
     headlineMedium = TextStyle(
-        fontFamily = Lexend,
-        fontWeight = FontWeight.W700,
-        fontSize = 14.sp,
-        lineHeight = 19.6.sp
+
     ),
+
+    headlineSmall = TextStyle(
+        fontFamily = Lexend,
+        fontWeight = FontWeight.W500,
+        fontSize = 10.sp,
+        lineHeight = 14.2.sp
+    ),
+
 
     // Label (Subtitle)
     labelMedium = TextStyle(

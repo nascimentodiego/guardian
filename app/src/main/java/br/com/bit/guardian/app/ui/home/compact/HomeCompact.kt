@@ -31,7 +31,7 @@ import br.com.bit.guardian.core.designsystem.icon.GuardianIcon
 import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
 import br.com.bit.guardian.core.ui.animation.Duration
 import br.com.bit.guardian.core.ui.animation.VerticallyAnimatedContent
-import br.com.bit.guardian.feature.reports.widget.HomeReportsWidget
+import br.com.bit.guardian.feature.reports.ui.widget.HomeReportsWidget
 import br.com.bit.guardian.management.widget.HomeDeviceWidget
 import br.com.bit.guardian.settings.home.HomePhonesWidget
 import br.com.bit.guardian.core.designsystem.R as Rds

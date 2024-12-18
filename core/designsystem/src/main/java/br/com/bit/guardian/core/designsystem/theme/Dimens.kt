@@ -40,3 +40,7 @@ data class GuardianWindowSize(
 val LocalWindowSizeClass = compositionLocalOf {
     GuardianWindowSize(WindowWidthSizeClass.Compact, WindowHeightSizeClass.Compact)
 }
+
+val LocalAdaptiveContent = compositionLocalOf {
+    WindowWidthSizeClass.Expanded
+}

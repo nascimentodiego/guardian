@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -27,6 +28,8 @@ fun HomeContentWidget(
     backgroundIcon: Int,
     iconColor: Color,
     backgroundIconColor: Color,
+    boxBackgroundColor:Color? = null,
+    contentAlignment: Alignment = Alignment.TopStart,
     content: @Composable () -> Unit = {}
 ) {
     Column(
@@ -46,8 +49,12 @@ fun HomeContentWidget(
                 .animateContentSize()
                 .fillMaxWidth()
                 .defaultMinSize(minHeight = 100.dp)
-                .background(GuardianTheme.colors.primaryContainer, RoundedCornerShape(8.dp))
-                .padding(GuardianTheme.dimens.spacingXS)
+                .background(
+                    boxBackgroundColor?:GuardianTheme.colors.primaryContainer,
+                    RoundedCornerShape(8.dp)
+                )
+                .padding(GuardianTheme.dimens.spacingXS),
+            contentAlignment = contentAlignment
         ) {
             content()
         }

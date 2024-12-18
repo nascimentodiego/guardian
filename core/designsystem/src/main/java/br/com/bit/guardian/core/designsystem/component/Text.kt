@@ -53,6 +53,20 @@ fun TextTitleSmall(
 )
 
 @Composable
+fun TextTitleSmall(
+    title: String,
+    modifier: Modifier = Modifier,
+    color: Color = GuardianTheme.colors.textTitle,
+    textAlign: TextAlign? = null
+) = Text(
+    text = title,
+    modifier = modifier,
+    style = GuardianTheme.typography.titleSmall,
+    color = color,
+    textAlign = textAlign
+)
+
+@Composable
 fun TextBodySmall(
     @StringRes stringRes: Int,
     modifier: Modifier = Modifier,
@@ -69,6 +83,25 @@ fun TextBodySmall(
     maxLines = maxLines,
     textAlign = textAlign
 )
+
+@Composable
+fun TextBodySmall(
+    text: String,
+    modifier: Modifier = Modifier,
+    color: Color = GuardianTheme.colors.textBody,
+    textAlign: TextAlign? = null,
+    overflow: TextOverflow = TextOverflow.Clip,
+    maxLines:Int = Int.MAX_VALUE
+) = Text(
+    text = text,
+    modifier = modifier,
+    style = GuardianTheme.typography.bodySmall,
+    overflow = overflow,
+    color = color,
+    maxLines = maxLines,
+    textAlign = textAlign
+)
+
 
 @Composable
 fun TextBodyMedium(
@@ -97,3 +130,32 @@ fun TextBodyLarge(
     color = color,
     textAlign = textAlign
 )
+
+@Composable
+fun TextHeadLineMedium(
+    title: String,
+    modifier: Modifier = Modifier,
+    color: Color = GuardianTheme.colors.textTitle,
+    textAlign: TextAlign? = null
+) = Text(
+    text = title,
+    modifier = modifier,
+    style = GuardianTheme.typography.headlineMedium,
+    color = color,
+    textAlign = textAlign
+)
+
+@Composable
+fun TextHeadLineSmall(
+    title: String,
+    modifier: Modifier = Modifier,
+    color: Color = GuardianTheme.colors.textTitle,
+    textAlign: TextAlign? = null
+) = Text(
+    text = title,
+    modifier = modifier,
+    style = GuardianTheme.typography.headlineSmall,
+    color = color,
+    textAlign = textAlign
+)
+

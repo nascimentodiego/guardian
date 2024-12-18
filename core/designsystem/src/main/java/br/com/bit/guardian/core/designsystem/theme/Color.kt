@@ -59,8 +59,8 @@ internal val Gray50 = Color(0xFFF5F5F5) // OnPrimary Light
 internal val Purple100 = Color(0xFFEFEFEF) // Primary Container Light
 internal val Purple900 = Color(0xFF494949) // OnPrimary Container Light
 
-internal val Gray = Color(0xFF585757) // Secondary Light
-internal val Gray02 = Color(0xFFb3b3b3) // OnSecondary Light
+internal val Gray = Color(0xFFCECDCD) // Secondary Light
+internal val Gray02 = Color(0xFF363636) // OnSecondary Light
 
 internal val Orange01 = Color(0xFFfe6c3b) // Tertiary Light
 internal val Gray04 = Color(0xFFF5F5F5) // OnTertiary Light
@@ -92,8 +92,8 @@ internal val Gray50Dark = Color(0xFFF5F5F5) // OnPrimary Dark
 internal val Purple100Dark = Color(0xFF181818) // Primary Container Dark
 internal val Purple900Dark = Color(0xFFA2A2A3) // OnPrimary Container Dark
 
-internal val GrayDark = Color(0xFF474545) // Secondary Dark
-internal val Gray02Dark = Color(0xFFCEC8C8) // OnSecondary Dark
+internal val GrayDark = Color(0xFF232323) // Secondary Dark
+internal val Gray02Dark = Color(0xFFC0C0C0) // OnSecondary Dark
 
 internal val Orange01Dark = Color(0xFFfe6c3b) // Tertiary Dark
 internal val Gray04Dark = Color(0xFFF5F5F5) // OnTertiary Dark

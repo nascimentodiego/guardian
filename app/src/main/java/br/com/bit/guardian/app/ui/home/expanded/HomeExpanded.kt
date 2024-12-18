@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
 import br.com.bit.guardian.core.ui.animation.VerticallyAnimatedContent
-import br.com.bit.guardian.feature.reports.widget.HomeReportsWidget
+import br.com.bit.guardian.feature.reports.ui.widget.HomeReportsWidget
 import br.com.bit.guardian.management.widget.HomeDeviceWidget
 import br.com.bit.guardian.settings.home.HomePhonesWidget
 
