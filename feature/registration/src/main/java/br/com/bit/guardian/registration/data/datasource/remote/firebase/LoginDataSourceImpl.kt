@@ -4,6 +4,7 @@ import br.com.bit.guardian.core.common.network.exceptions.GuardianApiException
 import br.com.bit.guardian.registration.data.datasource.remote.LoginDataSource
 import br.com.bit.guardian.registration.data.datasource.remote.response.UserLoginResponse
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -11,7 +12,10 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class LoginDataSourceImpl @Inject constructor(private val auth: FirebaseAuth) : LoginDataSource {
+class LoginDataSourceImpl @Inject constructor(
+    private val auth: FirebaseAuth,
+    private val database: FirebaseDatabase
+) : LoginDataSource {
     override suspend fun createUser(email: String, password: String): Flow<UserLoginResponse> =
         callbackFlow {
             auth.createUserWithEmailAndPassword(email, password)
@@ -25,6 +29,12 @@ class LoginDataSourceImpl @Inject constructor(private val auth: FirebaseAuth) : 
                                 photoUrl = task.result.user?.photoUrl.toString()
                             )
                         )
+
+                        database.reference
+                            .child("users")
+                            .child(task.result.user?.uid.orEmpty())
+                            .child("user_name")
+                            .setValue("nickname")
                     }
                 }
                 .addOnFailureListener { exception ->
