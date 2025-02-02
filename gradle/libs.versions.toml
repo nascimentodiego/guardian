@@ -1,6 +1,7 @@
 [versions]
 androidGradlePlugin = "8.6.1"
 androidDesugarJdkLibs = "2.0.4"
+kotlinxCollectionsImmutable = "0.3.8"
 ksp = "1.8.0-1.0.9"
 androidxActivity = "1.8.2"
 androidxAppCompat = "1.6.1"
@@ -13,7 +14,7 @@ androidxTestRules = "1.5.0"
 androidxTestRunner = "1.5.2"
 androidxComposeUiManifest = "1.5.4"
 androidxComposeMaterial3 = "1.1.2"
-androidxComposeBom = "2023.10.01"
+androidxComposeBom = "2024.12.01"
 androidxComposeCompiler = "1.5.8"
 junit4 = "4.13.2"
 jacoco = "0.8.8"
@@ -38,6 +39,8 @@ datastoreVersion = "1.1.1"
 material3AdaptiveNavigationSuiteAndroid = "1.3.0"
 adaptiveAndroid = "1.0.0"
 uiAndroid = "1.5.4"
+firebaseDatabaseKtx = "21.0.0"
+runtime = "1.7.6"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidxCore" }
@@ -65,6 +68,7 @@ androidx-test-ext = { group = "androidx.test.ext", name = "junit-ktx", version.r
 androidx-test-rules = { group = "androidx.test", name = "rules", version.ref = "androidxTestRules" }
 androidx-test-runner = { group = "androidx.test", name = "runner", version.ref = "androidxTestRunner" }
 androidx-test-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidxEspresso" }
+kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinxCollectionsImmutable" }
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
 okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
@@ -90,6 +94,8 @@ ui = { group = "androidx.compose.ui", name = "ui" }
 ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-adaptive-android = { group = "androidx.compose.material3.adaptive", name = "adaptive-android", version.ref = "adaptiveAndroid" }
 androidx-ui-android = { group = "androidx.compose.ui", name = "ui-android", version.ref = "uiAndroid" }
+firebase-database-ktx = { group = "com.google.firebase", name = "firebase-database-ktx", version.ref = "firebaseDatabaseKtx" }
+androidx-runtime = { group = "androidx.compose.runtime", name = "runtime", version.ref = "runtime" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }

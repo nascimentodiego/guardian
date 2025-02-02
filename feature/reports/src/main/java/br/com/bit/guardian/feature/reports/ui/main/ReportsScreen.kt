@@ -12,6 +12,7 @@ import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
 import br.com.bit.guardian.core.ui.composable.home.HomeContentWidget
 import br.com.bit.guardian.feature.reports.R
 import br.com.bit.guardian.feature.reports.ui.widget.composables.ActivityColumnComponent
+import br.com.bit.guardian.feature.reports.ui.widget.model.ActivityLog
 
 @Composable
 fun ReportsScreen(
@@ -31,7 +32,7 @@ fun ReportsScreen(
 
         LazyColumn {
             items(5) {
-                ActivityColumnComponent(modifier = Modifier)
+                ActivityColumnComponent(modifier = Modifier, activityLog = ActivityLog.empty())
                 Spacer(modifier = Modifier.height(GuardianTheme.dimens.spacingXS))
             }
         }

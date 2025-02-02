@@ -13,6 +13,8 @@ import br.com.bit.guardian.core.designsystem.icon.GuardianIcon
 import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
 import br.com.bit.guardian.core.ui.composable.home.HomeContentWidget
 import br.com.bit.guardian.feature.reports.R
+import br.com.bit.guardian.feature.reports.ui.widget.composables.ActivityColumnComponent
+import br.com.bit.guardian.feature.reports.ui.widget.model.ActivityLog
 import br.com.bit.guardian.core.designsystem.R as Rds
 
 @Composable
@@ -31,9 +33,11 @@ fun HomeReportsWidget(
     ) {
 
         //  EmptyComponent()
+        val log = ActivityLog.empty()
         LazyRow {
-            items(5) {
-                LoadingComponent(width = 120.dp, height = 100.dp)
+            items(1) {
+//                LoadingComponent(width = 120.dp, height = 100.dp)
+                ActivityColumnComponent(modifier = Modifier.width(120.dp), log)
                 Spacer(modifier = Modifier.width(GuardianTheme.dimens.spacingXS))
             }
         }

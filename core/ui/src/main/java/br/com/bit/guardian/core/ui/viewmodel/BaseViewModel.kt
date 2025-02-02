@@ -37,7 +37,7 @@ abstract class ViewModel<UiState, Event>(
     }
 
     protected fun restoreState(): Boolean {
-        if (savedStateHandle.contains(savedHandleKey)) {
+        if (hasScreenState()) {
             savedStateHandle.get<UiState>(savedHandleKey)?.let { publish(it) }
         }
         return hasScreenState()
@@ -48,7 +48,7 @@ abstract class ViewModel<UiState, Event>(
     protected fun getSavedHandleState() = savedStateHandle.get<UiState>(savedHandleKey)
 
     protected fun StateFlow<UiState?>.withData(func: (UiState) -> Unit) {
-        if (value != null)
+        if (hasData())
             func(value!!)
     }
 

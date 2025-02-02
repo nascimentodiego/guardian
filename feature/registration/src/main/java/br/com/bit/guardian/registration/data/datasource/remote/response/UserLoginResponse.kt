@@ -2,6 +2,7 @@ package br.com.bit.guardian.registration.data.datasource.remote.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+
 @Serializable
 data class UserLoginResponse(
     val uuid:String? = null,

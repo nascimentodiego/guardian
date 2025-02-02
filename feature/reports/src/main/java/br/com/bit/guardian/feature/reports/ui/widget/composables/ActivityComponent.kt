@@ -29,20 +29,25 @@ import br.com.bit.guardian.core.designsystem.component.TextHeadLineMedium
 import br.com.bit.guardian.core.designsystem.component.TextHeadLineSmall
 import br.com.bit.guardian.core.designsystem.icon.GuardianIcon
 import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
+import br.com.bit.guardian.feature.reports.ui.widget.model.ActivityLog
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun ActivityColumnComponent(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    activityLog: ActivityLog
 ) {
+    val listOfLog: PersistentList<String> = persistentListOf()
     Column(
         modifier = modifier
-            .background(GuardianTheme.colors.secondary, RoundedCornerShape(4.dp))
+            .background(GuardianTheme.colors.primaryContainer, RoundedCornerShape(4.dp))
             .padding(bottom = GuardianTheme.dimens.spacingXS)
             .clip(RoundedCornerShape(4.dp))
     ) {
         Row(
             modifier = Modifier
-                .background(GuardianTheme.colors.secondary)
+                .background(GuardianTheme.colors.primaryContainer)
                 .padding(end = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -62,7 +67,7 @@ fun ActivityColumnComponent(
                     tint = GuardianTheme.colors.primary
                 )
             }
-            TextHeadLineMedium("Garagem", color = GuardianTheme.colors.onSecondary)
+            TextHeadLineMedium(activityLog.deviceName, color = GuardianTheme.colors.textTitle)
         }
         Spacer(modifier = Modifier.height(GuardianTheme.dimens.spacingXS))
         Column(
@@ -76,9 +81,9 @@ fun ActivityColumnComponent(
                     painter = painterResource(id = GuardianIcon.Calendar),
                     modifier = Modifier.size(14.dp),
                     contentDescription = null,
-                    tint = GuardianTheme.colors.onSecondary
+                    tint = GuardianTheme.colors.iconInactiveColor
                 )
-                TextBodySmall(text = "17/12/2024", color = GuardianTheme.colors.onSecondary)
+                TextBodySmall(text = activityLog.date, color = GuardianTheme.colors.textBody)
             }
             Spacer(modifier = Modifier.height(GuardianTheme.dimens.spacingXXS))
             Row(
@@ -89,19 +94,19 @@ fun ActivityColumnComponent(
                     painter = painterResource(id = GuardianIcon.Timer),
                     modifier = Modifier.size(14.dp),
                     contentDescription = null,
-                    tint = GuardianTheme.colors.onSecondary
+                    tint = GuardianTheme.colors.iconInactiveColor
                 )
-                TextBodySmall(text = "16:04:00", color = GuardianTheme.colors.onSecondary)
+                TextBodySmall(text = activityLog.time, color = GuardianTheme.colors.textBody)
             }
             HorizontalDivider(
                 modifier = Modifier.padding(vertical = GuardianTheme.dimens.spacingXS),
-                color = GuardianTheme.colors.onSecondary
+                color = GuardianTheme.colors.iconInactiveColor
             )
             TextHeadLineSmall(
-                title = "(Abrir/Fechar)",
+                title = activityLog.action,
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center,
-                color = GuardianTheme.colors.onSecondary
+                color = GuardianTheme.colors.textBody
             )
         }
 
@@ -113,6 +118,6 @@ fun ActivityColumnComponent(
 @Composable
 fun ActivityComponentPreview() {
     GuardianTheme {
-        ActivityColumnComponent()
+        ActivityColumnComponent(activityLog = ActivityLog.empty())
     }
 }

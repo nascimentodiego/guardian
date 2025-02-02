@@ -22,7 +22,7 @@ class LoginDataSourceImpl @Inject constructor(private val auth: FirebaseAuth) : 
                                 uuid = task.result.user?.uid.orEmpty(),
                                 name = task.result.user?.displayName.orEmpty(),
                                 email = task.result.user?.email.orEmpty(),
-                                photoUrl = task.result.user?.phoneNumber.orEmpty()
+                                photoUrl = task.result.user?.photoUrl.toString()
                             )
                         )
                     }
