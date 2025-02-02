@@ -43,7 +43,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import br.com.bit.guardian.core.designsystem.component.SimpleError
 import br.com.bit.guardian.core.designsystem.component.TextTitleMedium
 import br.com.bit.guardian.core.designsystem.component.TextTitleSmall
 import br.com.bit.guardian.core.designsystem.extension.handleScreenBySize

@@ -73,7 +73,7 @@ fun TextBodySmall(
     color: Color = GuardianTheme.colors.textBody,
     textAlign: TextAlign? = null,
     overflow: TextOverflow = TextOverflow.Clip,
-    maxLines:Int = Int.MAX_VALUE
+    maxLines: Int = Int.MAX_VALUE
 ) = Text(
     text = stringResource(id = stringRes),
     modifier = modifier,
@@ -91,7 +91,7 @@ fun TextBodySmall(
     color: Color = GuardianTheme.colors.textBody,
     textAlign: TextAlign? = null,
     overflow: TextOverflow = TextOverflow.Clip,
-    maxLines:Int = Int.MAX_VALUE
+    maxLines: Int = Int.MAX_VALUE
 ) = Text(
     text = text,
     modifier = modifier,
@@ -150,12 +150,16 @@ fun TextHeadLineSmall(
     title: String,
     modifier: Modifier = Modifier,
     color: Color = GuardianTheme.colors.textTitle,
-    textAlign: TextAlign? = null
+    textAlign: TextAlign? = null,
+    maxLines: Int = 1,
+    overflow: TextOverflow = TextOverflow.Clip
 ) = Text(
     text = title,
     modifier = modifier,
     style = GuardianTheme.typography.headlineSmall,
     color = color,
+    maxLines = maxLines,
+    overflow = overflow,
     textAlign = textAlign
 )
 

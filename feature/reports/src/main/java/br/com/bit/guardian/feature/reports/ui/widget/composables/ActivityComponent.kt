@@ -21,24 +21,22 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.bit.guardian.core.designsystem.component.TextBodySmall
-import br.com.bit.guardian.core.designsystem.component.TextHeadLineMedium
 import br.com.bit.guardian.core.designsystem.component.TextHeadLineSmall
 import br.com.bit.guardian.core.designsystem.icon.GuardianIcon
 import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
 import br.com.bit.guardian.feature.reports.ui.widget.model.ActivityLog
-import kotlinx.collections.immutable.PersistentList
-import kotlinx.collections.immutable.persistentListOf
 
 @Composable
 fun ActivityColumnComponent(
     modifier: Modifier = Modifier,
     activityLog: ActivityLog
 ) {
-    val listOfLog: PersistentList<String> = persistentListOf()
     Column(
         modifier = modifier
             .background(GuardianTheme.colors.primaryContainer, RoundedCornerShape(4.dp))
@@ -58,7 +56,6 @@ fun ActivityColumnComponent(
                 Spacer(
                     modifier = Modifier.drawBehind {
                         drawCircle(color = circleColor, radius = circleSize)
-
                     }
                 )
                 Icon(
@@ -67,7 +64,11 @@ fun ActivityColumnComponent(
                     tint = GuardianTheme.colors.primary
                 )
             }
-            TextHeadLineMedium(activityLog.deviceName, color = GuardianTheme.colors.textTitle)
+            TextHeadLineSmall(
+                title = activityLog.deviceName,
+                color = GuardianTheme.colors.textTitle,
+                overflow = TextOverflow.Ellipsis
+            )
         }
         Spacer(modifier = Modifier.height(GuardianTheme.dimens.spacingXS))
         Column(
@@ -103,7 +104,7 @@ fun ActivityColumnComponent(
                 color = GuardianTheme.colors.iconInactiveColor
             )
             TextHeadLineSmall(
-                title = activityLog.action,
+                title = stringResource(activityLog.action.resourceName),
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center,
                 color = GuardianTheme.colors.textBody

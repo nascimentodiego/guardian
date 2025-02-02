@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="reports_title">Atividades</string>
-    <string name="reports_title_empty">Nenhuma atividade encontrada</string>">
+    <string name="reports_title_empty">Nenhuma atividade encontrada</string>
+
+    <string name="reports_device_open_close_action">Abrir/Fechar</string>
+    <string name="reports_device_alarm_action">Alarme ativado</string>
+    <string name="reports_device_detect_action">Pessoa detectada</string>
+    <string name="reports_device_unknown_action">Ação desconhecida</string>
 </resources>

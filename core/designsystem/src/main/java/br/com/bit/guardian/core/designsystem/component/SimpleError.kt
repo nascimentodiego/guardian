@@ -18,6 +18,7 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -25,10 +26,12 @@ import br.com.bit.guardian.core.designsystem.R
 import br.com.bit.guardian.core.designsystem.extension.ThemePreviews
 import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
 import br.com.bit.guardian.core.designsystem.theme.LocalWindowSizeClass
+import com.google.firebase.annotations.concurrent.Background
 
 @Composable
 fun SimpleError(
     modifier: Modifier = Modifier,
+    backgroundColor: Color = GuardianTheme.colors.background,
     widthSizeClass: WindowWidthSizeClass? = null,
     @StringRes titleRes: Int? = R.string.ds_simple_error_title,
     @StringRes descriptionRes: Int? = R.string.ds_simple_error_description,
@@ -45,10 +48,10 @@ fun SimpleError(
     Column(
         modifier = modifier
             .background(
-                color = GuardianTheme.colors.background,
+                color = backgroundColor,
                 shape = RoundedCornerShape(4.dp)
             )
-            .padding(GuardianTheme.dimens.spacingXS),
+            .padding(vertical = GuardianTheme.dimens.spacingXS, horizontal = GuardianTheme.dimens.spacingM),
         horizontalAlignment = align
     ) {
         if (widthSize == WindowWidthSizeClass.Compact) {

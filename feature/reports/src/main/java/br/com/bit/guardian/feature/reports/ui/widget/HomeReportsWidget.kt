@@ -1,8 +1,5 @@
 package br.com.bit.guardian.feature.reports.ui.widget
 
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -13,13 +10,19 @@ import br.com.bit.guardian.core.designsystem.icon.GuardianIcon
 import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
 import br.com.bit.guardian.core.ui.composable.home.HomeContentWidget
 import br.com.bit.guardian.feature.reports.R
-import br.com.bit.guardian.feature.reports.ui.widget.composables.ActivityColumnComponent
-import br.com.bit.guardian.feature.reports.ui.widget.model.ActivityLog
+import br.com.bit.guardian.feature.reports.ui.widget.composables.ErrorReportList
+import br.com.bit.guardian.feature.reports.ui.widget.composables.SuccessReportList
+import br.com.bit.guardian.feature.reports.ui.widget.model.ReportsUiState
+import br.com.bit.guardian.feature.reports.ui.widget.model.ReportsUiState.Error
+import br.com.bit.guardian.feature.reports.ui.widget.model.ReportsUiState.Loading
+import br.com.bit.guardian.feature.reports.ui.widget.model.ReportsUiState.Success
 import br.com.bit.guardian.core.designsystem.R as Rds
 
 @Composable
 fun HomeReportsWidget(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    uiState: ReportsUiState?,
+    onRetry: () -> Unit = {}
 ) {
     HomeContentWidget(
         modifier = modifier,
@@ -29,16 +32,13 @@ fun HomeReportsWidget(
         iconColor = GuardianTheme.colors.iconActiveColor,
         backgroundIconColor = GuardianTheme.colors.warning,
         boxBackgroundColor = GuardianTheme.colors.surface,
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.TopStart
     ) {
-
-        //  EmptyComponent()
-        val log = ActivityLog.empty()
-        LazyRow {
-            items(1) {
-//                LoadingComponent(width = 120.dp, height = 100.dp)
-                ActivityColumnComponent(modifier = Modifier.width(120.dp), log)
-                Spacer(modifier = Modifier.width(GuardianTheme.dimens.spacingXS))
+        uiState?.let {
+            when (it) {
+                is Loading -> LoadingComponent(width = 120.dp, height = 100.dp)
+                is Success -> SuccessReportList(it.data)
+                is Error -> ErrorReportList { onRetry.invoke() }
             }
         }
     }
@@ -48,6 +48,6 @@ fun HomeReportsWidget(
 @Composable
 fun HomeReportsWidgetPreview() {
     GuardianTheme {
-        HomeReportsWidget()
+        HomeReportsWidget(uiState = Success(listOf()))
     }
 }

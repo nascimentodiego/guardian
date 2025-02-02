@@ -63,6 +63,7 @@ dependencies {
 
     implementation(platform(libs.firebase.plataform.bom))
     implementation(libs.firebase.auth.ktx)
+    implementation(libs.androidx.material3.adaptive.navigation.suite.android)
 
     implementation(project(":core:common"))
     implementation(project(":core:data:network"))
@@ -70,7 +71,6 @@ dependencies {
     implementation(project(":core:domain"))
     implementation(project(":core:designsystem"))
     implementation(project(":feature:registration"))
-    implementation(libs.androidx.material3.adaptive.navigation.suite.android)
     implementation(project(":core:ui"))
     implementation(project(":feature:device:management"))
     implementation(project(":feature:settings"))

@@ -31,7 +31,9 @@ import br.com.bit.guardian.core.designsystem.icon.GuardianIcon
 import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
 import br.com.bit.guardian.core.ui.animation.Duration
 import br.com.bit.guardian.core.ui.animation.VerticallyAnimatedContent
+import br.com.bit.guardian.feature.reports.ui.widget.HomeReportWidgetRoute
 import br.com.bit.guardian.feature.reports.ui.widget.HomeReportsWidget
+import br.com.bit.guardian.feature.reports.ui.widget.model.ReportsUiState
 import br.com.bit.guardian.management.widget.HomeDeviceWidget
 import br.com.bit.guardian.settings.home.HomePhonesWidget
 import br.com.bit.guardian.core.designsystem.R as Rds
@@ -40,7 +42,6 @@ import br.com.bit.guardian.core.designsystem.R as Rds
 fun HomeCompact() {
     Column(
         modifier = Modifier
-
             .verticalScroll(rememberScrollState())
     ) {
         Row(
@@ -106,7 +107,9 @@ fun HomeCompact() {
         VerticallyAnimatedContent(
             delayAnimation = Duration.THIRD_START
         ) {
-            HomeReportsWidget(modifier = Modifier.padding(horizontal = GuardianTheme.dimens.spacingM))
+            HomeReportWidgetRoute(
+                modifier = Modifier.padding(horizontal = GuardianTheme.dimens.spacingM)
+            )
         }
     }
 }
