@@ -14,7 +14,6 @@ import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
 import br.com.bit.guardian.core.ui.extensions.intentDeepLink
 import br.com.bit.guardian.core.ui.routes.HOME
 import br.com.bit.guardian.registration.ui.login.composable.LoginRoute
-import br.com.bit.guardian.registration.ui.register.RegisterActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

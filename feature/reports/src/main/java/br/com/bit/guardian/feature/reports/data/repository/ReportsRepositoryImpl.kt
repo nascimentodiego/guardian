@@ -14,7 +14,7 @@ class ReportsRepositoryImpl @Inject constructor(
 ) : ReportsRepository {
     override fun fetchReports(): Flow<List<Report>> = flow {
         datasource.fetchReports().collect { response ->
-            emit(response.map { Report(it.deviceName, it.date, it.action) })
+            emit(response.map { Report(it.device.name, it.dateTime, it.action.orEmpty()) })
         }
     }.flowOn(Dispatchers.IO).handleNetworkError()
 }

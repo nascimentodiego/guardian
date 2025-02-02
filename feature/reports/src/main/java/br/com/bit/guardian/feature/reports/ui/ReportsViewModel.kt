@@ -22,34 +22,30 @@ class ReportsViewModel @Inject constructor(
 ) : ViewModel<ReportsUiState, Event>(savedStateHandle) {
     init {
         if (!restoreState()) {
-            publish(ReportsUiState.Loading)
-        } else {
             fetchReports()
         }
     }
 
-    private fun fetchReports() {
-        uiState.withData { data ->
-            viewModelScope.launch {
-                useCase()
-                    .asResult()
-                    .map { result ->
-                        when (result) {
-                            is Result.Success -> {
-                                val response = result.data.map { it.toActivityLog() }
-                                publish(ReportsUiState.Success(response))
-                            }
-
-                            is Result.Loading -> {
-                                publish(ReportsUiState.Loading)
-                            }
-
-                            is Result.Error -> {
-                                publish(ReportsUiState.Error)
-                            }
+    internal fun fetchReports() {
+        viewModelScope.launch {
+            useCase()
+                .asResult()
+                .map { result ->
+                    when (result) {
+                        is Result.Success -> {
+                            val response = result.data.map { it.toActivityLog() }
+                            publish(ReportsUiState.Success(response))
                         }
-                    }.collect()
-            }
+
+                        is Result.Loading -> {
+                            publish(ReportsUiState.Loading)
+                        }
+
+                        is Result.Error -> {
+                            publish(ReportsUiState.Error)
+                        }
+                    }
+                }.collect()
         }
     }
 }
