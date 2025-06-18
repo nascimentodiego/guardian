@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:feature/settings/src/main/java/br/com/bit/guardian/settings/ui/home/HomePhonesWidget.kt
 package br.com.bit.guardian.settings.ui.home
-========
-package br.com.bit.guardian.settings.home.ui
->>>>>>>> 872c452b6c08caebe79d09f208acf4f4c48ac89f:feature/settings/src/main/java/br/com/bit/guardian/settings/home/ui/HomePhonesWidget.kt
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
