@@ -15,7 +15,7 @@ import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
 import br.com.bit.guardian.core.ui.animation.VerticallyAnimatedContent
 import br.com.bit.guardian.feature.reports.ui.widget.HomeReportWidgetRoute
 import br.com.bit.guardian.management.widget.HomeDeviceWidget
-import br.com.bit.guardian.settings.home.ui.HomePhonesWidget
+import br.com.bit.guardian.settings.ui.home.HomePhonesWidget
 
 @Composable
 fun HomeExpanded(
