@@ -14,7 +14,6 @@ import br.com.bit.guardian.core.ui.composable.layout.AdaptiveContent
 @Composable
 fun HomeScreen() {
     GuardianTheme {
-
         AdaptiveContent(
             expandedContent = {
                 Row(
