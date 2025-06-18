@@ -14,17 +14,15 @@ internal fun Project.configureKotlinAndroid(
     commonExtension: CommonExtension<*, *, *, *, *, *>
 ) {
     commonExtension.apply {
-        compileSdk = 34
+        compileSdk = 36
 
         defaultConfig {
             minSdk = 29
         }
 
         compileOptions {
-            sourceCompatibility = JavaVersion.VERSION_17
-            targetCompatibility = JavaVersion.VERSION_17
-            // Unnecessary to AGP 8.2.1 without minSDK
-            // isCoreLibraryDesugaringEnabled = true
+            sourceCompatibility = JavaVersion.VERSION_19
+            targetCompatibility = JavaVersion.VERSION_19
         }
 
         kotlinOptions {
@@ -41,16 +39,14 @@ internal fun Project.configureKotlinAndroid(
                 "-opt-in=kotlin.Experimental",
             )
 
-            // Set JVM target to 17
-            jvmTarget = JavaVersion.VERSION_17.toString()
+            // Set JVM target to 19
+            jvmTarget = JavaVersion.VERSION_19.toString()
         }
     }
 
     val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
     dependencies {
-        // Unnecessary to AGP 8.2.1
-       // add("coreLibraryDesugaring", libs.findLibrary("android.desugarJdkLibs").get())
         add("implementation", libs.findLibrary("kotlinx.datetime").get())
     }
 }

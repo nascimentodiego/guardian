@@ -11,6 +11,7 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
             pluginManager.apply {
                 apply("guardian.android.library")
                 apply("guardian.android.library.compose")
+                apply("org.jetbrains.kotlin.plugin.compose")
                 apply("guardian.android.library.jacoco")
             }
 

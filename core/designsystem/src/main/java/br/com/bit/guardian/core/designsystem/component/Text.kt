@@ -26,6 +26,20 @@ fun TextTitleLarge(
 
 @Composable
 fun TextTitleMedium(
+   title: String,
+    modifier: Modifier = Modifier,
+    color: Color = GuardianTheme.colors.textTitle,
+    textAlign: TextAlign? = null
+) = Text(
+    text = title,
+    modifier = modifier,
+    style = GuardianTheme.typography.titleMedium,
+    color = color,
+    textAlign = textAlign
+)
+
+@Composable
+fun TextTitleMedium(
     @StringRes titleRes: Int,
     modifier: Modifier = Modifier,
     color: Color = GuardianTheme.colors.textTitle,
@@ -111,6 +125,20 @@ fun TextBodyMedium(
     textAlign: TextAlign? = null
 ) = Text(
     text = stringResource(id = stringRes),
+    modifier = modifier,
+    style = GuardianTheme.typography.bodyMedium,
+    color = color,
+    textAlign = textAlign
+)
+
+@Composable
+fun TextBodyMedium(
+    text: String,
+    modifier: Modifier = Modifier,
+    color: Color = GuardianTheme.colors.textBody,
+    textAlign: TextAlign? = null
+) = Text(
+    text = text,
     modifier = modifier,
     style = GuardianTheme.typography.bodyMedium,
     color = color,

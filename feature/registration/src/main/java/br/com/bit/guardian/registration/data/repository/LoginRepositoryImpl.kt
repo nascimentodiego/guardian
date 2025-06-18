@@ -20,7 +20,7 @@ class LoginRepositoryImpl @Inject constructor(
 ) : LoginRepository {
     override fun createUser(email: String, password: String): Flow<User> = flow {
         dataSource.createUser(email, password).collect { userResponse ->
-            userDataSource.updateUSerPreference(
+            val user = userDataSource.updateUSerPreference(
                 UserStorage(
                     userResponse.uuid.orEmpty(),
                     userResponse.name,
@@ -29,7 +29,6 @@ class LoginRepositoryImpl @Inject constructor(
                 )
             ).first()
 
-            val user = userDataSource.getUserPreferences().first()
             emit(
                 UserLoginResponse(
                     user.uuid,

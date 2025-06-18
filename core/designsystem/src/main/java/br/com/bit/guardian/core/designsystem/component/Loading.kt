@@ -2,6 +2,7 @@ package br.com.bit.guardian.core.designsystem.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -31,6 +32,28 @@ fun LoadingComponent(
         Box(
             modifier = Modifier
                 .width(width)
+                .height(height)
+                .background(GuardianTheme.colors.background)
+        )
+    }
+}
+
+@Composable
+fun LoadingComponent(
+    roundSize: Dp = 8.dp,
+    height: Dp = 64.dp
+) {
+    Box(
+        modifier = Modifier
+            .clip(RoundedCornerShape(roundSize))
+            .background(GuardianTheme.colors.surface)
+            .fillMaxWidth()
+            .height(height)
+            .shimmer()
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
                 .height(height)
                 .background(GuardianTheme.colors.background)
         )

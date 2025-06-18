@@ -1,21 +1,10 @@
 package br.com.bit.guardian.feature.reports.data.datasource.remote.response
 
-
-import com.google.firebase.database.Exclude
 import com.google.firebase.database.IgnoreExtraProperties
 
 @IgnoreExtraProperties
 data class ReportResponse(
-    val dateTime: String = "",
-    val device: Device = Device(),
-    val action: String? = ""
-) {
-    @Exclude
-    fun toMap(): Map<String, Any?> {
-        return mapOf(
-            "dateTime" to dateTime,
-            "device" to device,
-            "action" to action
-        )
-    }
-}
+    var date_time: String = "",
+    var device: Device = Device(),
+    var action: String? = ""
+)

@@ -38,7 +38,7 @@ class LoginActivity : ComponentActivity() {
                         finish()
                     },
                     {
-                        Toast.makeText(baseContext, "Deu bosta !", Toast.LENGTH_LONG).show()
+                        Toast.makeText(baseContext, "Deu ruim !", Toast.LENGTH_LONG).show()
                     }
                 )
             }

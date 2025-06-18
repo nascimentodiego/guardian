@@ -1,6 +1,7 @@
 plugins {
     id("guardian.android.feature")
     id("kotlin-parcelize")
+    id("org.jetbrains.kotlin.plugin.compose")
     kotlin("plugin.serialization")
 }
 

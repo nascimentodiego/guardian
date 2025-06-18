@@ -1,4 +1,4 @@
-package br.com.bit.guardian.settings.home
+package br.com.bit.guardian.settings.home.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

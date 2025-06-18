@@ -1,17 +1,9 @@
 package br.com.bit.guardian.app.ui.destination
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import br.com.bit.guardian.settings.home.ui.SettingsRoute
 
 @Composable
 fun SettingDestination() {
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .background(Color.Yellow)) {
-
-    }
+    SettingsRoute()
 }

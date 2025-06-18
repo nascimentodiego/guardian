@@ -1,10 +1,12 @@
 package br.com.bit.guardian.feature.reports.ui.widget
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
 import br.com.bit.guardian.feature.reports.ui.ReportsViewModel
 import br.com.bit.guardian.feature.reports.ui.widget.model.ReportsUiState
 
@@ -22,4 +24,9 @@ fun HomeReportWidgetRoute(modifier: Modifier = Modifier) {
         uiState = uiState,
         onRetry = viewModel::fetchReports
     )
+}
+
+@Composable
+fun ReportsRoute(){
+    HomeReportWidgetRoute(modifier = Modifier.padding(GuardianTheme.dimens.spacingM))
 }
