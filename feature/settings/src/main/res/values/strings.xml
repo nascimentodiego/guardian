@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="settings_screen_title">Configurações</string>
     <string name="settings_phone_title">Telefones</string>
+
+    <string name="settings_nickname_label">Apelido:</string>
+    <string name="settings_permissions_label">Permissões</string>
+    <string name="settings_about_label">Sobre</string>
+    <string name="settings_open_source">Licença de código aberto</string>
+    <string name="settings_version_label">Versão s%</string>
+
+    <string name="settings_logout_btn">Sair</string>
 </resources>

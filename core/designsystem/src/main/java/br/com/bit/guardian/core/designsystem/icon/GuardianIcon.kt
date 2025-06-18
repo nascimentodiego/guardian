@@ -2,20 +2,23 @@ package br.com.bit.guardian.core.designsystem.icon
 
 import br.com.bit.guardian.core.designsystem.R
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
-import androidx.compose.material.icons.rounded.ArrowForward
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material.icons.automirrored.rounded.ArrowForward
+import androidx.compose.material.icons.automirrored.rounded.List
+import androidx.compose.material.icons.rounded.Edit
 
 object GuardianIcon {
 
     val GuardianIcon = R.drawable.ds_ic_guardian
 
     // General
-    val ArrowForward = Icons.Rounded.ArrowForward
-    val ArrowBack = Icons.Rounded.ArrowBack
+    val ArrowForward = Icons.AutoMirrored.Rounded.ArrowForward
+    val ArrowBack = Icons.AutoMirrored.Rounded.ArrowBack
     val ChevronRight = R.drawable.ds_ic_chevron_right
-    val ChevronLeft =  R.drawable.ds_ic_chevron_left
+    val ChevronLeft = R.drawable.ds_ic_chevron_left
     val Close = R.drawable.ds_ic_close
     val Done = R.drawable.ds_ic_close
+    val Edit = Icons.Rounded.Edit
     val Logout = R.drawable.ds_ic_logout
     val CheckCircle = R.drawable.ds_ic_check_circle
     val UnCheckCircle = R.drawable.ds_ic_radio_button_unchecked
@@ -42,5 +45,23 @@ object GuardianIcon {
 
     // RF Control
     val RFRemoteControl = R.drawable.ds_ic_rf_remote
+
+    //Avatar
+    val Avatar01 = R.drawable.ds_ic_avatar_01
+    val Avatar02 = R.drawable.ds_ic_avatar_02
+    val Avatar03 = R.drawable.ds_ic_avatar_03
+    val Avatar04 = R.drawable.ds_ic_avatar_04
+    val Avatar05 = R.drawable.ds_ic_avatar_05
+    val Avatar06 = R.drawable.ds_ic_avatar_06
+
+    fun getUserAvatar(avatar: Int = 1) = when (avatar) {
+        1 -> Avatar01
+        2 -> Avatar02
+        3 -> Avatar03
+        4 -> Avatar04
+        5 -> Avatar05
+        6 -> Avatar06
+        else -> Avatar01
+    }
 
 }
