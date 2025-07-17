@@ -15,25 +15,29 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import br.com.bit.guardian.core.designsystem.extension.GuardianThemePreviews
+import br.com.bit.guardian.core.designsystem.extension.conditional
 import br.com.bit.guardian.core.designsystem.icon.GuardianIcon
 import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
 
 @Composable
-fun AvatarField(
+fun AvatarSelectableItem(
     modifier: Modifier = Modifier,
     avatar: Int,
-    onEditClick: () -> Unit
+    isSelected: Boolean,
+    onSelectClick: (avatar: Int) -> Unit
 ) {
     val avatarResource = GuardianIcon.getUserAvatar(avatar)
 
     Box(
         modifier = modifier
-            .size(100.dp)
-            .clickable { onEditClick.invoke() },
+            .size(80.dp)
+            .clickable { onSelectClick.invoke(avatar) },
         contentAlignment = Alignment.BottomEnd
     ) {
         val borderWidth = 4.dp
@@ -42,38 +46,42 @@ fun AvatarField(
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier
-                .size(150.dp)
-                .border(
-                    BorderStroke(borderWidth, GuardianTheme.colors.iconActiveColor),
-                    CircleShape
-                )
+                .size(80.dp)
+                .conditional(isSelected) {
+                    border(
+                        BorderStroke(borderWidth, GuardianTheme.colors.success),
+                        CircleShape
+                    )
+                }
                 .clip(CircleShape)
         )
-
-        Icon(
-            imageVector = GuardianIcon.Edit,
-            contentDescription = null,
-            modifier = Modifier
-                .background(
-                    GuardianTheme.colors.iconActiveColor,
-                    CircleShape
-                )
-                .size(24.dp)
-                .padding(4.dp),
-            tint = GuardianTheme.colors.textInverse
-        )
+        if (isSelected) {
+            Icon(
+                imageVector = ImageVector.vectorResource(GuardianIcon.CheckCircle),
+                contentDescription = null,
+                modifier = Modifier
+                    .background(
+                        GuardianTheme.colors.success,
+                        CircleShape
+                    )
+                    .size(24.dp)
+                    .padding(4.dp),
+                tint = GuardianTheme.colors.white
+            )
+        }
     }
 }
 
 @GuardianThemePreviews
 @Composable
-fun AvatarFieldPreview() {
+fun AvatarSelectableItemPreview() {
     GuardianTheme {
         Column(modifier = Modifier) {
-            AvatarField(
+            AvatarSelectableItem(
                 modifier = Modifier.align(Alignment.CenterHorizontally),
                 avatar = 1,
-                onEditClick = { }
+                isSelected = true,
+                onSelectClick = { }
             )
         }
     }

@@ -15,10 +15,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.bit.guardian.core.designsystem.component.TextBodySmall
 import br.com.bit.guardian.core.designsystem.component.TextTitleMedium
+import br.com.bit.guardian.core.designsystem.extension.GuardianThemePreviews
 import br.com.bit.guardian.core.designsystem.icon.GuardianIcon
 import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
 import br.com.bit.guardian.feature.settings.R
@@ -30,7 +30,7 @@ fun NickNameField(
     value: String,
     onClick: () -> Unit
 ) = Row(
-    modifier = modifier.clickable { onClick.invoke() },
+    modifier = modifier.background(GuardianTheme.colors.primaryContainer).clickable { onClick.invoke() },
     verticalAlignment = Alignment.CenterVertically,
     horizontalArrangement = Arrangement.Center
 ) {
@@ -46,7 +46,8 @@ fun NickNameField(
         modifier = Modifier
             .fillMaxWidth()
             .weight(0.1f),
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.End
     ) {
         Icon(
             imageVector = ImageVector.vectorResource(GuardianIcon.ChevronRight),
@@ -58,12 +59,12 @@ fun NickNameField(
                 )
                 .size(24.dp)
                 .padding(4.dp),
-            tint = GuardianTheme.colors.onPrimary
+            tint = GuardianTheme.colors.textInverse
         )
     }
 }
 
-@Preview(showBackground = true)
+@GuardianThemePreviews
 @Composable
 fun NickNameFieldPreview() {
     GuardianTheme {

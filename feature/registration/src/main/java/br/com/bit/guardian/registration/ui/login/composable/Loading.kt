@@ -21,7 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.bit.guardian.core.designsystem.R
-import br.com.bit.guardian.core.designsystem.extension.ThemePreviews
+import br.com.bit.guardian.core.designsystem.extension.GuardianThemePreviews
 import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
 import br.com.bit.guardian.core.designsystem.theme.LocalWindowSizeClass
 
@@ -76,12 +76,12 @@ fun TitleLarge() {
     Text(
         text = stringResource(id = R.string.ds_app_name),
         style = GuardianTheme.typography.titleLarge,
-        fontSize = 92.sp,
+        fontSize = 72.sp,
         color =GuardianTheme.colors.iconActiveColor
     )
 }
 
-@ThemePreviews
+@GuardianThemePreviews
 @Composable
 fun LoadingScreenPreview() {
     GuardianTheme {

@@ -23,7 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import br.com.bit.guardian.core.designsystem.R
-import br.com.bit.guardian.core.designsystem.extension.ThemePreviews
+import br.com.bit.guardian.core.designsystem.extension.GuardianThemePreviews
 import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
 
 @Composable
@@ -299,7 +299,7 @@ fun NextButtonPreview() {
 }
 
 
-@ThemePreviews
+@GuardianThemePreviews
 @Composable
 fun LoadedButtonPreview() {
     GuardianTheme {

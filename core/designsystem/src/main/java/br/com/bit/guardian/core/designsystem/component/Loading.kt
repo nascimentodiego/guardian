@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import br.com.bit.guardian.core.designsystem.extension.ThemePreviews
+import br.com.bit.guardian.core.designsystem.extension.GuardianThemePreviews
 import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
 import com.valentinilk.shimmer.shimmer
 
@@ -61,7 +61,7 @@ fun LoadingComponent(
 }
 
 @Composable
-@ThemePreviews
+@GuardianThemePreviews
 fun LoadingPreview() {
     GuardianTheme {
         LoadingComponent()

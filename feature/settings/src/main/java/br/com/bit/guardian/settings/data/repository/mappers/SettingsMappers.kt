@@ -8,7 +8,7 @@ import br.com.bit.guardian.settings.data.repository.model.Permission
 import br.com.bit.guardian.settings.data.repository.model.Settings
 
 fun SettingsResponse.toSettings() = Settings(
-    icon = this.icon,
+    icon = this.avatar,
     nickname = this.nickname,
     permissions = this.permissions.map { it.toPermission() },
     emergencies = this.emergencies.map { it.toEmergence() }

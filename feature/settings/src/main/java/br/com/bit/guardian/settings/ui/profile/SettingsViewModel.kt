@@ -10,6 +10,8 @@ import br.com.bit.guardian.settings.domain.usecase.SaveNicknameUseCase
 import br.com.bit.guardian.settings.domain.usecase.SettingsUseCase
 import br.com.bit.guardian.settings.domain.usecase.SignOutUseCase
 import br.com.bit.guardian.settings.ui.profile.mappers.toUiState
+import br.com.bit.guardian.settings.ui.profile.model.Avatar
+import br.com.bit.guardian.settings.ui.profile.model.NickName
 import br.com.bit.guardian.settings.ui.profile.model.SettingsEvent
 import br.com.bit.guardian.settings.ui.profile.model.SettingsUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -56,38 +58,6 @@ class SettingsViewModel @Inject constructor(
             }.collect()
     }
 
-    fun saveAvatar(avatarId: Int) = viewModelScope.launch {
-        saveAvatarUseCase(avatarId).asResult().map { result ->
-            when (result) {
-                is Result.Success -> {
-                    uiState.withData {
-                        val state = it as SettingsUiState.Success
-                        publish(state.copy(icon = avatarId))
-                    }
-                }
-
-                is Result.Loading -> { }
-                is Result.Error -> { }
-            }
-        }.collect()
-    }
-
-    fun saveNickname(nickname: String) = viewModelScope.launch {
-        saveNicknameUseCase(nickname).asResult().map { result ->
-            when (result) {
-                is Result.Success -> {
-                    uiState.withData {
-                        val state = it as SettingsUiState.Success
-                        publish(state.copy(nickname = nickname))
-                    }
-                }
-
-                is Result.Loading -> {}
-                is Result.Error -> {}
-            }
-        }.collect()
-    }
-
     fun signOut() = viewModelScope.launch {
         signOutUseCase()
             .asResult()
@@ -103,5 +73,96 @@ class SettingsViewModel @Inject constructor(
                     }
                 }
             }.collect()
+    }
+
+    fun onNickNameTextChange(newText: String) = uiState.withData {
+        val state = it as SettingsUiState.Success
+        publish(
+            state.copy(
+                nickname = it.nickname.copy(newValue = newText)
+            )
+        )
+    }
+
+    fun onConfirmNickName() = uiState.withData {
+        val state = it as SettingsUiState.Success
+        viewModelScope.launch {
+            runCatching {
+                saveNicknameUseCase(state.nickname.newValue).asResult().map { result ->
+                    when (result) {
+                        is Result.Success -> {
+                            sendEvent(SettingsEvent.SaveNickNameSuccess())
+                            publish(
+                                SettingsUiState.Success(
+                                    appVersion = state.appVersion,
+                                    nickname = NickName(text = state.nickname.newValue),
+                                    avatar = state.avatar,
+                                    permissions = state.permissions
+                                )
+                            )
+                        }
+
+                        is Result.Loading -> publish(
+                            state.copy(
+                                nickname = state.nickname.copy(
+                                    isLoading = true,
+                                    isError = false
+                                )
+                            )
+                        )
+
+                        is Result.Error -> publish(
+                            state.copy(
+                                nickname = state.nickname.copy(
+                                    isError = false,
+                                    isLoading = false
+                                )
+                            )
+                        )
+                    }
+                }.collect()
+            }.getOrElse {
+                publish(
+                    state.copy(
+                        nickname = state.nickname.copy(
+                            isError = true,
+                            isLoading = false
+                        )
+                    )
+                )
+            }
+        }
+    }
+
+    fun onConfirmAvatar(avatarId: Int) = uiState.withData {
+        val state = it as SettingsUiState.Success
+        viewModelScope.launch {
+            saveAvatarUseCase(avatarId).asResult().map { result ->
+                when (result) {
+                    is Result.Success -> {
+                        publish(state.copy(avatar = Avatar(icon = avatarId)))
+                        sendEvent(SettingsEvent.SaveAvatarSuccess())
+                    }
+
+                    is Result.Loading -> publish(
+                        state.copy(
+                            avatar = state.avatar.copy(
+                                isLoading = true,
+                                isError = false
+                            )
+                        )
+                    )
+
+                    is Result.Error -> publish(
+                        state.copy(
+                            avatar = state.avatar.copy(
+                                isLoading = false,
+                                isError = false
+                            )
+                        )
+                    )
+                }
+            }.collect()
+        }
     }
 }

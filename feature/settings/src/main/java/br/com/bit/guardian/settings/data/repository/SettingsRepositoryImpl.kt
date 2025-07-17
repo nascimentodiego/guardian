@@ -20,12 +20,16 @@ class SettingsRepositoryImpl @Inject constructor(
     }.flowOn(Dispatchers.IO).handleNetworkError()
 
     override fun saveAvatar(avatarId: Int): Flow<Unit> = flow {
-        dataSource.saveAvatar(avatarId)
-    }
+        dataSource.saveAvatar(avatarId).collect {
+            emit(it)
+        }
+    }.flowOn(Dispatchers.IO).handleNetworkError()
 
     override fun saveNickName(nickname: String): Flow<Unit> = flow {
-        dataSource.saveNickName(nickname)
-    }
+        dataSource.saveNickName(nickname).collect {
+            emit(it)
+        }
+    }.flowOn(Dispatchers.IO).handleNetworkError()
 
     override fun signOut(): Flow<Unit> = flow {
         dataSource.signOut().collect {

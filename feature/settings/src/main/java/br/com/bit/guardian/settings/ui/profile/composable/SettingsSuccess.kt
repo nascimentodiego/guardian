@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package br.com.bit.guardian.settings.ui.profile.composable
 
 import androidx.compose.foundation.layout.Box
@@ -9,8 +11,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.SheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,6 +27,8 @@ import br.com.bit.guardian.feature.settings.R
 import br.com.bit.guardian.settings.ui.profile.composable.components.AvatarField
 import br.com.bit.guardian.settings.ui.profile.composable.components.GenericField
 import br.com.bit.guardian.settings.ui.profile.composable.components.NickNameField
+import br.com.bit.guardian.settings.ui.profile.composable.components.bottomsheet.AvatarBottomSheet
+import br.com.bit.guardian.settings.ui.profile.composable.components.bottomsheet.NickNameComposable
 import br.com.bit.guardian.settings.ui.profile.model.SettingsUiState
 
 @Composable
@@ -30,8 +36,15 @@ fun SettingsSuccess(
     modifier: Modifier = Modifier,
     uiState: SettingsUiState.Success,
     onEditAvatarClick: (avatarId: Int) -> Unit,
-    onEditNicknameClick: () -> Unit,
-    onSignOutClick: () -> Unit
+    onConfirmAvatar: (avatarId: Int) -> Unit,
+    onEditNickNameClick: () -> Unit,
+    onConfirmNickname: () -> Unit,
+    onDismissRequest: () -> Unit,
+    onNickNameTextChange: (String) -> Unit,
+    onSignOutClick: () -> Unit,
+    showNicknameBottomSheet: Boolean,
+    showAvatarBottomSheet: Boolean,
+    sheetState: SheetState
 ) {
     Column(
         modifier = modifier
@@ -42,18 +55,33 @@ fun SettingsSuccess(
         // User Icon
         AvatarField(
             modifier = Modifier.align(Alignment.CenterHorizontally),
-            avatar = uiState.icon,
-            onEditClick = { onEditAvatarClick.invoke(uiState.icon) }
+            avatar = uiState.avatar.icon,
+            onEditClick = { onEditAvatarClick.invoke(uiState.avatar.icon) }
         )
         Spacer(modifier = Modifier.height(GuardianTheme.dimens.spacingXXL))
+        AvatarBottomSheet(
+            avatar = uiState.avatar,
+            showBottomSheet = showAvatarBottomSheet,
+            sheetState = sheetState,
+            onDismissRequest = onDismissRequest,
+            onConfirm = onConfirmAvatar
+        )
 
         // Nickname field
         NickNameField(
             label = R.string.settings_nickname_label,
-            value = uiState.nickname,
-            onClick = onEditNicknameClick
+            value = uiState.nickname.text,
+            onClick = onEditNickNameClick
         )
         Spacer(modifier = Modifier.height(GuardianTheme.dimens.spacingH))
+        NickNameComposable(
+            showBottomSheet = showNicknameBottomSheet,
+            sheetState = sheetState,
+            nickName = uiState.nickname,
+            onConfirm = onConfirmNickname,
+            onDismissRequest = onDismissRequest,
+            onTextChange = onNickNameTextChange
+        )
 
         // Emergence phones field
         GenericField(
@@ -105,5 +133,4 @@ fun SettingsSuccess(
             }
         }
     }
-
 }

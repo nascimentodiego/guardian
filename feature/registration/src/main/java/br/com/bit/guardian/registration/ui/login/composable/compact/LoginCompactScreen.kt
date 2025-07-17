@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import br.com.bit.guardian.core.designsystem.extension.ThemePreviews
+import br.com.bit.guardian.core.designsystem.extension.GuardianThemePreviews
 import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
 import br.com.bit.guardian.core.designsystem.theme.backgroundGradientPrimary
 import br.com.bit.guardian.registration.ui.login.LoginListener
@@ -38,7 +38,7 @@ fun LoginCompactScreen(
 }
 
 
-@ThemePreviews
+@GuardianThemePreviews
 @Composable
 fun LoginCompactScreenPreview(
     @PreviewParameter(LoginScreenProvider::class) uiState: LoginUiState

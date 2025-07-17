@@ -3,7 +3,13 @@
     <string name="settings_screen_title">Configurações</string>
     <string name="settings_phone_title">Telefones</string>
 
+    <string name="settings_avatar_label">Selecione seu avatar</string>
+
+    <!-- region Nickname -->
     <string name="settings_nickname_label">Apelido:</string>
+    <string name="settings_nickname_invalid_input">O apelido deve conter pelo menos 3 caracteres.</string>
+    <!-- endregion -->
+
     <string name="settings_permissions_label">Permissões</string>
     <string name="settings_about_label">Sobre</string>
     <string name="settings_open_source">Licença de código aberto</string>

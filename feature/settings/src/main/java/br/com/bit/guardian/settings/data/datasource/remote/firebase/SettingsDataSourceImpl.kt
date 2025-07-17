@@ -54,6 +54,10 @@ class SettingsDataSourceImpl @Inject constructor(
             }.addOnFailureListener { exception ->
                 close(exception)
             }
+        awaitClose()
+    }.catch { error ->
+        error.cause?.let { throw it }
+        throw GuardianApiException.GenericErrorException
     }
 
     override suspend fun saveNickName(nickname: String): Flow<Unit> = callbackFlow {
@@ -68,6 +72,10 @@ class SettingsDataSourceImpl @Inject constructor(
             }.addOnFailureListener { exception ->
                 close(exception)
             }
+        awaitClose()
+    }.catch { error ->
+        error.cause?.let { throw it }
+        throw GuardianApiException.GenericErrorException
     }
 
     override suspend fun signOut(): Flow<Unit> = callbackFlow {
