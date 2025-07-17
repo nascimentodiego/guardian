@@ -9,7 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import br.com.bit.guardian.core.designsystem.R
 import br.com.bit.guardian.core.designsystem.component.SimpleError
-import br.com.bit.guardian.core.designsystem.extension.ThemePreviews
+import br.com.bit.guardian.core.designsystem.extension.GuardianThemePreviews
 import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
 
 @Composable
@@ -30,7 +30,7 @@ fun ErrorReportList(modifier: Modifier = Modifier, retry: () -> Unit) {
     }
 }
 
-@ThemePreviews
+@GuardianThemePreviews
 @Composable
 fun ErrorReportListPreview() {
     GuardianTheme {

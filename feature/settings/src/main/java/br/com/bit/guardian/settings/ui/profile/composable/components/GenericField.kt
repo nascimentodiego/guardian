@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
@@ -13,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.bit.guardian.core.designsystem.component.TextBodyMedium
@@ -43,19 +45,19 @@ fun GenericField(
         modifier = Modifier
             .fillMaxWidth()
             .weight(0.1f),
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.End
     ) {
         Icon(
             imageVector = ImageVector.vectorResource(GuardianIcon.ChevronRight),
             contentDescription = null,
-            modifier = Modifier
-                .size(24.dp),
+            modifier = Modifier.size(24.dp),
             tint = GuardianTheme.colors.iconActiveColor
         )
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, device = Devices.TABLET)
 @Composable
 fun GenericFieldPreview() {
     GuardianTheme {

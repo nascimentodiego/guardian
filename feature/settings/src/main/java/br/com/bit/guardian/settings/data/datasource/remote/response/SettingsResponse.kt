@@ -1,7 +1,7 @@
 package br.com.bit.guardian.settings.data.datasource.remote.response
 
 data class SettingsResponse(
-    val icon: Int = 0,
+    val avatar: Int = 0,
     val nickname: String = "",
     val permissions: List<PermissionResponse> = listOf(),
     val emergencies: List<EmergenceResponse> = listOf(),

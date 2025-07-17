@@ -5,7 +5,7 @@ import br.com.bit.guardian.registration.ui.login.model.LoginUiState
 import br.com.bit.guardian.registration.ui.login.model.UserView
 
 class LoginScreenProvider : PreviewParameterProvider<LoginUiState> {
-    override val values = sequenceOf(
+    override val values: Sequence<LoginUiState> = sequenceOf(
         LoginUiState.Idle(
             UserView(
                 email = "nascimento.diego@gmail.com",
@@ -13,6 +13,7 @@ class LoginScreenProvider : PreviewParameterProvider<LoginUiState> {
                 isButtonLoading = false,
                 isButtonEnabled = false
             )
-        )
+        ),
+        LoginUiState.Loading
     )
 }

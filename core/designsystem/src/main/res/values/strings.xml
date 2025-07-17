@@ -4,4 +4,7 @@
     <string name="ds_simple_error_title">Falha ao enviar a requisição !</string>
     <string name="ds_simple_error_description">Algo não esta certo, não estou passando bem.</string>
     <string name="ds_button_try_again">Tentar novamente</string>
+
+    <string name="ds_button_cancel">Cancelar</string>
+    <string name="ds_button_confirm">Confirmar</string>
 </resources>

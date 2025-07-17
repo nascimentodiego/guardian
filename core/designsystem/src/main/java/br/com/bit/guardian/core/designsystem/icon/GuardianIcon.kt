@@ -54,14 +54,15 @@ object GuardianIcon {
     val Avatar05 = R.drawable.ds_ic_avatar_05
     val Avatar06 = R.drawable.ds_ic_avatar_06
 
-    fun getUserAvatar(avatar: Int = 1) = when (avatar) {
-        1 -> Avatar01
-        2 -> Avatar02
-        3 -> Avatar03
-        4 -> Avatar04
-        5 -> Avatar05
-        6 -> Avatar06
-        else -> Avatar01
-    }
+    val avatarIcons = hashMapOf(
+        1 to Avatar01,
+        2 to Avatar02,
+        3 to Avatar03,
+        4 to Avatar04,
+        5 to Avatar05,
+        6 to Avatar06
+    )
+
+    fun getUserAvatar(avatarId: Int = 1) = avatarIcons[avatarId] ?: Avatar01
 
 }

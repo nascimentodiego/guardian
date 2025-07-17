@@ -52,7 +52,6 @@ fun GuardianNavigationSuiteScaffold(
                         ) { currentDestination = it }
                     },
                     content = {
-                        Box(modifier = Modifier.background(Color.Red)) {  }
                         content(currentDestination)
                     }
                 )
@@ -62,6 +61,7 @@ fun GuardianNavigationSuiteScaffold(
                 bottomBar = {
                     GuardianNavbar(
                         modifier = Modifier,
+                        initialDestination = currentDestination,
                         entries = AppDestinations.entries
                     ) { currentDestination = it }
                 },

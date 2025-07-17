@@ -31,6 +31,7 @@ sealed class GuardianApiException : Exception() {
     data object NotFoundException : GuardianApiException()
     data object GenericErrorException : GuardianApiException()
     data object ServerErrorException : GuardianApiException()
+    data class GuardianBusinessException(val error: GuardianErrorType) : GuardianApiException()
     data class BadRequestException(val apiError: ApiError?) : GuardianApiException() {
         constructor(errorBody: String?) : this(
             apiError = errorBody?.let {
@@ -42,6 +43,10 @@ sealed class GuardianApiException : Exception() {
             }
         )
     }
+}
+
+interface GuardianErrorType {
+    val message: String
 }
 
 fun HttpException.parserApiNetworkError(): GuardianApiException {

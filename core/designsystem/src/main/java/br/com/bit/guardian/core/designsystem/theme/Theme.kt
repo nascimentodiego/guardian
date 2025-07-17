@@ -3,6 +3,8 @@
 package br.com.bit.guardian.core.designsystem.theme
 
 import android.app.Activity
+import android.content.res.Configuration
+import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Typography
@@ -12,10 +14,15 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
 import androidx.window.core.layout.WindowWidthSizeClass as WindowSize
 
@@ -95,3 +102,16 @@ fun GuardianTheme(
     }
 }
 
+@Composable
+fun AdaptiveStatusBarStyle(
+    background: Color = GuardianTheme.colors.surface
+) {
+    val window = (LocalActivity.current as Activity).window
+    val iconsShouldBeDark = background.luminance() >= 0.5f
+
+    LaunchedEffect(background) {
+        WindowCompat.getInsetsController(
+            window, window.decorView
+        ).isAppearanceLightStatusBars = iconsShouldBeDark   // true = ícones escuros
+    }
+}

@@ -50,5 +50,4 @@ fun LoginRoute(
         intent = viewModel::onIntent,
         callbacks = listener
     )
-
 }
