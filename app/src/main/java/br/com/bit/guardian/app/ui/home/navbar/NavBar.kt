@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import br.com.bit.guardian.app.ui.destination.AppDestinations
 import br.com.bit.guardian.core.designsystem.component.TextBodySmall
 import br.com.bit.guardian.core.designsystem.extension.GuardianThemePreviews
+import br.com.bit.guardian.core.designsystem.modifier.navigationBarPaddingOnly
 import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
 
 @Composable
