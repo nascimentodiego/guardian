@@ -54,7 +54,11 @@ class LogInUseCaseTest {
     @Test
     fun `invoke domain user does not expose photoUrl`() = runTest {
         fakeRepository.signInResult = flowOf(
-            DataUser(name = "User", email = "user@test.com", photoUrl = "http://secret.photo")
+            DataUser(
+                name = "User",
+                email = "user@test.com",
+                photoUrl = "http://secret.photo"
+            )
         )
 
         val result = useCase("user@test.com", "pass").first()
