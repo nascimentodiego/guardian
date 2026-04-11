@@ -34,4 +34,3 @@ object UserPreferencesSerializer : Serializer<UserPreferences> {
         dos.writeUTF(t.photoUrl)
     }
 }
-

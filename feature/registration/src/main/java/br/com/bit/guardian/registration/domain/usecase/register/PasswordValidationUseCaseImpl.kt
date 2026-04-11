@@ -68,8 +68,8 @@ class PasswordValidationUseCaseImpl @Inject constructor() : PasswordValidationUs
     }
 
     private fun checkMustBeEquals(password: String, confirmPassword: String): PasswordError {
-        val isValid = (password == confirmPassword)
-                && (password.isNotEmpty() && confirmPassword.isNotEmpty())
+        val isValid = (password == confirmPassword) &&
+            (password.isNotEmpty() && confirmPassword.isNotEmpty())
 
         return PasswordError(
             isValid = isValid,

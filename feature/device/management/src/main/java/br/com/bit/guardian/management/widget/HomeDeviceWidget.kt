@@ -21,7 +21,6 @@ fun HomeDeviceWidget(
         iconColor = GuardianTheme.colors.iconActiveColor,
         backgroundIconColor = GuardianTheme.colors.error
     )
-
 }
 
 @Preview(showBackground = true)

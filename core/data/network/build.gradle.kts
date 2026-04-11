@@ -15,7 +15,7 @@ secrets {
     defaultPropertiesFileName = "./tools/secrets/secrets.defaults.properties"
 }
 
-dependencies{
+dependencies {
     implementation(libs.okhttp.logging)
     api(libs.retrofit.core)
     api(libs.kotlinx.serialization.json)

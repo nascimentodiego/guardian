@@ -32,17 +32,17 @@ fun PrimaryButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
-    content: @Composable RowScope.() -> Unit,
+    content: @Composable RowScope.() -> Unit
 ) {
     Button(
         onClick = onClick,
         modifier = modifier,
         enabled = enabled,
         colors = ButtonDefaults.buttonColors(
-            containerColor = GuardianTheme.colors.primary,
+            containerColor = GuardianTheme.colors.primary
         ),
         contentPadding = contentPadding,
-        content = content,
+        content = content
     )
 }
 
@@ -53,14 +53,14 @@ fun LoadedButton(
     enabled: Boolean = true,
     isLoading: Boolean = false,
     contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
-    content: @Composable RowScope.() -> Unit,
+    content: @Composable RowScope.() -> Unit
 ) {
     Button(
         onClick = onClick,
         modifier = modifier,
         enabled = enabled,
         colors = ButtonDefaults.buttonColors(
-            containerColor = GuardianTheme.colors.primary,
+            containerColor = GuardianTheme.colors.primary
         ),
         contentPadding = contentPadding
     ) {
@@ -127,10 +127,11 @@ fun SimpleButton(
     enabled: Boolean = true,
     contentPadding: PaddingValues = ButtonDefaults.ContentPadding
 ) {
-    val borderColor = if (enabled)
+    val borderColor = if (enabled) {
         GuardianTheme.colors.onSecondary
-    else
+    } else {
         GuardianTheme.colors.onSecondary.copy(alpha = 0.1f)
+    }
     Button(
         onClick = onClick,
         modifier = modifier,
@@ -158,7 +159,7 @@ fun FinishButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
-    content: @Composable RowScope.() -> Unit,
+    content: @Composable RowScope.() -> Unit
 ) {
     Button(
         onClick = onClick,
@@ -191,7 +192,7 @@ fun NextButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
-    content: @Composable RowScope.() -> Unit,
+    content: @Composable RowScope.() -> Unit
 ) {
     Button(
         onClick = onClick,
@@ -224,7 +225,7 @@ fun PrevButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
-    content: @Composable RowScope.() -> Unit,
+    content: @Composable RowScope.() -> Unit
 ) {
     Button(
         onClick = onClick,
@@ -272,7 +273,6 @@ fun FinishButtonPreview() {
     }
 }
 
-
 @Composable
 fun PrevButtonPreview() {
     GuardianTheme {
@@ -285,7 +285,6 @@ fun PrevButtonPreview() {
     }
 }
 
-
 @Composable
 fun NextButtonPreview() {
     GuardianTheme {
@@ -297,7 +296,6 @@ fun NextButtonPreview() {
         }
     }
 }
-
 
 @GuardianThemePreviews
 @Composable
@@ -312,5 +310,3 @@ fun LoadedButtonPreview() {
         }
     }
 }
-
-

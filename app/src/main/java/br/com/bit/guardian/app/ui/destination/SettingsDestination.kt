@@ -11,7 +11,7 @@ import br.com.bit.guardian.settings.ui.profile.SettingsRoute
 @Composable
 fun SettingDestination() {
     AdaptiveStatusBarStyle()
-    Column (modifier = Modifier.padding(top = GuardianTheme.dimens.spacingS)) {
+    Column(modifier = Modifier.padding(top = GuardianTheme.dimens.spacingS)) {
         SettingsRoute()
     }
 }

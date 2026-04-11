@@ -19,7 +19,7 @@ import com.valentinilk.shimmer.shimmer
 fun LoadingComponent(
     roundSize: Dp = 8.dp,
     height: Dp = 64.dp,
-    width:Dp = 64.dp
+    width: Dp = 64.dp
 ) {
     Box(
         modifier = Modifier

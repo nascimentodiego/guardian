@@ -22,6 +22,5 @@ data class UserPreferences(
 
 val Context.userPreferencesStore: DataStore<UserPreferences> by dataStore(
     fileName = "user_prefs.proto",
-    serializer = UserPreferencesSerializer,
+    serializer = UserPreferencesSerializer
 )
-

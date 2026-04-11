@@ -31,8 +31,9 @@ fun OutlinedInputText(
         label = { Text(stringResource(id = label)) },
         isError = isError,
         supportingText = {
-            if (isError)
+            if (isError) {
                 Text(stringResource(id = supportingText))
+            }
         },
         colors = colors
     )

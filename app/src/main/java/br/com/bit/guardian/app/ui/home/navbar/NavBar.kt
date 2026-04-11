@@ -90,7 +90,8 @@ fun NavbarItem(
     val itemContainerColor by transition.animateColor(
         transitionSpec = {
             tween(200)
-        }, label = "color"
+        },
+        label = "color"
     ) { state ->
         when (state) {
             true -> GuardianTheme.colors.iconActiveContainer
@@ -101,7 +102,8 @@ fun NavbarItem(
     val iconColor by transition.animateColor(
         transitionSpec = {
             tween(200)
-        }, label = "color"
+        },
+        label = "color"
     ) { state ->
         when (state) {
             true -> GuardianTheme.colors.iconActiveColor
@@ -158,8 +160,6 @@ fun NavbarItem(
 @Composable
 fun GuardianNavbarPreview() {
     GuardianTheme {
-        GuardianNavbar(entries = AppDestinations.entries) {
-
-        }
+        GuardianNavbar(entries = AppDestinations.entries) {}
     }
 }

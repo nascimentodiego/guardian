@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import br.com.bit.guardian.app.model.ReportsUiState
 import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
 import dagger.hilt.android.AndroidEntryPoint
+
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
@@ -26,10 +27,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-
         }
     }
-
 
     @Composable
     fun Test() {
@@ -58,7 +57,8 @@ class MainActivity : ComponentActivity() {
                             Column {
                                 it.reports.forEach { report ->
                                     Text(
-                                        text = "${report.date} - ${report.user} -  ${report.device}",
+                                        text =
+                                        "${report.date} - ${report.user} -  ${report.device}",
                                         style = GuardianTheme.typography.bodyMedium
                                     )
                                     Spacer(modifier = Modifier.height(16.dp))

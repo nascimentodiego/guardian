@@ -21,7 +21,6 @@ import br.com.bit.guardian.core.designsystem.extension.forceWhite
 import br.com.bit.guardian.core.designsystem.extension.guardianTextColor
 import br.com.bit.guardian.core.designsystem.icon.GuardianIcon
 import br.com.bit.guardian.feature.registration.R
-import br.com.bit.guardian.registration.ui.login.model.LoginIntent
 
 @Composable
 fun PasswordTextField(
@@ -42,19 +41,24 @@ fun PasswordTextField(
     maxLines = 1,
     supportingText = {
         supportingText?.let {
-            if (isError)
+            if (isError) {
                 Text(text = stringResource(it))
+            }
         }
     },
-    visualTransformation = if (passwordVisible)
+    visualTransformation = if (passwordVisible) {
         VisualTransformation.None
-    else
-        PasswordVisualTransformation(),
+    } else {
+        PasswordVisualTransformation()
+    },
     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
     trailingIcon = {
         val image = painterResource(
-            if (passwordVisible) GuardianIcon.Visibility
-            else GuardianIcon.VisibilityOff
+            if (passwordVisible) {
+                GuardianIcon.Visibility
+            } else {
+                GuardianIcon.VisibilityOff
+            }
         )
         val description = if (passwordVisible) "Hide password" else "Show password"
 
@@ -86,19 +90,24 @@ fun OutlinedPasswordText(
     maxLines = 1,
     supportingText = {
         supportingText?.let {
-            if (isError)
+            if (isError) {
                 Text(text = stringResource(it))
+            }
         }
     },
-    visualTransformation = if (passwordVisible)
+    visualTransformation = if (passwordVisible) {
         VisualTransformation.None
-    else
-        PasswordVisualTransformation(),
+    } else {
+        PasswordVisualTransformation()
+    },
     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
     trailingIcon = {
         val image = painterResource(
-            if (passwordVisible) GuardianIcon.Visibility
-            else GuardianIcon.VisibilityOff
+            if (passwordVisible) {
+                GuardianIcon.Visibility
+            } else {
+                GuardianIcon.VisibilityOff
+            }
         )
         val description = if (passwordVisible) "Hide password" else "Show password"
 
@@ -108,4 +117,3 @@ fun OutlinedPasswordText(
     },
     colors = colors
 )
-

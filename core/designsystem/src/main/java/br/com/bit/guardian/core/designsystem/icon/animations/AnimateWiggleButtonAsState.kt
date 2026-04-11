@@ -1,8 +1,14 @@
 package br.com.bit.guardian.core.designsystem.icon.animations
 
 import androidx.annotation.FloatRange
-import androidx.compose.animation.core.*
-import androidx.compose.runtime.*
+import androidx.compose.animation.core.AnimationSpec
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.produceState
+import androidx.compose.runtime.rememberUpdatedState
 
 @Stable
 data class WiggleButtonParams(
@@ -16,7 +22,7 @@ fun animateWiggleButtonAsState(
     isSelected: Boolean,
     enterExitAnimationSpec: AnimationSpec<Float>,
     wiggleAnimationSpec: AnimationSpec<Float>,
-    maxRadius: Float,
+    maxRadius: Float
 ): State<WiggleButtonParams> {
     val enterExitFraction = animateFloatAsState(
         targetValue = if (isSelected) 1f else 0f,
@@ -38,11 +44,15 @@ fun animateWiggleButtonAsState(
         this.value = this.value.copy(
             scale = scaleInterpolator(enterExitFraction.value),
             alpha = alphaInterpolator(enterExitFraction.value),
-            radius = if (isAnimationRequired) calculateRadius(
-                maxRadius = maxRadius * 0.8f,
-                fraction = radiusInterpolator(wiggleFraction.value),
-                minRadius = mildRadius * maxRadius
-            ) else mildRadius * maxRadius
+            radius = if (isAnimationRequired) {
+                calculateRadius(
+                    maxRadius = maxRadius * 0.8f,
+                    fraction = radiusInterpolator(wiggleFraction.value),
+                    minRadius = mildRadius * maxRadius
+                )
+            } else {
+                mildRadius * maxRadius
+            }
         )
     }
 }
@@ -56,7 +66,7 @@ fun alphaInterpolator(fraction: Float): Float = fraction / 2 + 0.5f - 0.01f
 fun calculateRadius(
     maxRadius: Float,
     fraction: Float,
-    minRadius: Float,
+    minRadius: Float
 ) = (fraction * (maxRadius - minRadius)) + minRadius
 
 fun radiusInterpolator(

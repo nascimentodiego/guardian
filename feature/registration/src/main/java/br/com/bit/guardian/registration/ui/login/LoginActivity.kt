@@ -32,7 +32,8 @@ class LoginActivity : ComponentActivity() {
             GuardianTheme(
                 isStatusBarTranslucent = true
             ) {
-                LoginRoute(viewModel,
+                LoginRoute(
+                    viewModel,
                     {
                         startActivity(Intent(baseContext.intentDeepLink(HOME)))
                         finish()

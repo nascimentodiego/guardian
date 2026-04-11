@@ -4,7 +4,6 @@ plugins {
     kotlin("plugin.serialization")
 }
 
-
 android {
     namespace = "br.com.bit.guardian.feature.settings"
 }

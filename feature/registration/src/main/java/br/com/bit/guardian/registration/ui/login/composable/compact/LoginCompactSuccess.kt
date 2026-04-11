@@ -59,7 +59,7 @@ fun LoginCompactSuccess(
                 isError = false,
                 putEmail = {
                     intent(LoginIntent.InputEmail(it))
-                },
+                }
             )
             OutlinedPasswordText(
                 modifier = Modifier.fillMaxWidth(),

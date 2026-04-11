@@ -21,7 +21,6 @@ fun HomePhonesWidget(
         iconColor = GuardianTheme.colors.iconActiveColor,
         backgroundIconColor = GuardianTheme.colors.success
     ) {
-
     }
 }
 

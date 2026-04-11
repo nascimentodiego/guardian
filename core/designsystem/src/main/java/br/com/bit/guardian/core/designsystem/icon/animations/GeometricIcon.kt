@@ -48,13 +48,11 @@ fun GeometricAnimatedIcon(
     val density = LocalDensity.current
     val sizePx = remember(size) { size.toPxf(density) }
 
-
     Canvas(
         modifier = modifier
             .size(size * 1.1f)
             .onGloballyPositioned { canvasSize = it.size.toSize() }
     ) {
-
         with(backgroundPainter) {
             translate(
                 left = 20.toDp().toPx(),
@@ -84,7 +82,6 @@ fun GeometricAnimatedIcon(
 fun GeometricAnimatedIconPreview() {
     GuardianTheme {
         Row(horizontalArrangement = Arrangement.Absolute.SpaceEvenly) {
-
             GeometricAnimatedIcon(
                 modifier = Modifier,
                 icon = GuardianIcon.Home,
@@ -101,6 +98,5 @@ fun GeometricAnimatedIconPreview() {
                 backgroundIconColor = GuardianTheme.colors.error
             )
         }
-
     }
 }

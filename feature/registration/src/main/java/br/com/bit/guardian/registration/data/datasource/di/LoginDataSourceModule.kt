@@ -15,4 +15,3 @@ abstract class LoginDataSourceModule {
         dataSourceImpl: LoginDataSourceImpl
     ): LoginDataSource
 }
-

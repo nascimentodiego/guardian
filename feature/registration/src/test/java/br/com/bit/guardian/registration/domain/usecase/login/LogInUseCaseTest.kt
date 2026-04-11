@@ -23,7 +23,11 @@ class LogInUseCaseTest {
     @Test
     fun `invoke maps repository data user to domain user`() = runTest {
         fakeRepository.signInResult = flowOf(
-            DataUser(name = "Guardian User", email = "guardian@example.com", photoUrl = "https://photo.url")
+            DataUser(
+                name = "Guardian User",
+                email = "guardian@example.com",
+                photoUrl = "https://photo.url"
+            )
         )
 
         val result = useCase("guardian@example.com", "securePass1@").first()

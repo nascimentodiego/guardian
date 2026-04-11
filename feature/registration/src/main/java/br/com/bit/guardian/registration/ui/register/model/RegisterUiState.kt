@@ -7,11 +7,13 @@ import br.com.bit.guardian.feature.registration.R
 
 sealed class RegisterUiState(val ruleState: RegistrationRuleState) {
     @Parcelize
-    data class Idle(val state: RegistrationRuleState) : RegisterUiState(state),Parcelable
+    data class Idle(val state: RegistrationRuleState) : RegisterUiState(state), Parcelable
+
     @Parcelize
-    data class Success(val state: RegistrationRuleState) : RegisterUiState(state),Parcelable
+    data class Success(val state: RegistrationRuleState) : RegisterUiState(state), Parcelable
+
     @Parcelize
-    data class Loading(val state: RegistrationRuleState) : RegisterUiState(state),Parcelable
+    data class Loading(val state: RegistrationRuleState) : RegisterUiState(state), Parcelable
 }
 
 @Parcelize
@@ -24,14 +26,14 @@ data class RegistrationRuleState(
     val invalidConfPass: Boolean,
     val enableButton: Boolean,
     val listOfPassError: List<PasswordRuleItem>
-):Parcelable {
+) : Parcelable {
 
     fun mustEnableButton() = copy(
-        enableButton = !invalidEmail
-                && !invalidPass
-                && !invalidConfPass
-                && listOfPassError.firstOrNull { !it.isSuccess }
-            ?.let { false } ?: run { true }
+        enableButton = !invalidEmail &&
+            !invalidPass &&
+            !invalidConfPass &&
+            listOfPassError.firstOrNull { !it.isSuccess }
+                ?.let { false } ?: run { true }
     )
 
     companion object {
@@ -56,9 +58,4 @@ data class RegistrationRuleState(
 }
 
 @Parcelize
-data class PasswordRuleItem(@StringRes val textRes: Int, val isSuccess: Boolean):Parcelable
-
-
-
-
-
+data class PasswordRuleItem(@StringRes val textRes: Int, val isSuccess: Boolean) : Parcelable

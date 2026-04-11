@@ -14,4 +14,3 @@ fun ReportEntity.toActivityLog() = ActivityLog(
     deviceName = this.deviceName,
     deviceType = DeviceType.BIT_GARAGE
 )
-

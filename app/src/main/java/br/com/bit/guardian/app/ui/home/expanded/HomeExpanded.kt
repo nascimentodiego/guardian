@@ -41,7 +41,7 @@ fun HomeExpanded(
             }
             Spacer(modifier = Modifier.height(GuardianTheme.dimens.spacingM))
 
-            //Activities
+            // Activities
             HomeReportWidgetRoute()
         }
     }
@@ -53,5 +53,4 @@ fun HomeExpandedPreview() {
     GuardianTheme {
         HomeExpanded()
     }
-
 }

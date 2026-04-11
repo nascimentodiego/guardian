@@ -18,7 +18,6 @@ class UserPreferencesDataSourceImpl @Inject constructor(
     override fun getUserPreferences(): Flow<UserStorage> =
         context.userPreferencesStore.data.map(UserPreferences::toUserStorage)
 
-
     override fun updateUSerPreference(pref: UserStorage): Flow<UserStorage> =
         flow {
             val userPreferences = context.userPreferencesStore.updateData {
@@ -31,5 +30,4 @@ class UserPreferencesDataSourceImpl @Inject constructor(
             }
             emit(userPreferences.toUserStorage())
         }
-
 }

@@ -56,7 +56,9 @@ fun DropletButton(
     ) {
         val density = LocalDensity.current
         val dropletButtonParams = animateDropletButtonAsState(
-            isSelected = isSelected, animationSpec = animationSpec, size = size.toPxf(density)
+            isSelected = isSelected,
+            animationSpec = animationSpec,
+            size = size.toPxf(density)
         )
 
         val sizePx = remember(size) { size.toPxf(density) }
@@ -75,7 +77,7 @@ fun DropletButton(
                 .graphicsLayer(
                     alpha = 0.99f,
                     scaleX = dropletButtonParams.value.scale,
-                    scaleY = dropletButtonParams.value.scale,
+                    scaleY = dropletButtonParams.value.scale
                 ),
             contentDescription = contentDescription ?: ""
         ) {
@@ -103,14 +105,14 @@ fun DropletButton(
 data class DropletButtonParams(
     @FloatRange(from = 0.0, to = 1.0) val scale: Float = 1f,
     val radius: Float = 10f,
-    val verticalOffset: Float = 0f,
+    val verticalOffset: Float = 0f
 )
 
 @Composable
 internal fun animateDropletButtonAsState(
     isSelected: Boolean,
     animationSpec: AnimationSpec<Float> = remember { tween(300) },
-    size: Float,
+    size: Float
 ): State<DropletButtonParams> {
     val fraction = animateFloatAsState(
         targetValue = if (isSelected) 1f else 0f,

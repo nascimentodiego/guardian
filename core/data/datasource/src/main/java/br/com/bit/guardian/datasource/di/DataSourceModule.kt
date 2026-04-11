@@ -21,5 +21,3 @@ abstract class DataSourceModule {
         dataSourceImpl: UserPreferencesDataSourceImpl
     ): UserPreferencesDataSource
 }
-
-

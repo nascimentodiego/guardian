@@ -53,7 +53,6 @@ object NetworkModule {
     fun provideRetrofitApiService(
         @OkHttpApiClient okHttpClient: OkHttpClient
     ): Retrofit {
-
         return Retrofit.Builder()
             .baseUrl(API_URL)
             .client(okHttpClient)
@@ -67,7 +66,6 @@ object NetworkModule {
     fun provideRetrofitHotSpotApiService(
         @OkHttpHotSpotClient okHttpClient: OkHttpClient
     ): Retrofit {
-
         return Retrofit.Builder()
             .baseUrl(HOTSPOT_URL)
             .client(okHttpClient)
@@ -75,5 +73,4 @@ object NetworkModule {
                 providesNetworkJson.asConverterFactory(contentType)
             ).build()
     }
-
 }

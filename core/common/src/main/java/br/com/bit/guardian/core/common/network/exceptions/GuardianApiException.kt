@@ -62,5 +62,3 @@ fun HttpException.parserApiNetworkError(): GuardianApiException {
         else -> GuardianApiException.GenericErrorException
     }
 }
-
-

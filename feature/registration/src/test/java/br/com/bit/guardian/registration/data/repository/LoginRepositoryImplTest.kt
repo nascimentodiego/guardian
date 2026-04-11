@@ -30,7 +30,12 @@ class LoginRepositoryImplTest {
     @Test
     fun `signIn returns mapped user on success`() = runTest {
         fakeDataSource.signInResult = flowOf(
-            UserLoginResponse(uuid = "123", name = "Test User", email = "test@example.com", photoUrl = "photo.url")
+            UserLoginResponse(
+                uuid = "123",
+                name = "Test User",
+                email = "test@example.com",
+                photoUrl = "photo.url"
+            )
         )
 
         val user = repository.signIn("test@example.com", "password").first()
@@ -42,7 +47,12 @@ class LoginRepositoryImplTest {
     @Test
     fun `signIn preserves photoUrl in data model`() = runTest {
         fakeDataSource.signInResult = flowOf(
-            UserLoginResponse(uuid = "1", name = "User", email = "user@test.com", photoUrl = "https://photo.url")
+            UserLoginResponse(
+                uuid = "1",
+                name = "User",
+                email = "user@test.com",
+                photoUrl = "https://photo.url"
+            )
         )
 
         val user = repository.signIn("user@test.com", "pass").first()
@@ -55,7 +65,12 @@ class LoginRepositoryImplTest {
     @Test
     fun `createUser returns mapped user on success`() = runTest {
         fakeDataSource.createUserResult = flowOf(
-            UserLoginResponse(uuid = "456", name = "New User", email = "new@example.com", photoUrl = "")
+            UserLoginResponse(
+                uuid = "456",
+                name = "New User",
+                email = "new@example.com",
+                photoUrl = ""
+            )
         )
 
         val user = repository.createUser("new@example.com", "password").first()
@@ -67,7 +82,12 @@ class LoginRepositoryImplTest {
     @Test
     fun `createUser persists user data in preferences`() = runTest {
         fakeDataSource.createUserResult = flowOf(
-            UserLoginResponse(uuid = "789", name = "Pref User", email = "pref@example.com", photoUrl = "photo")
+            UserLoginResponse(
+                uuid = "789",
+                name = "Pref User",
+                email = "pref@example.com",
+                photoUrl = "photo"
+            )
         )
 
         repository.createUser("pref@example.com", "password").first()

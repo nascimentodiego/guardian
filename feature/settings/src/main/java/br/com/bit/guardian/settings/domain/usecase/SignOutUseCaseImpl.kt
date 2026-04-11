@@ -8,6 +8,6 @@ class SignOutUseCaseImpl @Inject constructor(
     private val repository: SettingsRepository
 ) : SignOutUseCase {
     override fun invoke(): Flow<Unit> {
-       return repository.signOut()
+        return repository.signOut()
     }
 }

@@ -11,8 +11,8 @@ class LogInUseCaseImpl @Inject constructor(
     private val repository: LoginRepository
 ) : LogInUseCase {
     override fun invoke(email: String, password: String): Flow<User> {
-      return repository.signIn(email, password).map {
-          it.toUser()
-      }
+        return repository.signIn(email, password).map {
+            it.toUser()
+        }
     }
 }

@@ -8,7 +8,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.text.style.TextOverflow.Companion.Ellipsis
 import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
 
 @Composable
@@ -26,7 +25,7 @@ fun TextTitleLarge(
 
 @Composable
 fun TextTitleMedium(
-   title: String,
+    title: String,
     modifier: Modifier = Modifier,
     color: Color = GuardianTheme.colors.textTitle,
     textAlign: TextAlign? = null
@@ -115,7 +114,6 @@ fun TextBodySmall(
     maxLines = maxLines,
     textAlign = textAlign
 )
-
 
 @Composable
 fun TextBodyMedium(
@@ -190,4 +188,3 @@ fun TextHeadLineSmall(
     overflow = overflow,
     textAlign = textAlign
 )
-

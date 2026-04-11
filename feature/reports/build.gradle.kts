@@ -11,5 +11,4 @@ dependencies {
     implementation(project(":core:ui"))
     implementation(libs.androidx.runtime)
     implementation(libs.kotlinx.collections.immutable)
-
 }

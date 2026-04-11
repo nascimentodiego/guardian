@@ -20,4 +20,3 @@ fun PermissionEntity.toUiState() = Permission(
     key = this.key,
     isChecked = this.isChecked
 )
-

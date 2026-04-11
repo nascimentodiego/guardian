@@ -21,9 +21,10 @@ fun <T> Flow<T>.asResult(): Flow<Result<T>> {
         .onStart { emit(Result.Loading) }
         .catch {
             Log.e("GuardianApiException", it.message, it)
-            if (it is GuardianApiException)
+            if (it is GuardianApiException) {
                 emit(Result.Error(it))
-            else
+            } else {
                 emit(Result.Error(GuardianApiException.GenericErrorException))
+            }
         }
 }

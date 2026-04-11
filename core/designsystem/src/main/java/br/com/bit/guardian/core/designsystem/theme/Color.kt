@@ -5,18 +5,14 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.compositionLocalOf
-import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
-
 
 internal val Purple80 = Color(0xFFD0BCFF)
 internal val PurpleGrey80 = Color(0xFFCCC2DC)
 internal val Pink80 = Color(0xFFEFB8C8)
 
-
 internal val PurpleGrey40 = Color(0xFF625b71)
 internal val Pink40 = Color(0xFF7D5260)
-
 
 internal val Red200 = Color(0xfff297a2)
 internal val Red300 = Color(0xffea6d7e)
@@ -52,7 +48,6 @@ internal val Black = Color(0xFF1A1A1A) // Background Dark
 internal val White = Color(0xFFFCFCFC) // Background Light
 internal val GreenContent_50 = Color(0xFFF0F6E6)
 
-
 // Colors Light
 internal val Purple40 = Color(0xFF452890) // Primary Light
 internal val Gray50 = Color(0xFFF5F5F5) // OnPrimary Light
@@ -69,16 +64,14 @@ internal val GrayLight01 = Color(0xFFffffff) // Surface Light
 internal val GrayLight02 = Color(0xFFD9D6D6) // Background Light
 internal val GrayLight03 = Color(0xFF343435) // OnBackground Light
 
-internal val IconActiveColorLight = Color(0xFF452890) // IconActiveColor Light
-internal val IconInactiveColorLight = Color(0x80452890) // IconInactiveColor Light
-internal val IconActiveContainerLight = Color(0x339771FA) // IconActiveContainer Light //Color(0xFF9771FA).copy(alpha = 0.2f)
-
+internal val IconActiveColorLight = Color(0xFF452890)
+internal val IconInactiveColorLight = Color(0x80452890)
+internal val IconActiveContainerLight = Color(0x339771FA)
 
 internal val LightColorSuccess = Color(0xFF27AE60)
 internal val LightColorWarning = Color(0xFFE2B93B)
 internal val LightColorError = Color(0xFFEB5757)
 internal val LightColorDisable = Gray400
-
 
 internal val TextTitleLight = Color(0xFF000000)
 internal val TextSubtitleLight = Color(0xE6000000)
@@ -105,7 +98,6 @@ internal val GrayLight03Dark = Color(0xFFE3E3E6) // OnBackground
 internal val IconActiveColorDark = Color(0xFFF4F4F5) // IconActiveColor Dark
 internal val IconInactiveColorDark = Color(0x73FFFFFF) // IconInactiveColor Dark
 internal val IconActiveContainerDark = Color(0x339771FA) // IconActiveContainer Dark
-
 
 internal val TextTitleDark = Color(0xFFFFFFFF)
 internal val TextSubtitleDark = Color(0xE6FFFFFF)

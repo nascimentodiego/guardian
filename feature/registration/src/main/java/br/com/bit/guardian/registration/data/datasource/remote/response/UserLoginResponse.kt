@@ -5,8 +5,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class UserLoginResponse(
-    val uuid:String? = null,
-    val name:String,
-    val email:String,
-    @SerialName("photo_url") val photoUrl:String
+    val uuid: String? = null,
+    val name: String,
+    val email: String,
+    @SerialName("photo_url") val photoUrl: String
 )

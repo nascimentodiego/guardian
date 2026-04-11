@@ -110,7 +110,6 @@ fun ActivityColumnComponent(
                 color = GuardianTheme.colors.textBody
             )
         }
-
     }
 }
 

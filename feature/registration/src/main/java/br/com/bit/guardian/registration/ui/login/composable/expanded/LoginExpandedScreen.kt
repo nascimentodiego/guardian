@@ -76,8 +76,12 @@ fun LoginExpandedScreenPreview(
     @PreviewParameter(LoginScreenProvider::class) uiState: LoginUiState
 ) {
     GuardianTheme {
-        LoginExpandedScreen(uiState = uiState, intent = {}, callbacks = object : LoginListener {
-            override fun onCreateUserClickListener() {}
-        })
+        LoginExpandedScreen(
+            uiState = uiState,
+            intent = {},
+            callbacks = object : LoginListener {
+                override fun onCreateUserClickListener() {}
+            }
+        )
     }
 }

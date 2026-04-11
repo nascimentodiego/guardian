@@ -7,8 +7,12 @@ import kotlinx.coroutines.flow.flowOf
 
 open class FakeLoginRepository : LoginRepository {
 
-    var signInResult: Flow<User> = flowOf(User(name = "Test User", email = "test@example.com", photoUrl = ""))
-    var createUserResult: Flow<User> = flowOf(User(name = "Test User", email = "test@example.com", photoUrl = ""))
+    var signInResult: Flow<User> = flowOf(
+        User(name = "Test User", email = "test@example.com", photoUrl = "")
+    )
+    var createUserResult: Flow<User> = flowOf(
+        User(name = "Test User", email = "test@example.com", photoUrl = "")
+    )
     var isUserLoggedResult: Flow<Boolean> = flowOf(false)
     var signOutResult: Flow<Unit> = flowOf(Unit)
 

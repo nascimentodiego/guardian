@@ -7,8 +7,16 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
 class FakePasswordValidationUseCase : PasswordValidationUseCase {
-    var result: List<PasswordError> = PasswordErrorType.entries.map { PasswordError(isValid = true, type = it) }
+    var result: List<PasswordError> = PasswordErrorType.entries.map {
+        PasswordError(
+            isValid = true,
+            type = it
+        )
+    }
 
-    override fun invoke(password: String, confirmPassword: String, email: String): Flow<List<PasswordError>> =
-        flowOf(result)
+    override fun invoke(
+        password: String,
+        confirmPassword: String,
+        email: String
+    ): Flow<List<PasswordError>> = flowOf(result)
 }

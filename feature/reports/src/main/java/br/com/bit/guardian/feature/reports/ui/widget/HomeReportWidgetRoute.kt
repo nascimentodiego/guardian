@@ -14,10 +14,11 @@ import br.com.bit.guardian.feature.reports.ui.widget.model.ReportsUiState
 fun HomeReportWidgetRoute(modifier: Modifier = Modifier) {
     val viewModel = hiltViewModel<ReportsViewModel>()
 
-    val uiState = if (LocalInspectionMode.current)
+    val uiState = if (LocalInspectionMode.current) {
         ReportsUiState.Loading
-    else
+    } else {
         viewModel.uiState.collectAsStateWithLifecycle().value
+    }
 
     HomeReportsWidget(
         modifier = modifier,
@@ -27,6 +28,6 @@ fun HomeReportWidgetRoute(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun ReportsRoute(){
+fun ReportsRoute() {
     HomeReportWidgetRoute(modifier = Modifier.padding(GuardianTheme.dimens.spacingM))
 }

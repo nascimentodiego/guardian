@@ -18,9 +18,9 @@ fun RegisterCompactScreen(
     state: RegisterUiState,
     intent: (RegistrationIntent) -> Unit,
     passwordVisible: Boolean = false,
-    visibilityClick: () -> Unit,
+    visibilityClick: () -> Unit
 ) {
-    InputEmail(state, Modifier.fillMaxWidth()){
+    InputEmail(state, Modifier.fillMaxWidth()) {
         intent.invoke(RegistrationIntent.InputEmail(it))
     }
     Spacer(modifier = Modifier.height(GuardianTheme.dimens.spacingS))
