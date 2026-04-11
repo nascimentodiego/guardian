@@ -1,0 +1,1652 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Monorepo vs Multirepo — Android em Larga Escala</title>
+  <style>
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --surface2: #22263a;
+      --border: #2e3352;
+      --accent: #6c63ff;
+      --accent2: #00d4aa;
+      --accent3: #ff6b6b;
+      --accent4: #ffd166;
+      --text: #e2e4f0;
+      --text-muted: #7c82a6;
+      --text-dim: #4a5080;
+      --green: #43e97b;
+      --red: #ff6b6b;
+      --yellow: #ffd166;
+      --blue: #4fc3f7;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, #0f1117 0%, #1a1040 50%, #0f1117 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 80px 24px 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(108,99,255,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(108,99,255,0.15);
+      border: 1px solid rgba(108,99,255,0.4);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 18px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #ffffff 0%, #a78bfa 50%, #00d4aa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 620px;
+      margin: 0 auto 36px;
+    }
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    .hero-stat {
+      text-align: center;
+    }
+    .hero-stat-value {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--accent2);
+      display: block;
+    }
+    .hero-stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* LAYOUT */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* NAV TABS */
+    .nav-tabs {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(15,17,23,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+    }
+    .nav-tabs-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .nav-tabs-inner::-webkit-scrollbar { display: none; }
+    .tab-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 16px 20px;
+      cursor: pointer;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    .tab-btn:hover { color: var(--text); }
+    .tab-btn.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    /* SECTIONS */
+    .section {
+      padding: 60px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .section:last-child { border-bottom: none; }
+
+    .section-header {
+      margin-bottom: 40px;
+    }
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+      display: block;
+    }
+    .section-title {
+      font-size: clamp(22px, 3vw, 32px);
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+    }
+    .section-desc {
+      color: var(--text-muted);
+      font-size: 16px;
+      max-width: 700px;
+    }
+
+    /* OVERVIEW TABLE */
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 16px;
+    }
+    .company-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      transition: border-color 0.2s, transform 0.2s;
+      cursor: default;
+    }
+    .company-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .company-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .company-name {
+      font-size: 16px;
+      font-weight: 700;
+    }
+    .strategy-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .badge-mono {
+      background: rgba(67,233,123,0.12);
+      color: var(--green);
+      border: 1px solid rgba(67,233,123,0.3);
+    }
+    .badge-multi {
+      background: rgba(255,107,107,0.12);
+      color: var(--red);
+      border: 1px solid rgba(255,107,107,0.3);
+    }
+    .badge-hybrid {
+      background: rgba(255,209,102,0.12);
+      color: var(--yellow);
+      border: 1px solid rgba(255,209,102,0.3);
+    }
+    .company-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .company-meta-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+    }
+    .meta-key { color: var(--text-muted); }
+    .meta-val { color: var(--text); font-weight: 500; }
+    .doc-level {
+      display: flex;
+      gap: 4px;
+      margin-top: 12px;
+    }
+    .doc-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+    }
+    .doc-dot.filled { background: var(--accent2); }
+
+    /* COMPANY DETAIL */
+    .company-detail {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      margin-bottom: 24px;
+      overflow: hidden;
+    }
+    .company-detail-header {
+      padding: 28px 32px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .company-detail-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .company-detail-subtitle {
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+    .company-detail-body {
+      padding: 28px 32px;
+    }
+    .detail-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+    @media (max-width: 768px) {
+      .detail-cols { grid-template-columns: 1fr; }
+      .company-detail-body { padding: 20px; }
+      .company-detail-header { padding: 20px; }
+    }
+
+    /* METRICS */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .metric-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+    }
+    .metric-value {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--accent2);
+      display: block;
+      line-height: 1.2;
+    }
+    .metric-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      line-height: 1.3;
+    }
+
+    /* SUBSECTION */
+    .subsection { margin-bottom: 24px; }
+    .subsection-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    /* TAGS */
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 5px 12px;
+      font-size: 13px;
+      color: var(--text);
+      font-weight: 500;
+    }
+    .tag.accent {
+      background: rgba(108,99,255,0.12);
+      border-color: rgba(108,99,255,0.3);
+      color: #a78bfa;
+    }
+
+    /* PROBLEMS/SOLUTIONS */
+    .problem-list { display: flex; flex-direction: column; gap: 10px; }
+    .problem-item {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      background: var(--surface2);
+      border-radius: 8px;
+      overflow: hidden;
+      font-size: 13px;
+    }
+    .problem-side {
+      padding: 12px 14px;
+    }
+    .problem-side.prob {
+      border-left: 3px solid var(--red);
+    }
+    .problem-side.sol {
+      border-left: 3px solid var(--green);
+    }
+    .problem-side strong {
+      display: block;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+      opacity: 0.6;
+    }
+    @media (max-width: 600px) {
+      .problem-item { grid-template-columns: 1fr; }
+    }
+
+    /* LINKS */
+    .links-list { display: flex; flex-direction: column; gap: 8px; }
+    .ref-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--blue);
+      text-decoration: none;
+      font-size: 13px;
+      padding: 8px 12px;
+      background: var(--surface2);
+      border-radius: 8px;
+      border: 1px solid transparent;
+      transition: border-color 0.2s;
+      word-break: break-word;
+    }
+    .ref-link:hover { border-color: var(--blue); }
+    .ref-link::before {
+      content: '↗';
+      font-size: 12px;
+      flex-shrink: 0;
+      opacity: 0.7;
+    }
+
+    /* COMPARISON TABLE */
+    .table-wrapper {
+      overflow-x: auto;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    thead tr {
+      background: var(--surface2);
+    }
+    th {
+      padding: 14px 18px;
+      text-align: left;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    td {
+      padding: 14px 18px;
+      border-bottom: 1px solid rgba(46,51,82,0.5);
+      vertical-align: top;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(108,99,255,0.04); }
+    .check { color: var(--green); font-size: 16px; }
+    .cross { color: var(--red); font-size: 16px; }
+    .partial { color: var(--yellow); font-size: 14px; }
+
+    /* PROS/CONS */
+    .pros-cons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    @media (max-width: 640px) { .pros-cons { grid-template-columns: 1fr; } }
+    .pros-cons-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .pros-cons-header {
+      padding: 16px 20px;
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .pros-header { background: rgba(67,233,123,0.08); color: var(--green); }
+    .cons-header { background: rgba(255,107,107,0.08); color: var(--red); }
+    .pros-cons-body { padding: 16px 20px; }
+    .pros-cons-item {
+      display: flex;
+      gap: 10px;
+      font-size: 14px;
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+    .pros-cons-item:last-child { margin-bottom: 0; }
+    .pros-cons-icon { flex-shrink: 0; margin-top: 1px; }
+
+    /* PATTERNS */
+    .pattern-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .pattern-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .pattern-number {
+      font-size: 36px;
+      font-weight: 900;
+      color: var(--border);
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+    .pattern-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--accent2);
+    }
+    .pattern-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ROADMAP */
+    .roadmap {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+      padding-left: 32px;
+    }
+    .roadmap::before {
+      content: '';
+      position: absolute;
+      left: 10px;
+      top: 12px;
+      bottom: 12px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--accent), var(--accent2));
+    }
+    .roadmap-item {
+      position: relative;
+      padding: 0 0 28px 24px;
+    }
+    .roadmap-item:last-child { padding-bottom: 0; }
+    .roadmap-dot {
+      position: absolute;
+      left: -32px;
+      top: 4px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--surface2);
+      border: 2px solid var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .roadmap-item:first-child .roadmap-dot { border-color: var(--green); background: rgba(67,233,123,0.1); }
+    .roadmap-item:nth-child(2) .roadmap-dot { border-color: var(--accent2); }
+    .roadmap-item:nth-child(3) .roadmap-dot { border-color: var(--accent); }
+    .roadmap-item:nth-child(4) .roadmap-dot { border-color: var(--yellow); }
+    .roadmap-item:nth-child(5) .roadmap-dot { border-color: var(--red); }
+    .roadmap-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .roadmap-tag {
+      font-size: 11px;
+      font-weight: 700;
+      background: rgba(108,99,255,0.15);
+      color: var(--accent);
+      padding: 2px 8px;
+      border-radius: 10px;
+      margin-left: 8px;
+    }
+    .roadmap-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* CODE BLOCK */
+    .code-block {
+      background: #0d1117;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      font-family: 'Cascadia Code', 'Fira Code', 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: #e6edf3;
+      overflow-x: auto;
+      line-height: 1.6;
+    }
+    .code-block .comment { color: #8b949e; }
+    .code-block .keyword { color: #ff7b72; }
+    .code-block .string { color: #a5d6ff; }
+    .code-block .type { color: #ffa657; }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 40px 24px;
+      color: var(--text-dim);
+      font-size: 13px;
+      border-top: 1px solid var(--border);
+    }
+    footer a { color: var(--text-muted); text-decoration: none; }
+
+    /* SCROLL REVEAL */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">Pesquisa Técnica · 2026</div>
+  <h1>Monorepo vs Multirepo<br>no Desenvolvimento Android</h1>
+  <p>Um levantamento das práticas adotadas por 14 empresas referência — com números reais, ferramentas e lições aprendidas em projetos com 100+ módulos.</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="hero-stat-value">14</span>
+      <span class="hero-stat-label">Empresas Analisadas</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-value">1.500</span>
+      <span class="hero-stat-label">Módulos (Cash App)</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-value">4×</span>
+      <span class="hero-stat-label">Melhora Média CI</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-value">92%</span>
+      <span class="hero-stat-label">Codebase Modularizado (Slack)</span>
+    </div>
+  </div>
+</div>
+
+<!-- NAV TABS -->
+<nav class="nav-tabs">
+  <div class="nav-tabs-inner">
+    <button class="tab-btn active" onclick="scrollToSection('visao-geral')">Visão Geral</button>
+    <button class="tab-btn" onclick="scrollToSection('empresas-globais')">Big Tech Global</button>
+    <button class="tab-btn" onclick="scrollToSection('empresas-android')">Referências Android</button>
+    <button class="tab-btn" onclick="scrollToSection('larga-escala')">100+ Módulos</button>
+    <button class="tab-btn" onclick="scrollToSection('comparativo')">Comparativo</button>
+    <button class="tab-btn" onclick="scrollToSection('padroes')">Padrões Universais</button>
+    <button class="tab-btn" onclick="scrollToSection('ferramentas')">Ferramentas</button>
+    <button class="tab-btn" onclick="scrollToSection('roadmap')">Roadmap</button>
+  </div>
+</nav>
+
+<div class="container">
+
+  <!-- VISÃO GERAL -->
+  <section class="section reveal" id="visao-geral">
+    <div class="section-header">
+      <span class="section-label">Overview</span>
+      <h2 class="section-title">Panorama das 14 Empresas</h2>
+      <p class="section-desc">Cada card representa a estratégia principal adotada, com o nível de documentação pública disponível.</p>
+    </div>
+    <div class="overview-grid">
+
+      <div class="company-card">
+        <div class="company-card-header">
+          <span class="company-name">Google</span>
+          <span class="strategy-badge badge-mono">Monorepo</span>
+        </div>
+        <div class="company-meta">
+          <div class="company-meta-row"><span class="meta-key">Build System</span><span class="meta-val">Bazel / Gradle</span></div>
+          <div class="company-meta-row"><span class="meta-key">Referência</span><span class="meta-val">Now in Android (NiA)</span></div>
+          <div class="company-meta-row"><span class="meta-key">Escala</span><span class="meta-val">Bilhões de linhas (Piper)</span></div>
+        </div>
+        <div class="doc-level" title="Nível de documentação pública">
+          <div class="doc-dot filled"></div><div class="doc-dot filled"></div><div class="doc-dot filled"></div><div class="doc-dot filled"></div><div class="doc-dot filled"></div>
+        </div>
+      </div>
+
+      <div class="company-card">
+        <div class="company-card-header">
+          <span class="company-name">Uber</span>
+          <span class="strategy-badge badge-mono">Monorepo</span>
+        </div>
+        <div class="company-meta">
+          <div class="company-meta-row"><span class="meta-key">Build System</span><span class="meta-val">Buck → Bazel</span></div>
+          <div class="company-meta-row"><span class="meta-key">Apps Android</span><span class="meta-val">20+</span></div>
+          <div class="company-meta-row"><span class="meta-key">Módulos</span><span class="meta-val">2.000+</span></div>
+        </div>
+        <div class="doc-level">
+          <div class="doc-dot filled"></div><div class="doc-dot filled"></div><div class="doc-dot filled"></div><div class="doc-dot filled"></div><div class="doc-dot filled"></div>
+        </div>
+      </div>
+
+      <div class="company-card">
+        <div class="company-card-header">
+          <span class="company-name">Airbnb</span>
+          <span class="strategy-badge badge-hybrid">Híbrido</span>
+        </div>
+        <div class="company-meta">
+          <div class="company-meta-row"><span class="meta-key">Build System</span><span class="meta-val">Gradle</span></div>
+          <div class="company-meta-row"><span class="meta-key">Engenheiros Mobile</span><span class="meta-val">100+</span></div>
+          <div class="company-meta-row"><span class="meta-key">Melhora de build</span><span class="meta-val">2.5× – 15×</span></div>
+        </div>
+        <div class="doc-level">
+          <div class="doc-dot filled"></div><div class="doc-dot filled"></div><div class="doc-dot filled"></div><div class="doc-dot"></div><div class="doc-dot"></div>
+        </div>
+      </div>
+
+      <div class="company-card">
+        <div class="company-card-header">
+          <span class="company-name">Netflix</span>
+          <span class="strategy-badge badge-multi">Multirepo</span>
+        </div>
+        <div class="company-meta">
+          <div class="company-meta-row"><span class="meta-key">Build System</span><span class="meta-val">Gradle + KMP</span></div>
+          <div class="company-meta-row"><span class="meta-key">Diferencial</span><span class="meta-val">CI distribuído</span></div>
+          <div class="company-meta-row"><span class="meta-key">Inovação</span><span class="meta-val">Primeira FAANG com KMP</span></div>
+        </div>
+        <div class="doc-level">
+          <div class="doc-dot filled"></div><div class="doc-dot filled"></div><div class="doc-dot filled"></div><div class="doc-dot"></div><div class="doc-dot"></div>
+        </div>
+      </div>
+
+      <div class="company-card">
+        <div class="company-card-header">
+          <span class="company-name">Disney Streaming</span>
+          <span class="strategy-badge badge-hybrid">Híbrido</span>
+        </div>
+        <div class="company-meta">
+          <div class="company-meta-row"><span class="meta-key">Arquitetura</span><span class="meta-val">ADK + NCPv2</span></div>
+          <div class="company-meta-row"><span class="meta-key">Linguagem Core</span><span class="meta-val">C99 + Rust/WASM</span></div>
+          <div class="company-meta-row"><span class="meta-key">Docs Públicas</span><span class="meta-val">Limitadas</span></div>
+        </div>
+        <div class="doc-level">
+          <div class="doc-dot filled"></div><div class="doc-dot"></div><div class="doc-dot"></div><div class="doc-dot"></div><div class="doc-dot"></div>
+        </div>
+      </div>
+
+      <div class="company-card">
+        <div class="company-card-header">
+          <span class="company-name">Stone</span>
+          <span class="strategy-badge badge-multi">Multirepo</span>
+        </div>
+        <div class="company-meta">
+          <div class="company-meta-row"><span class="meta-key">Build System</span><span class="meta-val">Gradle</span></div>
+          <div class="company-meta-row"><span class="meta-key">Modelo</span><span class="meta-val">SDKs independentes</span></div>
+          <div class="company-meta-row"><span class="meta-key">Docs Públicas</span><span class="meta-val">Limitadas</span></div>
+        </div>
+        <div class="doc-level">
+          <div class="doc-dot filled"></div><div class="doc-dot"></div><div class="doc-dot"></div><div class="doc-dot"></div><div class="doc-dot"></div>
+        </div>
+      </div>
+
+      <div class="company-card">
+        <div class="company-card-header">
+          <span class="company-name">Itaú Unibanco</span>
+          <span class="strategy-badge badge-multi">Multirepo</span>
+        </div>
+        <div class="company-meta">
+          <div class="company-meta-row"><span class="meta-key">Plataforma</span><span class="meta-val">GitHub Enterprise</span></div>
+          <div class="company-meta-row"><span class="meta-key">Engenheiros</span><span class="meta-val">17.000+</span></div>
+          <div class="company-meta-row"><span class="meta-key">Apps (Play Store)</span><span class="meta-val">16 apps</span></div>
+        </div>
+        <div class="doc-level">
+          <div class="doc-dot filled"></div><div class="doc-dot"></div><div class="doc-dot"></div><div class="doc-dot"></div><div class="doc-dot"></div>
+        </div>
+      </div>
+
+      <div class="company-card">
+        <div class="company-card-header">
+          <span class="company-name">Square / Block</span>
+          <span class="strategy-badge badge-mono">Monorepo</span>
+        </div>
+        <div class="company-meta">
+          <div class="company-meta-row"><span class="meta-key">Módulos Android</span><span class="meta-val">1.500</span></div>
+          <div class="company-meta-row"><span class="meta-key">Build System</span><span class="meta-val">Gradle + Metro</span></div>
+          <div class="company-meta-row"><span class="meta-key">Migração</span><span class="meta-val">Polyrepo → Mono (18m)</span></div>
+        </div>
+        <div class="doc-level">
+          <div class="doc-dot filled"></div><div class="doc-dot filled"></div><div class="doc-dot filled"></div><div class="doc-dot filled"></div><div class="doc-dot filled"></div>
+        </div>
+      </div>
+
+      <div class="company-card">
+        <div class="company-card-header">
+          <span class="company-name">Spotify</span>
+          <span class="strategy-badge badge-hybrid">Por Plataforma</span>
+        </div>
+        <div class="company-meta">
+          <div class="company-meta-row"><span class="meta-key">Build System</span><span class="meta-val">Bazel</span></div>
+          <div class="company-meta-row"><span class="meta-key">Build files</span><span class="meta-val">2.000+ BUILD.bazel</span></div>
+          <div class="company-meta-row"><span class="meta-key">Melhora CI</span><span class="meta-val">4× (80→20min)</span></div>
+        </div>
+        <div class="doc-level">
+          <div class="doc-dot filled"></div><div class="doc-dot filled"></div><div class="doc-dot filled"></div><div class="doc-dot filled"></div><div class="doc-dot"></div>
+        </div>
+      </div>
+
+      <div class="company-card">
+        <div class="company-card-header">
+          <span class="company-name">Lyft</span>
+          <span class="strategy-badge badge-mono">Monorepo</span>
+        </div>
+        <div class="company-meta">
+          <div class="company-meta-row"><span class="meta-key">Build System</span><span class="meta-val">Bazel + Buildkite</span></div>
+          <div class="company-meta-row"><span class="meta-key">Apps</span><span class="meta-val">10 apps</span></div>
+          <div class="company-meta-row"><span class="meta-key">Build antes→depois</span><span class="meta-val">15min → 2min</span></div>
+        </div>
+        <div class="doc-level">
+          <div class="doc-dot filled"></div><div class="doc-dot filled"></div><div class="doc-dot filled"></div><div class="doc-dot filled"></div><div class="doc-dot"></div>
+        </div>
+      </div>
+
+      <div class="company-card">
+        <div class="company-card-header">
+          <span class="company-name">Dropbox</span>
+          <span class="strategy-badge badge-hybrid">Por Plataforma</span>
+        </div>
+        <div class="company-meta">
+          <div class="company-meta-row"><span class="meta-key">Build System</span><span class="meta-val">Gradle</span></div>
+          <div class="company-meta-row"><span class="meta-key">Módulos</span><span class="meta-val">75</span></div>
+          <div class="company-meta-row"><span class="meta-key">Decisão</span><span class="meta-val">Avaliou Bazel, ficou no Gradle</span></div>
+        </div>
+        <div class="doc-level">
+          <div class="doc-dot filled"></div><div class="doc-dot filled"></div><div class="doc-dot filled"></div><div class="doc-dot filled"></div><div class="doc-dot"></div>
+        </div>
+      </div>
+
+      <div class="company-card">
+        <div class="company-card-header">
+          <span class="company-name">LinkedIn</span>
+          <span class="strategy-badge badge-multi">Polyrepo</span>
+        </div>
+        <div class="company-meta">
+          <div class="company-meta-row"><span class="meta-key">Build System</span><span class="meta-val">Gradle + Develocity</span></div>
+          <div class="company-meta-row"><span class="meta-key">Cache hit rate</span><span class="meta-val">~60%</span></div>
+          <div class="company-meta-row"><span class="meta-key">Melhora build</span><span class="meta-val">+400%</span></div>
+        </div>
+        <div class="doc-level">
+          <div class="doc-dot filled"></div><div class="doc-dot filled"></div><div class="doc-dot filled"></div><div class="doc-dot filled"></div><div class="doc-dot"></div>
+        </div>
+      </div>
+
+      <div class="company-card">
+        <div class="company-card-header">
+          <span class="company-name">Slack</span>
+          <span class="strategy-badge badge-hybrid">Por Plataforma</span>
+        </div>
+        <div class="company-meta">
+          <div class="company-meta-row"><span class="meta-key">Módulos adicionados</span><span class="meta-val">330 (Android)</span></div>
+          <div class="company-meta-row"><span class="meta-key">% modularizado</span><span class="meta-val">92%</span></div>
+          <div class="company-meta-row"><span class="meta-key">Redução CI p95</span><span class="meta-val">30%</span></div>
+        </div>
+        <div class="doc-level">
+          <div class="doc-dot filled"></div><div class="doc-dot filled"></div><div class="doc-dot filled"></div><div class="doc-dot filled"></div><div class="doc-dot filled"></div>
+        </div>
+      </div>
+
+      <div class="company-card">
+        <div class="company-card-header">
+          <span class="company-name">Shopify</span>
+          <span class="strategy-badge badge-hybrid">Híbrido (RN + KMM)</span>
+        </div>
+        <div class="company-meta">
+          <div class="company-meta-row"><span class="meta-key">Stack</span><span class="meta-val">React Native + KMM</span></div>
+          <div class="company-meta-row"><span class="meta-key">Código compartilhado</span><span class="meta-val">~95% via KMM</span></div>
+          <div class="company-meta-row"><span class="meta-key">CI</span><span class="meta-val">Buildkite</span></div>
+        </div>
+        <div class="doc-level">
+          <div class="doc-dot filled"></div><div class="doc-dot filled"></div><div class="doc-dot filled"></div><div class="doc-dot filled"></div><div class="doc-dot"></div>
+        </div>
+      </div>
+
+    </div>
+    <p style="font-size:12px;color:var(--text-dim);margin-top:14px;">● Nível de documentação pública: 5 pontos = muito documentado, 1 ponto = limitado</p>
+  </section>
+
+  <!-- BIG TECH GLOBAL -->
+  <section class="section reveal" id="empresas-globais">
+    <div class="section-header">
+      <span class="section-label">Big Tech Global</span>
+      <h2 class="section-title">Google · Uber · Airbnb · Netflix · Itaú · Stone</h2>
+    </div>
+
+    <!-- UBER -->
+    <div class="company-detail">
+      <div class="company-detail-header">
+        <div>
+          <div class="company-detail-title">Uber — A maior virada da indústria</div>
+          <div class="company-detail-subtitle">Multirepo (2013–2016) → Monorepo (2016–hoje) · 20+ apps · 2.000+ módulos</div>
+        </div>
+        <span class="strategy-badge badge-mono">Monorepo</span>
+      </div>
+      <div class="company-detail-body">
+        <div class="metrics-grid">
+          <div class="metric-card"><span class="metric-value">2.000+</span><span class="metric-label">Módulos Android</span></div>
+          <div class="metric-card"><span class="metric-value">20+</span><span class="metric-label">Apps no Monorepo</span></div>
+          <div class="metric-card"><span class="metric-value">&lt;1min</span><span class="metric-label">Build Incremental</span></div>
+          <div class="metric-card"><span class="metric-value">15→5min</span><span class="metric-label">Build Completo</span></div>
+        </div>
+        <div class="detail-cols">
+          <div>
+            <div class="subsection">
+              <div class="subsection-title">Ferramentas</div>
+              <div class="tags">
+                <span class="tag accent">OkBuck (Buck via Gradle)</span>
+                <span class="tag">Bazel (migração 2022)</span>
+                <span class="tag">DevPod</span>
+                <span class="tag">Buildkite</span>
+              </div>
+            </div>
+            <div class="subsection">
+              <div class="subsection-title">Por que voltaram ao Monorepo</div>
+              <div class="problem-list">
+                <div class="problem-item">
+                  <div class="problem-side prob"><strong>Problema</strong>Overhead imenso ao criar novos repos</div>
+                  <div class="problem-side sol"><strong>Solução</strong>Tudo em um único repositório</div>
+                </div>
+                <div class="problem-item">
+                  <div class="problem-side prob"><strong>Problema</strong>Sincronização difícil entre codebases</div>
+                  <div class="problem-side sol"><strong>Solução</strong>Buck com builds incrementais</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="subsection">
+              <div class="subsection-title">Referências</div>
+              <div class="links-list">
+                <a class="ref-link" href="https://www.uber.com/blog/android-engineering-code-monorepo/" target="_blank">The Journey to Android Monorepo — Uber Blog</a>
+                <a class="ref-link" href="https://www.uber.com/blog/ios-monorepo/" target="_blank">Faster Together: Uber's iOS Monorepo</a>
+                <a class="ref-link" href="https://github.com/uber/okbuck" target="_blank">OkBuck — GitHub</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NETFLIX -->
+    <div class="company-detail">
+      <div class="company-detail-header">
+        <div>
+          <div class="company-detail-title">Netflix — O caso multirepo bem-sucedido</div>
+          <div class="company-detail-subtitle">Multirepo com CI distribuído como compensação · Primeira FAANG com KMP em produção</div>
+        </div>
+        <span class="strategy-badge badge-multi">Multirepo</span>
+      </div>
+      <div class="company-detail-body">
+        <div class="detail-cols">
+          <div>
+            <div class="subsection">
+              <div class="subsection-title">Solução para os problemas do Multirepo</div>
+              <p style="font-size:14px;color:var(--text-muted);line-height:1.6;">Desenvolveram um sistema de <strong style="color:var(--text)">CI distribuído</strong> onde o dono de um código compartilhado recebe feedback imediato sobre quais consumidores (diretos e transitivos) foram quebrados por uma mudança — simulando o principal benefício do monorepo sem abandonar repos separados.</p>
+            </div>
+            <div class="subsection">
+              <div class="subsection-title">Ferramentas</div>
+              <div class="tags">
+                <span class="tag">Gradle</span>
+                <span class="tag accent">KMP (Studio Apps)</span>
+                <span class="tag">Kotlin</span>
+                <span class="tag">Jetpack Compose</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="subsection">
+              <div class="subsection-title">Referências</div>
+              <div class="links-list">
+                <a class="ref-link" href="https://netflixtechblog.com/towards-true-continuous-integration-distributed-repositories-and-dependencies-2a2e3108c051" target="_blank">Towards True Continuous Integration — Netflix TechBlog</a>
+                <a class="ref-link" href="https://netflixtechblog.com/netflix-android-and-ios-studio-apps-kotlin-multiplatform-d6d4d8d25d23" target="_blank">Netflix Studio Apps — KMP</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- EMPRESAS ANDROID REFERÊNCIA -->
+  <section class="section reveal" id="empresas-android">
+    <div class="section-header">
+      <span class="section-label">Referências Android</span>
+      <h2 class="section-title">Square · Spotify · Lyft · Dropbox · LinkedIn · Slack · Shopify</h2>
+    </div>
+
+    <!-- SQUARE -->
+    <div class="company-detail">
+      <div class="company-detail-header">
+        <div>
+          <div class="company-detail-title">Square / Block (Cash App)</div>
+          <div class="company-detail-subtitle">O maior codebase Android modular documentado publicamente · 1.500 módulos</div>
+        </div>
+        <span class="strategy-badge badge-mono">Monorepo</span>
+      </div>
+      <div class="company-detail-body">
+        <div class="metrics-grid">
+          <div class="metric-card"><span class="metric-value">1.500</span><span class="metric-label">Módulos Android</span></div>
+          <div class="metric-card"><span class="metric-value">~450</span><span class="metric-label">Serviços JVM migrados</span></div>
+          <div class="metric-card"><span class="metric-value">8.800</span><span class="metric-label">Builds/semana</span></div>
+          <div class="metric-card"><span class="metric-value">10min</span><span class="metric-label">p90 de CI</span></div>
+          <div class="metric-card"><span class="metric-value">~59%</span><span class="metric-label">Melhora build (Metro)</span></div>
+          <div class="metric-card"><span class="metric-value">18 meses</span><span class="metric-label">Duração da migração</span></div>
+        </div>
+        <div class="detail-cols">
+          <div>
+            <div class="subsection">
+              <div class="subsection-title">Ferramentas Criadas Internamente</div>
+              <div class="problem-list">
+                <div class="problem-item" style="grid-template-columns:auto 1fr;">
+                  <div class="problem-side prob" style="border-left-color:var(--accent)"><strong>Anvil</strong>Kotlin compiler plugin para DI multi-módulo. Elimina boilerplate do Dagger.</div>
+                  <div class="problem-side sol" style="border-left-color:var(--accent2)"><strong>Metro (2024)</strong>Substituto Kotlin-first, compatível com K2. 59% mais rápido.</div>
+                </div>
+              </div>
+            </div>
+            <div class="subsection">
+              <div class="subsection-title">Outros Open-Source</div>
+              <div class="tags">
+                <span class="tag accent">Workflow (state machines)</span>
+                <span class="tag accent">Molecule (StateFlow + Compose)</span>
+                <span class="tag accent">Redwood (UI multiplataforma)</span>
+                <span class="tag">OkHttp</span>
+                <span class="tag">Retrofit</span>
+                <span class="tag">Okio</span>
+              </div>
+            </div>
+            <div class="subsection">
+              <div class="subsection-title">Problemas com 1.500 Módulos</div>
+              <div class="problem-list">
+                <div class="problem-item">
+                  <div class="problem-side prob"><strong>Problema</strong>IDE (IntelliJ) travando com todos os módulos carregados</div>
+                  <div class="problem-side sol"><strong>Solução</strong>Plugin IntelliJ customizado para carregamento seletivo de módulos</div>
+                </div>
+                <div class="problem-item">
+                  <div class="problem-side prob"><strong>Problema</strong>Dagger + kapt incompatível com Kotlin 2.0 (K2)</div>
+                  <div class="problem-side sol"><strong>Solução</strong>Migração para Metro (compile-time, K2-first)</div>
+                </div>
+                <div class="problem-item">
+                  <div class="problem-side prob"><strong>Problema</strong>Testes flaky amplificados em escala</div>
+                  <div class="problem-side sol"><strong>Solução</strong>Ferramentas para surfaçar flaky tests aos times donos</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="subsection">
+              <div class="subsection-title">Referências</div>
+              <div class="links-list">
+                <a class="ref-link" href="https://code.cash.app/android-architecture-for-the-rocketship-part1-modularisation" target="_blank">Android Architecture for the Rocketship — Modularisation</a>
+                <a class="ref-link" href="https://code.cash.app/cash-android-moves-to-metro" target="_blank">Cash Android Moves to Metro</a>
+                <a class="ref-link" href="https://engineering.block.xyz/blog/from-polyrepo-fragmentation-to-monorepo-leverage" target="_blank">From Polyrepo Fragmentation to Monorepo Leverage</a>
+                <a class="ref-link" href="https://developer.squareup.com/blog/introducing-anvil/" target="_blank">Introducing Anvil — Square Developer Blog</a>
+                <a class="ref-link" href="https://www.droidcon.com/2022/06/28/dagger-anvil-learning-to-love-dependency-injection/" target="_blank">Dagger + Anvil — Droidcon 2022</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLACK -->
+    <div class="company-detail">
+      <div class="company-detail-header">
+        <div>
+          <div class="company-detail-title">Slack — Os dados mais detalhados da indústria</div>
+          <div class="company-detail-subtitle">Projeto Duplo · 18 meses · 330 módulos adicionados · 92% do codebase modularizado</div>
+        </div>
+        <span class="strategy-badge badge-hybrid">Por Plataforma</span>
+      </div>
+      <div class="company-detail-body">
+        <div class="metrics-grid">
+          <div class="metric-card"><span class="metric-value">330</span><span class="metric-label">Módulos adicionados (Android)</span></div>
+          <div class="metric-card"><span class="metric-value">92%</span><span class="metric-label">Codebase modularizado</span></div>
+          <div class="metric-card"><span class="metric-value">30%</span><span class="metric-label">Redução CI p95</span></div>
+          <div class="metric-card"><span class="metric-value">20–45s</span><span class="metric-label">Economia por build (Config Cache)</span></div>
+        </div>
+        <div class="detail-cols">
+          <div>
+            <div class="subsection">
+              <div class="subsection-title">A Lição Mais Importante</div>
+              <div style="background:rgba(255,209,102,0.08);border:1px solid rgba(255,209,102,0.3);border-radius:10px;padding:16px;font-size:14px;line-height:1.6;">
+                <strong style="color:var(--yellow);">Estabilizar → Modularizar → Modernizar</strong><br>
+                <span style="color:var(--text-muted)">Tentar modularizar código com tech debt cria dependências circulares ocultas que inviabilizam a migração. O Slack levou 18 meses porque precisou liquidar a dívida técnica <em>antes</em> de poder modularizar.</span>
+              </div>
+            </div>
+            <div class="subsection">
+              <div class="subsection-title">Padrão API/Impl (adotado no Projeto Duplo)</div>
+              <div class="code-block"><span class="comment">// Cada feature tem dois subprojetos:</span>
+:feature-payments:<span class="keyword">api</span>   <span class="comment">// interfaces públicas</span>
+:feature-payments:<span class="keyword">impl</span>  <span class="comment">// implementação</span>
+
+<span class="comment">// Outros módulos só dependem de :api</span>
+<span class="comment">// Nunca de :impl — garante isolamento</span></div>
+            </div>
+          </div>
+          <div>
+            <div class="subsection">
+              <div class="subsection-title">Referências</div>
+              <div class="links-list">
+                <a class="ref-link" href="https://slack.engineering/stabilize-modularize-modernize-scaling-slacks-mobile-codebases/" target="_blank">Stabilize, Modularize, Modernize — Part 1</a>
+                <a class="ref-link" href="https://slack.engineering/stabilize-modularize-modernize-scaling-slacks-mobile-codebases-2/" target="_blank">Scaling Slack's Mobile Codebases — Part 2</a>
+                <a class="ref-link" href="https://slack.engineering/scaling-slacks-mobile-codebases-modernization/" target="_blank">Scaling Slack's Mobile Codebases — Part 3</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LYFT -->
+    <div class="company-detail">
+      <div class="company-detail-header">
+        <div>
+          <div class="company-detail-title">Lyft — CI Dinâmico com Affected Targets</div>
+          <div class="company-detail-subtitle">Monorepo por plataforma · Bazel · Buildkite · 10 apps · 200 contribuidores</div>
+        </div>
+        <span class="strategy-badge badge-mono">Monorepo</span>
+      </div>
+      <div class="company-detail-body">
+        <div class="metrics-grid">
+          <div class="metric-card"><span class="metric-value">15→2min</span><span class="metric-label">Build Rider App</span></div>
+          <div class="metric-card"><span class="metric-value">20→5min</span><span class="metric-label">Build CI</span></div>
+          <div class="metric-card"><span class="metric-value">~100</span><span class="metric-label">Máquinas Mac no CI</span></div>
+          <div class="metric-card"><span class="metric-value">2→20</span><span class="metric-label">Jobs CI (affected vs tudo)</span></div>
+        </div>
+        <div class="detail-cols">
+          <div>
+            <div class="subsection">
+              <div class="subsection-title">Como funciona o CI Dinâmico</div>
+              <div class="code-block"><span class="comment"># generate_pipeline.py (simplificado)</span>
+<span class="keyword">def</span> <span class="type">generate_pipeline</span>():
+  <span class="comment"># 1. Quais arquivos mudaram no PR?</span>
+  changed = github.<span class="keyword">get_changed_files</span>(pr)
+
+  <span class="comment"># 2. Quais targets do Bazel são afetados?</span>
+  affected = bazel.<span class="keyword">query</span>(
+    <span class="string">f"rdeps(//..., {changed})"</span>
+  )
+
+  <span class="comment"># 3. Gera apenas os jobs necessários</span>
+  <span class="keyword">return</span> buildkite.<span class="keyword">generate</span>(affected)
+  <span class="comment"># Resultado: 2 jobs ao invés de 20</span></div>
+            </div>
+          </div>
+          <div>
+            <div class="subsection">
+              <div class="subsection-title">Citação direta</div>
+              <div style="background:var(--surface2);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:14px 16px;font-size:14px;font-style:italic;color:var(--text-muted);line-height:1.6;">"Você precisa de pelo menos 1 engenheiro dedicado full-time à infraestrutura de build para manter Bazel em escala."<br><strong style="color:var(--text);font-style:normal;">— Keith Smiley, Lyft</strong></div>
+            </div>
+            <div class="subsection" style="margin-top:16px;">
+              <div class="subsection-title">Referências</div>
+              <div class="links-list">
+                <a class="ref-link" href="https://buildkite.com/resources/blog/how-lyfts-mobile-team-does-mobile-ci-at-scale/" target="_blank">How Lyft's mobile team does CI at scale</a>
+                <a class="ref-link" href="https://semaphore.io/blog/keith-smiley-bazel" target="_blank">Keith Smiley of Lyft on Bazel — Semaphore</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SPOTIFY -->
+    <div class="company-detail">
+      <div class="company-detail-header">
+        <div>
+          <div class="company-detail-title">Spotify — 2.000 Build Files Gerados Automaticamente</div>
+          <div class="company-detail-subtitle">Repos por plataforma · Bazel · 200+ engenheiros · 120+ times</div>
+        </div>
+        <span class="strategy-badge badge-hybrid">Por Plataforma</span>
+      </div>
+      <div class="company-detail-body">
+        <div class="metrics-grid">
+          <div class="metric-card"><span class="metric-value">2.000+</span><span class="metric-label">BUILD.bazel files</span></div>
+          <div class="metric-card"><span class="metric-value">200+</span><span class="metric-label">Engenheiros</span></div>
+          <div class="metric-card"><span class="metric-value">80→20min</span><span class="metric-label">CI p75</span></div>
+          <div class="metric-card"><span class="metric-value">~30s</span><span class="metric-label">Build local p75</span></div>
+        </div>
+        <div class="detail-cols">
+          <div>
+            <div class="subsection">
+              <div class="subsection-title">Insight Principal</div>
+              <p style="font-size:14px;color:var(--text-muted);line-height:1.6;">A Spotify usou uma <strong style="color:var(--text)">DSL em Ruby + YAML</strong> para abstrair o Bazel. Os 2.000+ arquivos BUILD.bazel são gerados automaticamente — os engenheiros nunca precisaram aprender Bazel diretamente. A migração ocorreu <strong style="color:var(--text)">sem interromper nenhuma release semanal</strong>.</p>
+            </div>
+          </div>
+          <div>
+            <div class="subsection">
+              <div class="subsection-title">Referências</div>
+              <div class="links-list">
+                <a class="ref-link" href="https://engineering.atspotify.com/2023/10/switching-build-systems-seamlessly" target="_blank">Switching Build Systems, Seamlessly — Spotify Engineering</a>
+                <a class="ref-link" href="https://speakerdeck.com/hejelinnilsson/modularization-how-hard-can-it-be-droidcon-berlin" target="_blank">Modularization - how hard can it be? — Droidcon Berlin</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DROPBOX + LINKEDIN -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+      <div class="company-detail" style="margin-bottom:0;">
+        <div class="company-detail-header">
+          <div>
+            <div class="company-detail-title">Dropbox</div>
+            <div class="company-detail-subtitle">75 módulos · Avaliou Bazel, escolheu Gradle</div>
+          </div>
+          <span class="strategy-badge badge-hybrid">Gradle</span>
+        </div>
+        <div class="company-detail-body">
+          <div class="subsection">
+            <div class="subsection-title">Decisão Documentada</div>
+            <p style="font-size:13px;color:var(--text-muted);line-height:1.5;">Bazel reduziria builds de 252s para 81s (com cache), mas a <strong style="color:var(--text)">familiaridade do time com Gradle</strong> pesou mais. Criaram o <strong style="color:var(--text)">Layered Verifier</strong> (Kotlin) para impor regras de dependência entre camadas.</p>
+          </div>
+          <div class="links-list">
+            <a class="ref-link" href="https://dropbox.tech/mobile/modernizing-our-android-build-system-part-i-the-planning" target="_blank">Modernizing Android Build System — Part I</a>
+            <a class="ref-link" href="https://dropbox.tech/mobile/modernizing-our-android-build-system-part-ii-the-execution" target="_blank">Modernizing Android Build System — Part II</a>
+          </div>
+        </div>
+      </div>
+      <div class="company-detail" style="margin-bottom:0;">
+        <div class="company-detail-header">
+          <div>
+            <div class="company-detail-title">LinkedIn</div>
+            <div class="company-detail-subtitle">+400% build time · 60% cache hit rate</div>
+          </div>
+          <span class="strategy-badge badge-multi">Polyrepo</span>
+        </div>
+        <div class="company-detail-body">
+          <div class="metrics-grid" style="grid-template-columns:1fr 1fr;">
+            <div class="metric-card"><span class="metric-value">400%</span><span class="metric-label">Melhora build</span></div>
+            <div class="metric-card"><span class="metric-value">40%</span><span class="metric-label">Melhora testes</span></div>
+          </div>
+          <div class="links-list" style="margin-top:12px;">
+            <a class="ref-link" href="https://engineering.linkedin.com/blog/2018/07/how-we-improved-build-time-by-400-percent" target="_blank">400% Build Time Improvement — LinkedIn</a>
+            <a class="ref-link" href="https://engineering.linkedin.com/blog/2019/productivity-at-scale--how-we-improved-build-time-with-gradle-bu" target="_blank">Gradle Build Cache — LinkedIn</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- LARGA ESCALA -->
+  <section class="section reveal" id="larga-escala">
+    <div class="section-header">
+      <span class="section-label">100+ Módulos</span>
+      <h2 class="section-title">Problemas e Soluções em Larga Escala</h2>
+      <p class="section-desc">Desafios que só aparecem quando o número de módulos ultrapassa a centena.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:32px;">
+      <div>
+        <div class="subsection-title" style="margin-bottom:16px;">Problema Principal: DI não escala</div>
+        <div class="code-block">
+<span class="comment">// Evolução da DI em projetos grandes</span>
+
+<span class="comment">// Fase 1 (até ~30 módulos)</span>
+<span class="keyword">Dagger 2 + kapt</span>
+<span class="comment">// Funciona, mas kapt é lento</span>
+
+<span class="comment">// Fase 2 (30–100 módulos)</span>
+<span class="keyword">Dagger 2 + KSP</span> <span class="comment">// ou Hilt</span>
+<span class="comment">// KSP é 2x mais rápido que kapt</span>
+
+<span class="comment">// Fase 3 (100+ módulos)</span>
+<span class="keyword">Anvil</span> (Square) <span class="comment">// elimina boilerplate</span>
+
+<span class="comment">// Fase 4 (Kotlin 2.0 / K2)</span>
+<span class="keyword">Metro</span> (Block) <span class="comment">// 59% mais rápido</span>
+<span class="comment">// Kotlin-first, compile-time</span>
+        </div>
+      </div>
+      <div>
+        <div class="subsection-title" style="margin-bottom:16px;">Affected Modules Detection</div>
+        <div class="code-block">
+<span class="comment">// Sem detection: O(n) com módulos</span>
+PR com 1 arquivo alterado
+→ <span class="keyword">20 jobs de CI</span> disparados
+→ <span class="type">40+ minutos</span> de feedback
+
+<span class="comment">// Com detection (Bazel query)</span>
+PR com 1 arquivo alterado
+→ <span class="keyword">2 jobs afetados</span> detectados
+→ <span class="type">~5 minutos</span> de feedback
+
+<span class="comment">// Economia: ~90% de compute de CI</span>
+<span class="comment">// Usado por: Lyft, Spotify, Google</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection-title" style="margin-bottom:16px;">Gradle Develocity (Enterprise) em Larga Escala</div>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>O que faz</th>
+            <th>Resultado Documentado</th>
+            <th>Empresa</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Build Cache Distribuído</strong></td>
+            <td>Cache remoto compartilhado entre todos os devs e CI</td>
+            <td>+30% builds · +40% testes · 60% hit rate</td>
+            <td>LinkedIn, Slack</td>
+          </tr>
+          <tr>
+            <td><strong>Predictive Test Selection</strong></td>
+            <td>ML seleciona apenas testes prováveis de falhar</td>
+            <td>49% menos testes sem perda de cobertura</td>
+            <td>Dados Gradle 2024</td>
+          </tr>
+          <tr>
+            <td><strong>Configuration Cache</strong></td>
+            <td>Serializa fase de configuração do Gradle</td>
+            <td>20–45s economizados por build</td>
+            <td>Slack</td>
+          </tr>
+          <tr>
+            <td><strong>Flaky Test Detection</strong></td>
+            <td>Detecta testes não-determinísticos automaticamente</td>
+            <td>Reduz ruído de CI em escala</td>
+            <td>Square/Block</td>
+          </tr>
+          <tr>
+            <td><strong>Build Scans</strong></td>
+            <td>Timeline completa de cada build (deps, cache, performance)</td>
+            <td>Diagnóstico de regressões em minutos</td>
+            <td>LinkedIn, Slack</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- COMPARATIVO -->
+  <section class="section reveal" id="comparativo">
+    <div class="section-header">
+      <span class="section-label">Comparativo</span>
+      <h2 class="section-title">Monorepo vs Multirepo</h2>
+    </div>
+
+    <div class="pros-cons" style="margin-bottom:40px;">
+      <div class="pros-cons-card">
+        <div class="pros-cons-header pros-header">
+          <span>✓</span> Vantagens do Monorepo
+        </div>
+        <div class="pros-cons-body">
+          <div class="pros-cons-item"><span class="pros-cons-icon" style="color:var(--green)">✓</span><span>Refatorações atômicas — uma única PR altera múltiplos módulos consistentemente</span></div>
+          <div class="pros-cons-item"><span class="pros-cons-icon" style="color:var(--green)">✓</span><span>Ferramentas compartilhadas (lint, CI, convention plugins) aplicadas uniformemente</span></div>
+          <div class="pros-cons-item"><span class="pros-cons-icon" style="color:var(--green)">✓</span><span>Detecção imediata de quebras entre módulos</span></div>
+          <div class="pros-cons-item"><span class="pros-cons-icon" style="color:var(--green)">✓</span><span>Sem cerimônia de versionamento entre dependências internas</span></div>
+          <div class="pros-cons-item"><span class="pros-cons-icon" style="color:var(--green)">✓</span><span>Experiência no IDE melhor: navegação entre módulos sem trocar de projeto</span></div>
+        </div>
+      </div>
+      <div class="pros-cons-card">
+        <div class="pros-cons-header cons-header">
+          <span>✗</span> Desvantagens do Monorepo
+        </div>
+        <div class="pros-cons-body">
+          <div class="pros-cons-item"><span class="pros-cons-icon" style="color:var(--red)">✗</span><span>Git clone/fetch fica lento conforme o repo cresce</span></div>
+          <div class="pros-cons-item"><span class="pros-cons-icon" style="color:var(--red)">✗</span><span>Em 100+ módulos, Gradle puro pode não ser suficiente — requer Bazel/Buck</span></div>
+          <div class="pros-cons-item"><span class="pros-cons-icon" style="color:var(--red)">✗</span><span>CI precisa ser inteligente (affected targets) para não escalar O(n)</span></div>
+          <div class="pros-cons-item"><span class="pros-cons-icon" style="color:var(--red)">✗</span><span>IDE pode travar com muitos módulos carregados simultaneamente</span></div>
+          <div class="pros-cons-item"><span class="pros-cons-icon" style="color:var(--red)">✗</span><span>Controle de acesso granular por time é mais complexo</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pros-cons">
+      <div class="pros-cons-card">
+        <div class="pros-cons-header pros-header">
+          <span>✓</span> Vantagens do Multirepo
+        </div>
+        <div class="pros-cons-body">
+          <div class="pros-cons-item"><span class="pros-cons-icon" style="color:var(--green)">✓</span><span>Isolamento total por time/produto</span></div>
+          <div class="pros-cons-item"><span class="pros-cons-icon" style="color:var(--green)">✓</span><span>Clone e operações git rápidas por repositório</span></div>
+          <div class="pros-cons-item"><span class="pros-cons-icon" style="color:var(--green)">✓</span><span>Autonomia e ciclos de release completamente independentes</span></div>
+          <div class="pros-cons-item"><span class="pros-cons-icon" style="color:var(--green)">✓</span><span>Controle de acesso natural — cada time gerencia seu repo</span></div>
+          <div class="pros-cons-item"><span class="pros-cons-icon" style="color:var(--green)">✓</span><span>Build system padrão (Gradle) funciona bem individualmente</span></div>
+        </div>
+      </div>
+      <div class="pros-cons-card">
+        <div class="pros-cons-header cons-header">
+          <span>✗</span> Desvantagens do Multirepo
+        </div>
+        <div class="pros-cons-body">
+          <div class="pros-cons-item"><span class="pros-cons-icon" style="color:var(--red)">✗</span><span>Refatorações cross-repo são dolorosas (múltiplas PRs coordenadas)</span></div>
+          <div class="pros-cons-item"><span class="pros-cons-icon" style="color:var(--red)">✗</span><span>Dependências compartilhadas propagam lentamente entre repos</span></div>
+          <div class="pros-cons-item"><span class="pros-cons-icon" style="color:var(--red)">✗</span><span>Duplicação de tooling, CI e convention plugins entre repos</span></div>
+          <div class="pros-cons-item"><span class="pros-cons-icon" style="color:var(--red)">✗</span><span>Diamond dependency e drift de versões são frequentes</span></div>
+          <div class="pros-cons-item"><span class="pros-cons-icon" style="color:var(--red)">✗</span><span>Debugging cross-repo é difícil sem Composite Builds</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:32px;">
+      <div class="subsection-title" style="margin-bottom:16px;">Comparativo de Ferramentas de Build</div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Gradle</th>
+              <th>Bazel</th>
+              <th>Nx</th>
+              <th>Buck2</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Local Computation Cache</td>
+              <td><span class="check">✓</span> Nativo</td>
+              <td><span class="check">✓</span> Nativo</td>
+              <td><span class="check">✓</span> Nativo</td>
+              <td><span class="check">✓</span> Nativo</td>
+            </tr>
+            <tr>
+              <td>Distributed Cache</td>
+              <td><span class="check">✓</span> Nativo</td>
+              <td><span class="check">✓</span> Nativo</td>
+              <td><span class="check">✓</span> Nativo</td>
+              <td><span class="check">✓</span> Nativo</td>
+            </tr>
+            <tr>
+              <td><strong>Remote Execution</strong></td>
+              <td><span class="cross">✗</span> Implementar</td>
+              <td><span class="check">✓</span> <strong>Nativo</strong></td>
+              <td><span class="check">✓</span> Nativo</td>
+              <td><span class="check">✓</span> Nativo</td>
+            </tr>
+            <tr>
+              <td><strong>Affected Projects Detection</strong></td>
+              <td><span class="check">✓</span> <strong>Nativo</strong></td>
+              <td><span class="cross">✗</span> Implementar</td>
+              <td><span class="check">✓</span> Nativo</td>
+              <td><span class="partial">~</span> Parcial</td>
+            </tr>
+            <tr>
+              <td>Suporte Android Nativo</td>
+              <td><span class="check">✓</span> Nativo</td>
+              <td><span class="check">✓</span> Nativo</td>
+              <td><span class="partial">~</span> Experimental</td>
+              <td><span class="check">✓</span> Nativo</td>
+            </tr>
+            <tr>
+              <td>Curva de Aprendizado</td>
+              <td><span class="check">✓</span> Baixa</td>
+              <td><span class="cross">✗</span> Alta</td>
+              <td><span class="partial">~</span> Média</td>
+              <td><span class="cross">✗</span> Alta</td>
+            </tr>
+            <tr>
+              <td>Adoção na Indústria Android</td>
+              <td><span class="check">✓</span> <strong>Dominante</strong></td>
+              <td><span class="partial">~</span> Lyft, Spotify, Google</td>
+              <td><span class="cross">✗</span> Rara</td>
+              <td><span class="partial">~</span> Meta</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size:12px;color:var(--text-dim);margin-top:10px;">Fonte: <a href="https://monorepo.tools/compare" target="_blank" style="color:var(--text-muted);">monorepo.tools/compare</a></p>
+    </div>
+  </section>
+
+  <!-- PADRÕES UNIVERSAIS -->
+  <section class="section reveal" id="padroes">
+    <div class="section-header">
+      <span class="section-label">Padrões Universais</span>
+      <h2 class="section-title">O que todas as empresas aprenderam</h2>
+      <p class="section-desc">Independente de monorepo ou multirepo, esses padrões aparecem em todas as empresas que escalaram para 100+ módulos.</p>
+    </div>
+    <div class="pattern-grid">
+      <div class="pattern-card">
+        <div class="pattern-number">01</div>
+        <div class="pattern-title">Escala exige especialização</div>
+        <div class="pattern-desc">Todas as empresas com 100+ módulos criaram times dedicados de Developer Infrastructure / Platform Engineering. Não é opcional — é o que permite o resto do time continuar produtivo.</div>
+      </div>
+      <div class="pattern-card">
+        <div class="pattern-number">02</div>
+        <div class="pattern-title">Estabilizar antes de modularizar</div>
+        <div class="pattern-desc">Lição explícita do Slack: liquidar tech debt e dependências circulares ocultas é pré-requisito. Modularizar código instável multiplica o problema, não o resolve.</div>
+      </div>
+      <div class="pattern-card">
+        <div class="pattern-number">03</div>
+        <div class="pattern-title">DI é o maior gargalo</div>
+        <div class="pattern-desc">Dagger puro com kapt não escala bem em 100+ módulos. A indústria evoluiu para KSP → Anvil → Metro. Hilt resolve bem até ~100 módulos com KSP.</div>
+      </div>
+      <div class="pattern-card">
+        <div class="pattern-number">04</div>
+        <div class="pattern-title">Padrão :api / :impl é universal</div>
+        <div class="pattern-desc">Cada módulo de feature expõe apenas interfaces públicas em :api. A :impl é a implementação privada. Outros módulos dependem apenas de :api — garante isolamento e evita dependências circulares.</div>
+      </div>
+      <div class="pattern-card">
+        <div class="pattern-number">05</div>
+        <div class="pattern-title">Affected detection é mandatório</div>
+        <div class="pattern-desc">Sem detecção de módulos afetados, o CI cresce O(n) com o número de módulos. Com ela, cresce apenas com os módulos alterados. A Lyft economiza ~90% de compute de CI com essa técnica.</div>
+      </div>
+      <div class="pattern-card">
+        <div class="pattern-number">06</div>
+        <div class="pattern-title">Monorepo não é bala de prata</div>
+        <div class="pattern-desc">O Block documentou os custos após migrar: git lento em repos grandes, IDE strain, testes flaky amplificados. A decisão depende do tamanho do time e do grau de acoplamento entre os produtos.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FERRAMENTAS -->
+  <section class="section reveal" id="ferramentas">
+    <div class="section-header">
+      <span class="section-label">Ferramentas</span>
+      <h2 class="section-title">Arsenal da Indústria Android</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;">
+      <div class="company-detail" style="margin-bottom:0;">
+        <div class="company-detail-header" style="padding:16px 20px;">
+          <div><div class="company-detail-title" style="font-size:16px;">Bazel</div><div class="company-detail-subtitle">Google, Lyft, Spotify</div></div>
+        </div>
+        <div class="company-detail-body" style="padding:16px 20px;">
+          <p style="font-size:13px;color:var(--text-muted);line-height:1.5;margin-bottom:12px;">Build system hermético com remote execution nativo. Melhor para times polyglot (Android + iOS + backend). Curva de aprendizado alta.</p>
+          <a class="ref-link" href="https://bazel.build" target="_blank">bazel.build</a>
+        </div>
+      </div>
+      <div class="company-detail" style="margin-bottom:0;">
+        <div class="company-detail-header" style="padding:16px 20px;">
+          <div><div class="company-detail-title" style="font-size:16px;">Gradle Develocity</div><div class="company-detail-subtitle">LinkedIn, Slack, Dropbox</div></div>
+        </div>
+        <div class="company-detail-body" style="padding:16px 20px;">
+          <p style="font-size:13px;color:var(--text-muted);line-height:1.5;margin-bottom:12px;">Build cache distribuído + Predictive Test Selection + Build Scans. Melhor ROI para quem já usa Gradle.</p>
+          <a class="ref-link" href="https://gradle.com/develocity/" target="_blank">gradle.com/develocity</a>
+        </div>
+      </div>
+      <div class="company-detail" style="margin-bottom:0;">
+        <div class="company-detail-header" style="padding:16px 20px;">
+          <div><div class="company-detail-title" style="font-size:16px;">Metro (Block)</div><div class="company-detail-subtitle">Cash App, Slack</div></div>
+        </div>
+        <div class="company-detail-body" style="padding:16px 20px;">
+          <p style="font-size:13px;color:var(--text-muted);line-height:1.5;margin-bottom:12px;">Substituto do Anvil/Dagger para DI compile-time em Kotlin 2.0+. 59% mais rápido que Dagger.</p>
+          <a class="ref-link" href="https://github.com/ZacSweers/metro" target="_blank">github.com/ZacSweers/metro</a>
+        </div>
+      </div>
+      <div class="company-detail" style="margin-bottom:0;">
+        <div class="company-detail-header" style="padding:16px 20px;">
+          <div><div class="company-detail-title" style="font-size:16px;">Buildkite</div><div class="company-detail-subtitle">Lyft, Shopify, Uber</div></div>
+        </div>
+        <div class="company-detail-body" style="padding:16px 20px;">
+          <p style="font-size:13px;color:var(--text-muted);line-height:1.5;margin-bottom:12px;">CI/CD para monorepos com pipelines dinâmicos. Permite gerar jobs em runtime baseado em affected targets.</p>
+          <a class="ref-link" href="https://buildkite.com" target="_blank">buildkite.com</a>
+        </div>
+      </div>
+      <div class="company-detail" style="margin-bottom:0;">
+        <div class="company-detail-header" style="padding:16px 20px;">
+          <div><div class="company-detail-title" style="font-size:16px;">Anvil (Square)</div><div class="company-detail-subtitle">Square, Slack — em manutenção</div></div>
+        </div>
+        <div class="company-detail-body" style="padding:16px 20px;">
+          <p style="font-size:13px;color:var(--text-muted);line-height:1.5;margin-bottom:12px;">Kotlin compiler plugin que elimina o boilerplate do Dagger em projetos multi-módulo. Em modo de manutenção desde 2023.</p>
+          <a class="ref-link" href="https://github.com/square/anvil" target="_blank">github.com/square/anvil</a>
+        </div>
+      </div>
+      <div class="company-detail" style="margin-bottom:0;">
+        <div class="company-detail-header" style="padding:16px 20px;">
+          <div><div class="company-detail-title" style="font-size:16px;">Buck2 (Meta)</div><div class="company-detail-subtitle">Meta, alternativa ao Bazel</div></div>
+        </div>
+        <div class="company-detail-body" style="padding:16px 20px;">
+          <p style="font-size:13px;color:var(--text-muted);line-height:1.5;margin-bottom:12px;">Reescrito em Rust. Suporte nativo a Kotlin/Java/Android. Performance excelente, mas ecosistema menor que o Bazel.</p>
+          <a class="ref-link" href="https://buck2.build" target="_blank">buck2.build</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROADMAP -->
+  <section class="section reveal" id="roadmap">
+    <div class="section-header">
+      <span class="section-label">Próximos Passos</span>
+      <h2 class="section-title">Roadmap de Evolução do Guardian</h2>
+      <p class="section-desc">O Guardian já está no caminho correto com monorepo + Gradle multi-module. A evolução natural por fase de crescimento.</p>
+    </div>
+    <div class="roadmap">
+      <div class="roadmap-item">
+        <div class="roadmap-dot"></div>
+        <div class="roadmap-title">Agora — Qualquer tamanho <span class="roadmap-tag">Atual</span></div>
+        <div class="roadmap-desc">Adotar o padrão <code style="background:var(--surface2);padding:2px 6px;border-radius:4px;font-size:12px;">:api/:impl</code> nos módulos de feature. Previne acoplamento e dependências circulares que se tornarão dolorosas em escala. Hilt + KSP já é a configuração correta para o tamanho atual.</div>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-dot"></div>
+        <div class="roadmap-title">~30–50 módulos <span class="roadmap-tag" style="background:rgba(0,212,170,0.15);color:var(--accent2)">Próximo</span></div>
+        <div class="roadmap-desc">Habilitar Gradle Remote Build Cache (Develocity ou self-hosted via GCS/S3). Configuration Cache e Build Cache já estão parcialmente configurados no <code style="background:var(--surface2);padding:2px 6px;border-radius:4px;font-size:12px;">gradle.properties</code> do projeto — o próximo passo é tornar o cache distribuído.</div>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-dot"></div>
+        <div class="roadmap-title">~100 módulos</div>
+        <div class="roadmap-desc">Implementar affected modules detection no CI — disparar apenas os jobs de teste/lint dos módulos alterados pelo PR. Reduz feedback de CI de minutos para dezenas de segundos.</div>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-dot"></div>
+        <div class="roadmap-title">200+ módulos</div>
+        <div class="roadmap-desc">Dedicar um engenheiro a Developer Experience / Build Infrastructure. Avaliar Gradle Predictive Test Selection (Develocity). Considerar plugin de IDE para carregamento seletivo de módulos (padrão Square/Block).</div>
+      </div>
+      <div class="roadmap-item">
+        <div class="roadmap-dot"></div>
+        <div class="roadmap-title">500+ módulos</div>
+        <div class="roadmap-desc">Reavaliar Bazel vs Gradle com base no perfil do time. Se o codebase for polyglot (Android + iOS + backend), Bazel oferece remote execution nativa. Se for só Android, Gradle + Develocity + affected detection provavelmente ainda é mais rentável.</div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <p>Pesquisa compilada em Abril de 2026 · Baseado em artigos públicos, blog posts de engenharia e talks de conferências.</p>
+  <p style="margin-top:8px;">Referências principais: <a href="https://developer.android.com/topic/modularization" target="_blank">Android Modularization Guide</a> · <a href="https://monorepo.tools" target="_blank">monorepo.tools</a> · <a href="https://github.com/MobileNativeFoundation/discussions/discussions/31" target="_blank">MobileNativeFoundation Discussions</a></p>
+</footer>
+
+<script>
+  function scrollToSection(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+  }
+
+  // Scroll spy
+  const sections = document.querySelectorAll('.section');
+  const tabs = document.querySelectorAll('.tab-btn');
+  const sectionIds = ['visao-geral','empresas-globais','empresas-android','larga-escala','comparativo','padroes','ferramentas','roadmap'];
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const idx = sectionIds.indexOf(entry.target.id);
+        if (idx >= 0) {
+          tabs.forEach(t => t.classList.remove('active'));
+          if (tabs[idx]) tabs[idx].classList.add('active');
+        }
+      }
+    });
+  }, { threshold: 0.3 });
+
+  sections.forEach(s => observer.observe(s));
+
+  // Reveal on scroll
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+</script>
+</body>
+</html>

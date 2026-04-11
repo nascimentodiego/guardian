@@ -7,6 +7,7 @@ import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.kotlin
+
 class AndroidLibraryConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
@@ -43,9 +44,7 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
                 add("api", libs.findLibrary("firebase-database-ktx").get())
 
                 add("testImplementation", kotlin("test"))
-                add("testImplementation", project(":core:test"))
                 add("androidTestImplementation", kotlin("test"))
-                add("androidTestImplementation", project(":core:test"))
 
             }
         }

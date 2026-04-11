@@ -65,6 +65,11 @@ gradlePlugin {
             id = "guardian.android.hilt"
             implementationClass = "AndroidHiltConventionPlugin"
         }
+
+        register("androidLibraryTest") {
+            id = "guardian.android.library.test"
+            implementationClass = "AndroidLibraryTestConventionPlugin"
+        }
     }
 }
 
