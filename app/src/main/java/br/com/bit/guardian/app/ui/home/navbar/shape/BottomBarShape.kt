@@ -24,7 +24,9 @@ import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
 
 class BottomBarShape : Shape {
     override fun createOutline(
-        size: Size, layoutDirection: LayoutDirection, density: Density
+        size: Size,
+        layoutDirection: LayoutDirection,
+        density: Density
     ) = Outline.Generic(
         Path().apply {
             moveTo(0f, 0f)
@@ -43,12 +45,14 @@ class BottomBarShape : Shape {
 //            lineTo(0f, size.height)
 
             close()
-        })
+        }
+    )
 }
 
 @Composable
 fun Modifier.drawVerticalTopGradient(
-    vararg colorStops: Pair<Float, Color>, contentColor: Color
+    vararg colorStops: Pair<Float, Color>,
+    contentColor: Color
 ) = this.drawBehind {
     val path = Path()
     path.moveTo(size.width, 0f)
@@ -58,14 +62,19 @@ fun Modifier.drawVerticalTopGradient(
     val brush = Brush.verticalGradient(colorStops = colorStops)
 
     drawRect(
-        brush = brush, size = Size(
-            size.width, 12.dp.toPx()
+        brush = brush,
+        size = Size(
+            size.width,
+            12.dp.toPx()
         )
     )
 
     drawRect(
-        SolidColor(contentColor), topLeft = Offset(0f, 12.dp.toPx()), size = Size(
-            size.width, size.height
+        SolidColor(contentColor),
+        topLeft = Offset(0f, 12.dp.toPx()),
+        size = Size(
+            size.width,
+            size.height
         )
     )
 }
@@ -75,34 +84,42 @@ fun Modifier.drawVerticalTopGradient(
 fun ShapePreview() {
     GuardianTheme {
         val color = GuardianTheme.colors.primary
-        Row(modifier = Modifier
-            .drawBehind {
-                val path = Path()
-                path.moveTo(size.width, 0f)
-                path.lineTo(size.width, size.height)
-                path.lineTo(0f, size.height)
+        Row(
+            modifier = Modifier
+                .drawBehind {
+                    val path = Path()
+                    path.moveTo(size.width, 0f)
+                    path.lineTo(size.width, size.height)
+                    path.lineTo(0f, size.height)
 
-                val brush = Brush.verticalGradient(
-                    listOf(
-                        Color.Transparent, color
+                    val brush = Brush.verticalGradient(
+                        listOf(
+                            Color.Transparent,
+                            color
+                        )
                     )
-                )
 
-                drawRect(
-                    brush = brush, size = Size(
-                        size.width, 6.dp.toPx()
+                    drawRect(
+                        brush = brush,
+                        size = Size(
+                            size.width,
+                            6.dp.toPx()
+                        )
                     )
-                )
 
-                drawRect(
-                    SolidColor(color), topLeft = Offset(0f, 6.dp.toPx()), size = Size(
-                        size.width, size.height
+                    drawRect(
+                        SolidColor(color),
+                        topLeft = Offset(0f, 6.dp.toPx()),
+                        size = Size(
+                            size.width,
+                            size.height
+                        )
                     )
-                )
-            }
-            .fillMaxWidth()
-            .height(80.dp),
+                }
+                .fillMaxWidth()
+                .height(80.dp),
             horizontalArrangement = SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically) {}
+            verticalAlignment = Alignment.CenterVertically
+        ) {}
     }
 }

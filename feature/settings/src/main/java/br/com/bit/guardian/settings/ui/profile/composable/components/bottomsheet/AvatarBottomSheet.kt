@@ -68,7 +68,8 @@ internal fun AvatarBottomSheet(
 
     if (showBottomSheet) {
         ModalBottomSheet(
-            onDismissRequest = { cancelEvent.invoke() }, sheetState = sheetState
+            onDismissRequest = { cancelEvent.invoke() },
+            sheetState = sheetState
         ) {
             SelectAvatarContent(
                 modifier = modifier,
@@ -110,7 +111,8 @@ internal fun SelectAvatarContent(
                         AvatarSelectableItem(
                             avatar = avatar.key,
                             isSelected = avatar.key == selected,
-                            onSelectClick = { selected = avatar.key })
+                            onSelectClick = { selected = avatar.key }
+                        )
                     }
                 }
             }
@@ -118,7 +120,8 @@ internal fun SelectAvatarContent(
         Spacer(modifier = Modifier.height(GuardianTheme.dimens.spacingS))
         Row(modifier = Modifier) {
             LoadedTertiaryButton(
-                onClick = onCancel, modifier = Modifier
+                onClick = onCancel,
+                modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
             ) {
