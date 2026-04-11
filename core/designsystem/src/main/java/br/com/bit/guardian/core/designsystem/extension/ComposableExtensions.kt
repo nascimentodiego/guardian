@@ -8,8 +8,8 @@ import br.com.bit.guardian.core.designsystem.theme.GuardianWindowSize
 
 @Composable
 inline fun GuardianWindowSize.handleScreenBySize(
-    compactScreen: () -> @Composable Unit,
-    expandedScreen: () -> @Composable Unit
+    compactScreen: @Composable () -> Unit,
+    expandedScreen: @Composable () -> Unit
 ) {
     val widthSize = this.widthSizeClass
     val heightSize = this.heightSizeClass

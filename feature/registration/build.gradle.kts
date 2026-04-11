@@ -8,6 +8,9 @@ plugins {
 
 android {
     namespace = "br.com.bit.guardian.feature.registration"
+    screenshotTests {
+        imageDifferenceThreshold = 0.02f
+    }
 }
 
 dependencies {

@@ -1,5 +1,6 @@
 [versions]
 androidGradlePlugin = "8.9.3"
+screenshot = "0.0.1-alpha14"
 androidDesugarJdkLibs = "2.0.4"
 kotlinxCollectionsImmutable = "0.3.8"
 ksp = "1.8.0-1.0.9"
@@ -18,7 +19,7 @@ androidxComposeBom = "2025.06.00"
 androidxComposeCompiler = "1.5.15"
 junit4 = "4.13.2"
 jacoco = "0.8.8"
-kotlin = "2.1.0"
+kotlin = "2.2.10"
 kotlinxCoroutines = "1.7.3"
 kotlinxDatetime = "0.6.1"
 kotlinxSerializationJson = "1.7.3"
@@ -57,6 +58,8 @@ androidx-lifecycle-viewModelCompose = { group = "androidx.lifecycle", name = "li
 androidx-compose-ui-test = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-compose-ui-testManifest = { group = "androidx.compose.ui", name = "ui-test-manifest", version.ref = "androidxComposeUiManifest" }
 androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+screenshot-validation-api = { group = "com.android.tools.screenshot", name = "screenshot-validation-api", version.ref = "screenshot" }
 androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-compose-ui-util = { group = "androidx.compose.ui", name = "ui-util" }
 androidx-material3-adaptive-navigation-suite-android = { group = "androidx.compose.material3", name = "material3-adaptive-navigation-suite-android", version.ref = "material3AdaptiveNavigationSuiteAndroid" }
@@ -113,3 +116,4 @@ secrets = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugi
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 googleServices = { id = "com.google.gms.google-services", version.ref = "googleService" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+screenshot = { id = "com.android.compose.screenshot", version.ref = "screenshot" }
