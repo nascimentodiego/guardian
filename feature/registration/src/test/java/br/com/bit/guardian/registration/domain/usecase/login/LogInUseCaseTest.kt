@@ -23,7 +23,11 @@ class LogInUseCaseTest {
     @Test
     fun `invoke maps repository data user to domain user`() = runTest {
         fakeRepository.signInResult = flowOf(
-            DataUser(name = "Guardian User", email = "guardian@example.com", photoUrl = "https://photo.url")
+            DataUser(
+                name = "Guardian User",
+                email = "guardian@example.com",
+                photoUrl = "https://photo.url"
+            )
         )
 
         val result = useCase("guardian@example.com", "securePass1@").first()
@@ -54,7 +58,11 @@ class LogInUseCaseTest {
     @Test
     fun `invoke domain user does not expose photoUrl`() = runTest {
         fakeRepository.signInResult = flowOf(
-            DataUser(name = "User", email = "user@test.com", photoUrl = "http://secret.photo")
+            DataUser(
+                name = "User",
+                email = "user@test.com",
+                photoUrl = "http://secret.photo"
+            )
         )
 
         val result = useCase("user@test.com", "pass").first()

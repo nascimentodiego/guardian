@@ -1,12 +1,12 @@
 package br.com.bit.guardian.core.designsystem.icon
 
-import br.com.bit.guardian.core.designsystem.R
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.automirrored.rounded.ArrowForward
-import androidx.compose.material.icons.automirrored.rounded.List
 import androidx.compose.material.icons.rounded.Edit
+import br.com.bit.guardian.core.designsystem.R
 
+@Suppress("MemberNameEqualsClassName")
 object GuardianIcon {
 
     val GuardianIcon = R.drawable.ds_ic_guardian
@@ -46,7 +46,7 @@ object GuardianIcon {
     // RF Control
     val RFRemoteControl = R.drawable.ds_ic_rf_remote
 
-    //Avatar
+    // Avatar
     val Avatar01 = R.drawable.ds_ic_avatar_01
     val Avatar02 = R.drawable.ds_ic_avatar_02
     val Avatar03 = R.drawable.ds_ic_avatar_03
@@ -64,5 +64,4 @@ object GuardianIcon {
     )
 
     fun getUserAvatar(avatarId: Int = 1) = avatarIcons[avatarId] ?: Avatar01
-
 }

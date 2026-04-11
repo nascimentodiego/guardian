@@ -37,17 +37,19 @@ fun LoginCompactScreen(
     }
 }
 
-
 @GuardianThemePreviews
 @Composable
+@Suppress("EmptyFunctionBlock")
 fun LoginCompactScreenPreview(
     @PreviewParameter(LoginScreenProvider::class) uiState: LoginUiState
 ) {
     GuardianTheme {
-        LoginCompactScreen(uiState = uiState,
+        LoginCompactScreen(
+            uiState = uiState,
             intent = {},
             callbacks = object : LoginListener {
                 override fun onCreateUserClickListener() {}
-            })
+            }
+        )
     }
 }

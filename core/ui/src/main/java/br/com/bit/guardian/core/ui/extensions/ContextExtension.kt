@@ -10,5 +10,3 @@ fun Context.intentDeepLink(link: String) = Intent(
 ).apply {
     setPackage(packageName)
 }
-
-

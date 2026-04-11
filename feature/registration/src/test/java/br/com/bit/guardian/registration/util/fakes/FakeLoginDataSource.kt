@@ -19,8 +19,12 @@ class FakeLoginDataSource : LoginDataSource {
     var signOutResult: Flow<Unit> = flowOf(Unit)
     var isUserLoggedResult: Flow<Boolean> = flowOf(false)
 
-    override suspend fun signIn(email: String, password: String): Flow<UserLoginResponse> = signInResult
-    override suspend fun createUser(email: String, password: String): Flow<UserLoginResponse> = createUserResult
+    override suspend fun signIn(email: String, password: String): Flow<UserLoginResponse> =
+        signInResult
+
+    override suspend fun createUser(email: String, password: String): Flow<UserLoginResponse> =
+        createUserResult
+
     override suspend fun signOut(): Flow<Unit> = signOutResult
     override suspend fun isUserLogged(): Flow<Boolean> = isUserLoggedResult
 }

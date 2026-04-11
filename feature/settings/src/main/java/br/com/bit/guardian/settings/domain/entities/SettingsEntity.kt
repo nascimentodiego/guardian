@@ -15,7 +15,7 @@ data class EmergenceEntity(
 )
 
 data class PermissionEntity(
-    val key:String = "",
+    val key: String = "",
     val label: String = "",
     val isChecked: Boolean = false
 )

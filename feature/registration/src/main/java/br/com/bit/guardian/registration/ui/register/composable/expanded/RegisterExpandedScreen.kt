@@ -73,7 +73,6 @@ fun RegisterExpandedScreen(
                     intent.invoke(RegistrationIntent.ConfirmPassword(it))
                 }
             }
-
         }
         Divider(modifier = Modifier.width(GuardianTheme.dimens.spacingH))
         Box(modifier = Modifier.weight(1f)) {

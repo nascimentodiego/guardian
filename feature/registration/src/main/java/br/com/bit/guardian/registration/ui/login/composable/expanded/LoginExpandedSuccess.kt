@@ -62,7 +62,6 @@ fun LoginExpandedSuccess(
                     )
                     GuardianDisplayMedium(color = GuardianTheme.colors.onBackground)
                 }
-
             } else {
                 GuardianLogoSmall(tintColor = GuardianTheme.colors.onBackground)
                 GuardianDisplayMedium(color = GuardianTheme.colors.onBackground)
@@ -76,7 +75,7 @@ fun LoginExpandedSuccess(
                 colors = OutlinedTextFieldDefaults.onBackgroundColor(),
                 putEmail = {
                     intent(LoginIntent.InputEmail(it))
-                },
+                }
             )
             OutlinedPasswordText(
                 modifier = Modifier.fillMaxWidth(),
@@ -100,7 +99,7 @@ fun LoginExpandedSuccess(
                     LoadedTertiaryButton(
                         enabled = uiState.userView.isButtonEnabled,
                         isLoading = uiState.userView.isButtonLoading,
-                        onClick = {  intent(LoginIntent.Login) },
+                        onClick = { intent(LoginIntent.Login) },
                         modifier = Modifier.weight(1f)
                     ) {
                         Text(
@@ -122,13 +121,12 @@ fun LoginExpandedSuccess(
                             color = GuardianTheme.colors.onBackground
                         )
                     }
-
                 }
             } else {
                 LoadedTertiaryButton(
                     enabled = uiState.userView.isButtonEnabled,
-                    isLoading =  uiState.userView.isButtonLoading,
-                    onClick = {  intent(LoginIntent.Login)  },
+                    isLoading = uiState.userView.isButtonLoading,
+                    onClick = { intent(LoginIntent.Login) },
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(

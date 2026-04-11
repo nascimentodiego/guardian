@@ -21,6 +21,7 @@ class SaveNicknameUseCaseImpl @Inject constructor(
 }
 
 data object NicknameTooShortException : Exception(), GuardianErrorType {
+    @Suppress("UnusedPrivateMember")
     private fun readResolve(): Any = NicknameTooShortException
     override val message: String
         get() = "Nickname must be at least 3 characters"

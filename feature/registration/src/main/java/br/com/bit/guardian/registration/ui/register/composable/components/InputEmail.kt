@@ -28,8 +28,9 @@ fun InputEmail(
         isError = state.ruleState.invalidEmail,
         maxLines = 1,
         supportingText = {
-            if (state.ruleState.invalidEmail)
+            if (state.ruleState.invalidEmail) {
                 Text(text = stringResource(R.string.login_input_email_invalid))
+            }
         },
         colors = OutlinedTextFieldDefaults.guardianTextColor()
     )
@@ -54,8 +55,9 @@ fun OutlinedInputEmailText(
         label = { Text(stringResource(id = R.string.login_input_title_email)) },
         isError = false,
         supportingText = {
-            if (isError)
+            if (isError) {
                 Text(stringResource(id = R.string.login_input_email_invalid))
+            }
         },
         colors = colors
     )

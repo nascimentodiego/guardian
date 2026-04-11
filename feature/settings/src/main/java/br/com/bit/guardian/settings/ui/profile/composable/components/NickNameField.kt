@@ -30,7 +30,9 @@ fun NickNameField(
     value: String,
     onClick: () -> Unit
 ) = Row(
-    modifier = modifier.background(GuardianTheme.colors.primaryContainer).clickable { onClick.invoke() },
+    modifier = modifier
+        .background(GuardianTheme.colors.primaryContainer)
+        .clickable { onClick.invoke() },
     verticalAlignment = Alignment.CenterVertically,
     horizontalArrangement = Arrangement.Center
 ) {

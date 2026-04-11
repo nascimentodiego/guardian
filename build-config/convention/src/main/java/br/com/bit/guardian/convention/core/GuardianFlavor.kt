@@ -14,7 +14,7 @@ enum class FlavorDimension {
 @Suppress("EnumEntryName")
 enum class GuardianFlavor(val dimension: FlavorDimension, val applicationIdSuffix: String? = null) {
     demo(FlavorDimension.contentType),
-    prod(FlavorDimension.contentType, ".prod")
+    prod(FlavorDimension.contentType)
 }
 
 fun Project.configureFlavors(

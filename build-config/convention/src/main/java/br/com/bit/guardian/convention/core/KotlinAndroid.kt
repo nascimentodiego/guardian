@@ -48,6 +48,7 @@ internal fun Project.configureKotlinAndroid(
 
     dependencies {
         add("implementation", libs.findLibrary("kotlinx.datetime").get())
+        add("implementation", libs.findLibrary("timber").get())
     }
 }
 

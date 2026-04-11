@@ -6,7 +6,7 @@ import br.com.bit.guardian.core.designsystem.theme.AdaptiveStatusBarStyle
 import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
 
 @Composable
-fun HomeDestination(){
+fun HomeDestination() {
     AdaptiveStatusBarStyle(GuardianTheme.colors.primary)
     HomeScreen()
 }

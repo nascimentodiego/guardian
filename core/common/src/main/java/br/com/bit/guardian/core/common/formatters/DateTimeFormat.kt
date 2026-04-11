@@ -2,13 +2,10 @@ package br.com.bit.guardian.core.common.formatters
 
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
-import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.TimeZone.Companion.UTC
-import kotlinx.datetime.toInstant
 import kotlinx.datetime.toJavaLocalDateTime
 import kotlinx.datetime.toLocalDateTime
-import kotlinx.datetime.todayIn
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 

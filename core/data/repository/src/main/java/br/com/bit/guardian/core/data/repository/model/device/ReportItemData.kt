@@ -4,6 +4,6 @@ import kotlinx.datetime.Instant
 
 data class ReportItemData(
     val date: Instant,
-    val deviceType:DeviceTypeData,
-    val userEmail:String
+    val deviceType: DeviceTypeData,
+    val userEmail: String
 )

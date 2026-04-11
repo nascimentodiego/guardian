@@ -16,7 +16,7 @@ import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
 @Composable
 fun GuardianLogoLarge(
     modifier: Modifier = Modifier,
-    tintColor: Color =GuardianTheme.colors.onBackground
+    tintColor: Color = GuardianTheme.colors.onBackground
 ) {
     Icon(
         modifier = modifier.size(256.dp),
@@ -29,7 +29,7 @@ fun GuardianLogoLarge(
 @Composable
 fun GuardianLogoMedium(
     modifier: Modifier = Modifier,
-    tintColor: Color =GuardianTheme.colors.onBackground
+    tintColor: Color = GuardianTheme.colors.onBackground
 ) {
     Icon(
         modifier = modifier.size(128.dp),
@@ -42,7 +42,7 @@ fun GuardianLogoMedium(
 @Composable
 fun GuardianLogoSmall(
     modifier: Modifier = Modifier,
-    iconSize:Dp = 72.dp,
+    iconSize: Dp = 72.dp,
     tintColor: Color = GuardianTheme.colors.onBackground
 ) {
     Icon(

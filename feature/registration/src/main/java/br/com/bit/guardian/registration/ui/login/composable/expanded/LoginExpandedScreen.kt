@@ -71,13 +71,18 @@ fun LoginExpandedScreen(
 }
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, device = Devices.TABLET)
+@Suppress("EmptyFunctionBlock")
 @Composable
 fun LoginExpandedScreenPreview(
     @PreviewParameter(LoginScreenProvider::class) uiState: LoginUiState
 ) {
     GuardianTheme {
-        LoginExpandedScreen(uiState = uiState, intent = {}, callbacks = object : LoginListener {
-            override fun onCreateUserClickListener() {}
-        })
+        LoginExpandedScreen(
+            uiState = uiState,
+            intent = {},
+            callbacks = object : LoginListener {
+                override fun onCreateUserClickListener() {}
+            }
+        )
     }
 }

@@ -16,7 +16,3 @@ fun <T> Flow<T>.handleNetworkError(): Flow<T> = catch {
         else -> throw GuardianApiException.GenericErrorException
     }
 }
-
-
-
-

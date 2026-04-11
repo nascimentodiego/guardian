@@ -10,7 +10,6 @@ import br.com.bit.guardian.core.designsystem.theme.LocalWindowSizeClass
 import br.com.bit.guardian.registration.ui.login.LoginListener
 import br.com.bit.guardian.registration.ui.login.composable.compact.LoginCompactScreen
 import br.com.bit.guardian.registration.ui.login.composable.expanded.LoginExpandedScreen
-import br.com.bit.guardian.registration.ui.login.model.LoginEvent
 import br.com.bit.guardian.registration.ui.login.model.LoginIntent
 import br.com.bit.guardian.registration.ui.login.model.LoginUiState
 
@@ -29,14 +28,17 @@ fun LoginScreen(
 
 @Composable
 @Preview
+@Suppress("EmptyFunctionBlock")
 fun LoginExpandedScreenPreview(
     @PreviewParameter(LoginScreenProvider::class) uiState: LoginUiState
 ) {
     GuardianTheme {
-        LoginScreen(uiState = uiState,
+        LoginScreen(
+            uiState = uiState,
             intent = {},
             callbacks = object : LoginListener {
                 override fun onCreateUserClickListener() {}
-            })
+            }
+        )
     }
 }

@@ -28,7 +28,7 @@ fun HomeContentWidget(
     backgroundIcon: Int,
     iconColor: Color,
     backgroundIconColor: Color,
-    boxBackgroundColor:Color? = null,
+    boxBackgroundColor: Color? = null,
     contentAlignment: Alignment = Alignment.TopStart,
     content: @Composable () -> Unit = {}
 ) {
@@ -50,7 +50,7 @@ fun HomeContentWidget(
                 .fillMaxWidth()
                 .defaultMinSize(minHeight = 100.dp)
                 .background(
-                    boxBackgroundColor?:GuardianTheme.colors.primaryContainer,
+                    boxBackgroundColor ?: GuardianTheme.colors.primaryContainer,
                     RoundedCornerShape(8.dp)
                 )
                 .padding(GuardianTheme.dimens.spacingXS),

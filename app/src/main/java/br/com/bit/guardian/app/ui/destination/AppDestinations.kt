@@ -13,5 +13,5 @@ enum class AppDestinations(
     HOME(R.string.menu_home, GuardianIcon.Home, R.string.menu_home),
     DEVICES(R.string.menu_devices, GuardianIcon.Devices, R.string.menu_devices),
     ACTIVITIES(R.string.menu_logs, GuardianIcon.Reports, R.string.menu_logs),
-    SETTINGS(R.string.menu_settings, GuardianIcon.Settings, R.string.menu_settings),
+    SETTINGS(R.string.menu_settings, GuardianIcon.Settings, R.string.menu_settings)
 }

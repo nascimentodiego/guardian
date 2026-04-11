@@ -4,11 +4,11 @@ data class Settings(
     val icon: Int = 0,
     val nickname: String = "",
     val permissions: List<Permission> = listOf(),
-    val emergencies: List<Emergence> = listOf(),
+    val emergencies: List<Emergence> = listOf()
 )
 
 data class Permission(
-    val key:String = "",
+    val key: String = "",
     val label: String = "",
     val value: Boolean = false
 )

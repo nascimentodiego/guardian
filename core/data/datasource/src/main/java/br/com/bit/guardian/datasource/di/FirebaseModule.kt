@@ -16,4 +16,3 @@ object FirebaseModule {
         return Firebase.database
     }
 }
-

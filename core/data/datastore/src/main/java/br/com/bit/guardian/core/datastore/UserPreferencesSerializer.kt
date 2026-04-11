@@ -1,6 +1,7 @@
 package br.com.bit.guardian.core.datastore
 
 import androidx.datastore.core.Serializer
+import timber.log.Timber
 import java.io.DataInputStream
 import java.io.DataOutputStream
 import java.io.InputStream
@@ -9,6 +10,7 @@ import java.io.OutputStream
 object UserPreferencesSerializer : Serializer<UserPreferences> {
     override val defaultValue: UserPreferences = UserPreferences.getDefaultInstance()
 
+    @Suppress("TooGenericExceptionCaught")
     override suspend fun readFrom(input: InputStream): UserPreferences {
         return try {
             val dis = DataInputStream(input)
@@ -19,6 +21,7 @@ object UserPreferencesSerializer : Serializer<UserPreferences> {
                 dis.readUTF()
             )
         } catch (exception: Exception) {
+            Timber.e(exception, "Error reading proto.")
             UserPreferences("", "", "", "")
         }
     }
@@ -34,4 +37,3 @@ object UserPreferencesSerializer : Serializer<UserPreferences> {
         dos.writeUTF(t.photoUrl)
     }
 }
-

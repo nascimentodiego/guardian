@@ -89,7 +89,8 @@ fun RegisterScreen(
 @Composable
 fun Loading() {
     Box(
-        modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
     ) {
         CircularProgressIndicator()
     }
@@ -105,54 +106,67 @@ fun IdleState(
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
 
-    Scaffold(modifier = modifier
-        .background(color = GuardianTheme.colors.primary)
-        .nestedScroll(scrollBehavior.nestedScrollConnection), snackbarHost = {
-        SnackbarHost(hostState = snackbarHostState)
-    }, topBar = {
-        CenterAlignedTopAppBar(colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-            containerColor = GuardianTheme.colors.primary,
-            titleContentColor = GuardianTheme.colors.onBackground,
-        ), title = {
-            TextTitleMedium(
-                titleRes = R.string.login_register_screen, color = Color.White
-            )
-        }, navigationIcon = {
-            IconButton(onClick = { onNavigationClickListener.invoke() }) {
-                Box(
-                    Modifier
-                        .fillMaxSize()
-                        .background(
-                            shape = CircleShape, color = Color.White
-                        ), contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                        imageVector = GuardianIcon.ArrowBack,
-                        contentDescription = "Localized description",
-                        tint = Color.Black
+    Scaffold(
+        modifier = modifier
+            .background(color = GuardianTheme.colors.primary)
+            .nestedScroll(scrollBehavior.nestedScrollConnection),
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
+        },
+        topBar = {
+            CenterAlignedTopAppBar(
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    containerColor = GuardianTheme.colors.primary,
+                    titleContentColor = GuardianTheme.colors.onBackground
+                ),
+                title = {
+                    TextTitleMedium(
+                        titleRes = R.string.login_register_screen,
+                        color = Color.White
                     )
+                },
+                navigationIcon = {
+                    IconButton(onClick = { onNavigationClickListener.invoke() }) {
+                        Box(
+                            Modifier
+                                .fillMaxSize()
+                                .background(
+                                    shape = CircleShape,
+                                    color = Color.White
+                                ),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                imageVector = GuardianIcon.ArrowBack,
+                                contentDescription = "Localized description",
+                                tint = Color.Black
+                            )
+                        }
+                    }
+                },
+                scrollBehavior = scrollBehavior
+            )
+        },
+        floatingActionButton = {
+            AnimatedVisibility(
+                visible = state.ruleState.enableButton,
+                enter = slideInVertically(initialOffsetY = { it * 2 }),
+                exit = slideOutVertically(targetOffsetY = { it * 2 })
+            ) {
+                FloatingActionButton(onClick = { intent.invoke(RegistrationIntent.CreateUser) }) {
+                    Icon(painterResource(id = GuardianIcon.AddUser), contentDescription = null)
                 }
             }
-        }, scrollBehavior = scrollBehavior
-        )
-    }, floatingActionButton = {
-        AnimatedVisibility(
-            visible = state.ruleState.enableButton,
-            enter = slideInVertically(initialOffsetY = { it * 2 }),
-            exit = slideOutVertically(targetOffsetY = { it * 2 }),
-        ) {
-            FloatingActionButton(onClick = { intent.invoke(RegistrationIntent.CreateUser) }) {
-                Icon(painterResource(id = GuardianIcon.AddUser), contentDescription = null)
-            }
         }
-    }) { innerPadding ->
+    ) { innerPadding ->
         Column(
             modifier = Modifier
                 .background(color = GuardianTheme.colors.primary)
                 .padding(innerPadding)
                 .fillMaxSize()
                 .background(
-                    color = GuardianTheme.colors.background, shape = RoundedCornerShape(16.dp)
+                    color = GuardianTheme.colors.background,
+                    shape = RoundedCornerShape(16.dp)
                 )
                 .padding(GuardianTheme.dimens.spacingM)
                 .verticalScroll(rememberScrollState())
@@ -167,13 +181,13 @@ fun IdleState(
                     { passwordVisible = !passwordVisible }
                 )
             }, expandedScreen = {
-                RegisterExpandedScreen(
-                    state,
-                    intent,
-                    passwordVisible,
-                    { passwordVisible = !passwordVisible },
-                )
-            })
+                    RegisterExpandedScreen(
+                        state,
+                        intent,
+                        passwordVisible,
+                        { passwordVisible = !passwordVisible }
+                    )
+                })
         }
     }
 }
@@ -188,7 +202,8 @@ fun RegistrationRules(listOfPassError: List<PasswordRuleItem>) {
     listOfPassError.forEach {
         Spacer(modifier = Modifier.height(GuardianTheme.dimens.spacingS))
         CheckDetailItem(
-            isSuccess = it.isSuccess, textRes = it.textRes
+            isSuccess = it.isSuccess,
+            textRes = it.textRes
         )
     }
 }
@@ -203,8 +218,10 @@ fun LoginExpandedScreenPreview(
     @PreviewParameter(RegistrationScreenProvider::class) uiState: RegisterUiState
 ) {
     GuardianTheme {
-        RegisterScreen(uiState = uiState,
+        RegisterScreen(
+            uiState = uiState,
             intent = {},
-            onBackPressClickListener = {})
+            onBackPressClickListener = {}
+        )
     }
 }

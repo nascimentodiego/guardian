@@ -47,10 +47,11 @@ class LoginViewModel @Inject constructor(
                 .map { result ->
                     when (result) {
                         is Result.Success -> {
-                            if (result.data)
+                            if (result.data) {
                                 sendEvent(LoginEvent.Success())
-                            else
+                            } else {
                                 publishIdleState()
+                            }
                         }
 
                         is Result.Loading -> {
@@ -89,7 +90,6 @@ class LoginViewModel @Inject constructor(
             }
         }
     }
-
 
     override fun hasScreenState(): Boolean {
         return getSavedHandleState() is LoginUiState.Idle

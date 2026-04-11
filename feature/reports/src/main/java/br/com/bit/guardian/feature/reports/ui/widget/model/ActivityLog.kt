@@ -14,7 +14,14 @@ data class ActivityLog(
     val action: DeviceAction
 ) : Parcelable {
     companion object {
-        fun empty() = ActivityLog("-1", "--", "--", "Dispositivo", DeviceType.UNKNOWN, DeviceAction.UNKNOW)
+        fun empty() = ActivityLog(
+            "-1",
+            "--",
+            "--",
+            "Dispositivo",
+            DeviceType.UNKNOWN,
+            DeviceAction.UNKNOW
+        )
     }
 }
 

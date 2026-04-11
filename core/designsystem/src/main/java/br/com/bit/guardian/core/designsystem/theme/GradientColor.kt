@@ -20,7 +20,8 @@ fun Modifier.backgroundGradientPrimary(shape: Shape? = null): Modifier {
             val biggerDimension = maxOf(size.height, size.width)
             return RadialGradientShader(
                 colors = listOf(
-                    firstColor, secondColor
+                    firstColor,
+                    secondColor
                 ),
                 center = size.center,
                 radius = biggerDimension / 2f,
@@ -28,8 +29,9 @@ fun Modifier.backgroundGradientPrimary(shape: Shape? = null): Modifier {
             )
         }
     }
-    return if (shape == null)
+    return if (shape == null) {
         this.background(largeRadialGradient)
-    else
+    } else {
         this.background(largeRadialGradient, shape)
+    }
 }

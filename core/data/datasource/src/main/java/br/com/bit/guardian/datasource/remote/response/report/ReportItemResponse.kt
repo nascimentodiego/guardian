@@ -10,11 +10,11 @@ import kotlinx.serialization.Serializable
 data class ReportItemResponse(
     @SerialName("date")
     @Serializable(InstantSerializer::class)
-    val date:Instant,
+    val date: Instant,
     @SerialName("device")
     @Serializable(with = DeviceTypeSerializer::class)
-    val deviceType:DeviceTypeResponse,
-    @SerialName("user") val userEmail:String
+    val deviceType: DeviceTypeResponse,
+    @SerialName("user") val userEmail: String
 )
 
 /*

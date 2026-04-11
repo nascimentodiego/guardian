@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.first
 
 class LoginRepositoryImpl @Inject constructor(
     private val dataSource: LoginDataSource,
-    private val userDataSource: UserPreferencesDataSource,
+    private val userDataSource: UserPreferencesDataSource
 ) : LoginRepository {
     override fun createUser(email: String, password: String): Flow<User> = flow {
         dataSource.createUser(email, password).collect { userResponse ->

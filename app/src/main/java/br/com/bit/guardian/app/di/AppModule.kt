@@ -18,5 +18,4 @@ object AppModule {
         println("BuildConfig Version: ${BuildConfig.VERSION_NAME}")
         return BuildConfig.VERSION_NAME
     }
-
 }

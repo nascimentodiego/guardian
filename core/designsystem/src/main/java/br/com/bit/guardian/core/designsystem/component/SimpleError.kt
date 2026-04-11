@@ -50,14 +50,17 @@ fun SimpleError(
                 color = backgroundColor,
                 shape = RoundedCornerShape(4.dp)
             )
-            .padding(vertical = GuardianTheme.dimens.spacingXS, horizontal = GuardianTheme.dimens.spacingM),
+            .padding(
+                vertical = GuardianTheme.dimens.spacingXS,
+                horizontal = GuardianTheme.dimens.spacingM
+            ),
         horizontalAlignment = align
     ) {
         if (widthSize == WindowWidthSizeClass.Compact) {
             SimpleErrorCompact(
                 titleRes,
                 descriptionRes,
-                buttonLabelRes,
+                buttonLabelRes
             ) {
                 onClickListener.invoke()
             }
@@ -65,13 +68,12 @@ fun SimpleError(
             SimpleErrorExpanded(
                 titleRes,
                 descriptionRes,
-                buttonLabelRes,
+                buttonLabelRes
             ) {
                 onClickListener.invoke()
             }
         }
     }
-
 }
 
 @Composable
@@ -170,7 +172,6 @@ fun SimpleErrorPreview() {
             titleRes = R.string.ds_simple_error_title,
             descriptionRes = R.string.ds_simple_error_description
         ) {
-
         }
     }
 }

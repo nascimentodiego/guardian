@@ -14,13 +14,12 @@ import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
 @Composable
 fun DeviceDestination() {
     AdaptiveStatusBarStyle()
-    Column (modifier = Modifier.padding(top = GuardianTheme.dimens.spacingS)) {
+    Column(modifier = Modifier.padding(top = GuardianTheme.dimens.spacingS)) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .background(Color.Red)
         ) {
-
         }
     }
 }

@@ -66,7 +66,7 @@ fun BitPlatformHighlight(
             delay(timeToInvert)
 
             if (!visible) {
-                if (messageIndex >= bitHighlightMessages.size-1) {
+                if (messageIndex >= bitHighlightMessages.size - 1) {
                     messageIndex = 0
                 } else {
                     ++messageIndex
@@ -111,7 +111,7 @@ fun BitPlatformHighlight(
         ) {
             TextBodySmall(
                 stringRes = bitHighlightMessages[messageIndex].messageRes,
-                modifier = Modifier.padding(horizontal = 56.dp,),
+                modifier = Modifier.padding(horizontal = 56.dp),
                 color = Color.White,
                 textAlign = TextAlign.Center
             )
@@ -126,7 +126,6 @@ val bitHighlightMessages = listOf(
 )
 
 data class BitMessage(@StringRes val titleRes: Int, @StringRes val messageRes: Int)
-
 
 @Preview
 @Composable

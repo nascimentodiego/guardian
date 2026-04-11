@@ -67,7 +67,7 @@ fun Title() {
     Text(
         text = stringResource(id = R.string.ds_app_name),
         style = GuardianTheme.typography.titleLarge,
-        color =GuardianTheme.colors.iconActiveColor
+        color = GuardianTheme.colors.iconActiveColor
     )
 }
 
@@ -77,7 +77,7 @@ fun TitleLarge() {
         text = stringResource(id = R.string.ds_app_name),
         style = GuardianTheme.typography.titleLarge,
         fontSize = 72.sp,
-        color =GuardianTheme.colors.iconActiveColor
+        color = GuardianTheme.colors.iconActiveColor
     )
 }
 

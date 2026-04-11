@@ -71,7 +71,6 @@ fun SettingsRoute(
             is SettingsUiState.Loading -> SettingsLoading()
             is SettingsUiState.Error, null -> SettingsError(retry = viewModel::fetchSettings)
         }
-
     }
 
     LaunchedEffect(events) {

@@ -9,11 +9,9 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class LoginDataSourceModule {
+abstract class ReportsDataSourceModule {
     @Binds
     abstract fun bindsReportsDataSource(
         dataSourceImpl: ReportsDataSourceImpl
     ): ReportsDataSource
 }
-
-

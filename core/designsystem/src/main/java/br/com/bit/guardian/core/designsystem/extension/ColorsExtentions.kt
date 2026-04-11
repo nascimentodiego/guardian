@@ -48,6 +48,5 @@ fun OutlinedTextFieldDefaults.onBackgroundColor() = colors(
     errorLabelColor = GuardianTheme.colors.error
 )
 
-
 @Composable
 fun Color.withState(enabled: Boolean): Color = if (enabled) this else this.copy(alpha = 0.2f)

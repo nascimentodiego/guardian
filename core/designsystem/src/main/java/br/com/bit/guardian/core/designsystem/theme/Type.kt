@@ -40,9 +40,7 @@ val Typography = Typography(
     ),
 
     // headlineMedium (Paragraph Bold)
-    headlineMedium = TextStyle(
-
-    ),
+    headlineMedium = TextStyle(),
 
     headlineSmall = TextStyle(
         fontFamily = Lexend,
@@ -50,7 +48,6 @@ val Typography = Typography(
         fontSize = 10.sp,
         lineHeight = 14.2.sp
     ),
-
 
     // Label (Subtitle)
     labelMedium = TextStyle(
@@ -76,7 +73,7 @@ val Typography = Typography(
         lineHeight = 33.6.sp
     ),
 
-    //Title Large
+    // Title Large
     titleLarge = TextStyle(
         fontFamily = Cabin,
         fontWeight = FontWeight.W700,
@@ -84,7 +81,7 @@ val Typography = Typography(
         lineHeight = 33.6.sp
     ),
 
-    //Displayed Large
+    // Displayed Large
     displayLarge = TextStyle(
         fontFamily = Cabin,
         fontWeight = FontWeight.W700,
@@ -92,7 +89,7 @@ val Typography = Typography(
         lineHeight = 33.6.sp
     ),
 
-    //Displayed Medium
+    // Displayed Medium
     displayMedium = TextStyle(
         fontFamily = Cabin,
         fontWeight = FontWeight.W500,

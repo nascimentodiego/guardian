@@ -10,33 +10,33 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.slideInHorizontally
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.graphics.Path
@@ -58,7 +58,6 @@ import br.com.bit.guardian.core.designsystem.component.TextBodySmall
 import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
 import kotlinx.coroutines.delay
 
-
 @Composable
 fun GuardianNavRail(
     modifier: Modifier = Modifier,
@@ -66,7 +65,6 @@ fun GuardianNavRail(
     entries: List<AppDestinations>,
     onSelectedItem: (destination: AppDestinations) -> Unit
 ) {
-
     var visible by remember {
         mutableStateOf(false)
     }
@@ -93,13 +91,13 @@ fun GuardianNavRail(
             Column(
                 modifier = Modifier
                     .background(
-                        GuardianTheme.colors.primaryContainer, RailShape
+                        GuardianTheme.colors.primaryContainer,
+                        RailShape
                     )
                     .offset(x = 8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
-            )
-            {
+            ) {
                 Spacer(modifier = Modifier.height(GuardianTheme.dimens.spacingH))
                 NailContent(initialDestination, entries, onSelectedItem)
                 Spacer(modifier = Modifier.height(GuardianTheme.dimens.spacingH))
@@ -121,7 +119,7 @@ fun NailContent(
             NavRailItem(
                 pos = index,
                 destination = it,
-                isSelected = it == destinationSelected,
+                isSelected = it == destinationSelected
             ) { dest ->
                 destinationSelected = dest
                 onSelectedItem(dest)
@@ -147,7 +145,11 @@ fun NavRailItemLayout(
         val placeables: List<Placeable> = measurables.map { it.measure(constraints) }
         val totalWidth = placeables.first().width
         var totalHeight = placeables.sumOf { it.height }
-        totalHeight += if (placeables.size == 1) 0 else (correctSpaceHeight * (placeables.size - 1)).roundToPx()
+        totalHeight += if (placeables.size == 1) {
+            0
+        } else {
+            (correctSpaceHeight * (placeables.size - 1)).roundToPx()
+        }
 
         layout(width = totalWidth, height = totalHeight) {
             val currentX = 0
@@ -172,7 +174,8 @@ fun NavRailItem(
     val itemContainerColor by transition.animateColor(
         transitionSpec = {
             tween(200)
-        }, label = "color"
+        },
+        label = "color"
     ) { state ->
         when (state) {
             true -> GuardianTheme.colors.iconActiveContainer
@@ -183,7 +186,8 @@ fun NavRailItem(
     val iconColor by transition.animateColor(
         transitionSpec = {
             tween(200)
-        }, label = "color"
+        },
+        label = "color"
     ) { state ->
         when (state) {
             true -> GuardianTheme.colors.iconActiveColor
@@ -264,9 +268,12 @@ object RailShape : Shape {
 
         moveTo(0f, 0f)
         cubicTo(
-            x1 = 0f, y1 = heightF * .4f,  // 1) control point
-            x2 = widthF, y2 = 0f,          // 2) control point
-            widthF, heightF                 // destiny point
+            x1 = 0f,
+            y1 = heightF * .4f, // 1) control point
+            x2 = widthF,
+            y2 = 0f, // 2) control point
+            widthF,
+            heightF // destiny point
         )
 
         lineTo(0f, heightF)
@@ -279,9 +286,12 @@ object RailShape : Shape {
         moveTo(0f, height)
 
         cubicTo(
-            x1 = 0f, y1 = height - heightF * .4f, // 1) control point
-            x2 = widthF, y2 = height, // 2) control point
-            x3 = widthF, y3 = height - heightF // destiny point
+            x1 = 0f,
+            y1 = height - heightF * .4f, // 1) control point
+            x2 = widthF,
+            y2 = height, // 2) control point
+            x3 = widthF,
+            y3 = height - heightF // destiny point
         )
         lineTo(0f, height - heightF)
         close()
@@ -314,9 +324,12 @@ fun NavRailCanvasPreview() {
             val topPath = Path().apply {
                 moveTo(0f, 0f)
                 cubicTo(
-                    x1 = 0f, y1 = heightF, // 1) control point
-                    x2 = widthF, y2 = 0f, // 2) control point
-                    width, heightF // destiny point
+                    x1 = 0f,
+                    y1 = heightF, // 1) control point
+                    x2 = widthF,
+                    y2 = 0f, // 2) control point
+                    width,
+                    heightF // destiny point
                 )
                 lineTo(0f, heightF)
                 close()
@@ -335,9 +348,12 @@ fun NavRailCanvasPreview() {
                 moveTo(0f, height)
 
                 cubicTo(
-                    x1 = 0f, y1 = height - heightF, // 1) control point
-                    x2 = width, y2 = height, // 2) control point
-                    x3 = width, y3 = height - heightF // destiny point
+                    x1 = 0f,
+                    y1 = height - heightF, // 1) control point
+                    x2 = width,
+                    y2 = height, // 2) control point
+                    x3 = width,
+                    y3 = height - heightF // destiny point
                 )
                 lineTo(0f, height - heightF)
                 close()

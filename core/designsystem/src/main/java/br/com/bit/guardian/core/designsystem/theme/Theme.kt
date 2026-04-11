@@ -3,7 +3,6 @@
 package br.com.bit.guardian.core.designsystem.theme
 
 import android.app.Activity
-import android.content.res.Configuration
 import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -20,9 +19,7 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
 import androidx.window.core.layout.WindowWidthSizeClass as WindowSize
 
@@ -58,7 +55,8 @@ fun GuardianTheme(
                 val window = (view.context as Activity).window
                 window.statusBarColor = colorScheme.primary.toArgb()
                 WindowCompat.getInsetsController(
-                    window, view
+                    window,
+                    view
                 ).isAppearanceLightStatusBars = darkTheme
             }
         }
@@ -74,8 +72,8 @@ fun GuardianTheme(
         GuardianWindowSize.Compact
     }
 
-      val adaptiveInfo = currentWindowAdaptiveInfo()
-      val localAdaptiveContent = with(adaptiveInfo) {
+    val adaptiveInfo = currentWindowAdaptiveInfo()
+    val localAdaptiveContent = with(adaptiveInfo) {
         if (windowPosture.isTabletop ||
             windowSizeClass.windowWidthSizeClass == WindowSize.EXPANDED ||
             windowSizeClass.windowWidthSizeClass == WindowSize.MEDIUM
@@ -111,7 +109,8 @@ fun AdaptiveStatusBarStyle(
 
     LaunchedEffect(background) {
         WindowCompat.getInsetsController(
-            window, window.decorView
-        ).isAppearanceLightStatusBars = iconsShouldBeDark   // true = ícones escuros
+            window,
+            window.decorView
+        ).isAppearanceLightStatusBars = iconsShouldBeDark // true = ícones escuros
     }
 }

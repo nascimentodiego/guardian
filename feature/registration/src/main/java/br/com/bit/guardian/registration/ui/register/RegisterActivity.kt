@@ -40,7 +40,8 @@ class RegisterActivity : ComponentActivity() {
                         val msg = applicationContext.getString(R.string.login_register_success_msg)
                         Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
                         finish()
-                    }, onBackPress = {
+                    },
+                    onBackPress = {
                         finish()
                     }
                 )

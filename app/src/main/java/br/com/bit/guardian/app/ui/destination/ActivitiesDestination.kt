@@ -11,7 +11,7 @@ import br.com.bit.guardian.feature.reports.ui.widget.ReportsRoute
 @Composable
 fun ActivitiesDestination() {
     AdaptiveStatusBarStyle()
-    Column (modifier = Modifier.padding(top = GuardianTheme.dimens.spacingS)) {
+    Column(modifier = Modifier.padding(top = GuardianTheme.dimens.spacingS)) {
         ReportsRoute()
     }
 }

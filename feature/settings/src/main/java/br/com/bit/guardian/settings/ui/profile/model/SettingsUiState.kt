@@ -37,4 +37,3 @@ data class NickName(
     val isLoading: Boolean = false,
     val isError: Boolean = false
 ) : Parcelable
-
