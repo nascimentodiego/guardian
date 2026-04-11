@@ -11,8 +11,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Cache Git LFS objects
+        uses: actions/cache@v4
+        with:
+          path: .git/lfs
+          key: lfs-${{ runner.os }}-${{ hashFiles('**/*.png') }}
+          restore-keys: lfs-${{ runner.os }}-
+
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          lfs: true
 
       - name: Setup JDK 19
         uses: actions/setup-java@v4
