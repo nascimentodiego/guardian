@@ -1,4 +1,3 @@
-import br.com.bit.guardian.convention.core.configureFlavors
 import br.com.bit.guardian.convention.core.configureKotlinAndroid
 import br.com.bit.guardian.convention.core.configureLintAndroid
 import com.android.build.api.dsl.ApplicationExtension
@@ -23,7 +22,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                 configureLintAndroid(this)
                 defaultConfig.targetSdk = 36
 
-                configureFlavors(this)
+//                configureFlavors(this)
             }
         }
     }
