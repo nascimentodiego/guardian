@@ -44,7 +44,7 @@ class MainActivity : ComponentActivity() {
                 modifier = Modifier.fillMaxSize(),
                 color = GuardianTheme.colors.background
             ) {
-                uiState.value?.let { it ->
+                uiState.value?.let {
                     when (it) {
                         is ReportsUiState.Loading -> {
                             Text(

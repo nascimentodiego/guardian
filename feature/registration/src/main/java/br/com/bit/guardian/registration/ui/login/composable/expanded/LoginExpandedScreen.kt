@@ -71,6 +71,7 @@ fun LoginExpandedScreen(
 }
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, device = Devices.TABLET)
+@Suppress("EmptyFunctionBlock")
 @Composable
 fun LoginExpandedScreenPreview(
     @PreviewParameter(LoginScreenProvider::class) uiState: LoginUiState

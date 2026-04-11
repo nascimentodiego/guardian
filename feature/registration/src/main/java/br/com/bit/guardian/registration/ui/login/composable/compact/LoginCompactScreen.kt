@@ -39,6 +39,7 @@ fun LoginCompactScreen(
 
 @GuardianThemePreviews
 @Composable
+@Suppress("EmptyFunctionBlock")
 fun LoginCompactScreenPreview(
     @PreviewParameter(LoginScreenProvider::class) uiState: LoginUiState
 ) {

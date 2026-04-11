@@ -23,7 +23,6 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -33,7 +32,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import br.com.bit.guardian.core.designsystem.R as RDs
 import br.com.bit.guardian.core.designsystem.component.LoadedButton
 import br.com.bit.guardian.core.designsystem.component.LoadedTertiaryButton
 import br.com.bit.guardian.core.designsystem.component.TextTitleSmall
@@ -46,6 +44,7 @@ import br.com.bit.guardian.settings.ui.profile.composable.components.AvatarSelec
 import br.com.bit.guardian.settings.ui.profile.model.Avatar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import br.com.bit.guardian.core.designsystem.R as RDs
 
 @Composable
 internal fun AvatarBottomSheet(
@@ -69,8 +68,7 @@ internal fun AvatarBottomSheet(
 
     if (showBottomSheet) {
         ModalBottomSheet(
-            onDismissRequest = { cancelEvent.invoke() },
-            sheetState = sheetState
+            onDismissRequest = { cancelEvent.invoke() }, sheetState = sheetState
         ) {
             SelectAvatarContent(
                 modifier = modifier,
@@ -92,7 +90,6 @@ internal fun SelectAvatarContent(
     onConfirm: (Int) -> Unit
 ) {
     var selected by rememberSaveable { mutableIntStateOf(init) }
-    val listOfAvatar by rememberSaveable { mutableStateOf(avatarIcons) }
 
     Column(modifier = modifier.padding(horizontal = GuardianTheme.dimens.spacingM)) {
         LazyVerticalGrid(
@@ -113,8 +110,7 @@ internal fun SelectAvatarContent(
                         AvatarSelectableItem(
                             avatar = avatar.key,
                             isSelected = avatar.key == selected,
-                            onSelectClick = { selected = avatar.key }
-                        )
+                            onSelectClick = { selected = avatar.key })
                     }
                 }
             }
@@ -122,8 +118,7 @@ internal fun SelectAvatarContent(
         Spacer(modifier = Modifier.height(GuardianTheme.dimens.spacingS))
         Row(modifier = Modifier) {
             LoadedTertiaryButton(
-                onClick = onCancel,
-                modifier = Modifier
+                onClick = onCancel, modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
             ) {
@@ -154,10 +149,7 @@ internal fun SelectAvatarContent(
 fun SelectAvatarContentPreview() {
     GuardianTheme {
         Surface {
-            SelectAvatarContent(
-                onCancel = {},
-                onConfirm = { }
-            )
+            SelectAvatarContent(onCancel = {}, onConfirm = { })
         }
     }
 }

@@ -28,6 +28,7 @@ fun LoginScreen(
 
 @Composable
 @Preview
+@Suppress("EmptyFunctionBlock")
 fun LoginExpandedScreenPreview(
     @PreviewParameter(LoginScreenProvider::class) uiState: LoginUiState
 ) {

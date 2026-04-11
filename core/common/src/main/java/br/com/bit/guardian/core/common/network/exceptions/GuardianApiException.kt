@@ -3,6 +3,7 @@ package br.com.bit.guardian.core.common.network.exceptions
 import br.com.bit.guardian.core.common.network.model.ApiError
 import kotlinx.serialization.json.Json
 import retrofit2.HttpException
+import timber.log.Timber
 
 // The server cannot or will not process the request due to something that is perceived
 // to be a client error
@@ -32,12 +33,15 @@ sealed class GuardianApiException : Exception() {
     data object GenericErrorException : GuardianApiException()
     data object ServerErrorException : GuardianApiException()
     data class GuardianBusinessException(val error: GuardianErrorType) : GuardianApiException()
+
+    @Suppress("TooGenericExceptionCaught")
     data class BadRequestException(val apiError: ApiError?) : GuardianApiException() {
         constructor(errorBody: String?) : this(
             apiError = errorBody?.let {
                 try {
                     json.decodeFromString<ApiError>(it)
                 } catch (t: Throwable) {
+                    Timber.e(t)
                     null
                 }
             }

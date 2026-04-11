@@ -17,6 +17,7 @@ fun TextTitleLarge(
     color: Color = GuardianTheme.colors.textTitle,
     textAlign: TextAlign? = null
 ) = Text(
+    modifier = modifier,
     text = stringResource(id = titleRes),
     style = GuardianTheme.typography.titleLarge,
     color = color,
