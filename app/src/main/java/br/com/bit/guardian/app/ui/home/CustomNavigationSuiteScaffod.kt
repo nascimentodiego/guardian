@@ -34,7 +34,10 @@ fun GuardianNavigationSuiteScaffold(
 
     val adaptiveInfo = currentWindowAdaptiveInfo()
     val navigationType = with(adaptiveInfo) {
-        if (windowPosture.isTabletop || windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.EXPANDED || windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.MEDIUM) {
+        if (windowPosture.isTabletop ||
+            windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.EXPANDED ||
+            windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.MEDIUM
+        ) {
             NavigationSuiteType.NavigationRail
         } else {
             NavigationSuiteType.NavigationBar
@@ -44,19 +47,26 @@ fun GuardianNavigationSuiteScaffold(
         if (navigationType == NavigationSuiteType.NavigationRail) {
             GuardianRailLayout(
                 modifier = modifier.padding(
-                    WindowInsets.navigationBars.only(WindowInsetsSides.End)
+                    WindowInsets
+                        .navigationBars
+                        .only(WindowInsetsSides.End)
                         .asPaddingValues()
-                ), navRail = {
+                ),
+                navRail = {
                     GuardianNavRail(
-                        initialDestination = currentDestination, entries = AppDestinations.entries
+                        initialDestination = currentDestination,
+                        entries = AppDestinations.entries
                     ) { currentDestination = it }
-                }, content = {
+                },
+                content = {
                     content(currentDestination)
-                })
+                }
+            )
         } else {
             GuardianBottomBarLayout(modifier = modifier.navigationBarPaddingOnly(), bottomBar = {
                 GuardianNavbar(
-                    initialDestination = currentDestination, entries = AppDestinations.entries
+                    initialDestination = currentDestination,
+                    entries = AppDestinations.entries
                 ) { currentDestination = it }
             }, content = { content(currentDestination) })
         }
