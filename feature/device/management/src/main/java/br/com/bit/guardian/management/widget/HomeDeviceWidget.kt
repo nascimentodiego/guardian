@@ -2,7 +2,7 @@ package br.com.bit.guardian.management.widget
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import br.com.bit.guardian.core.designsystem.extension.GuardianThemePreviews
 import br.com.bit.guardian.core.designsystem.icon.GuardianIcon
 import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
 import br.com.bit.guardian.core.ui.composable.home.HomeContentWidget
@@ -23,7 +23,7 @@ fun HomeDeviceWidget(
     )
 }
 
-@Preview(showBackground = true)
+@GuardianThemePreviews
 @Composable
 fun HomeDeviceWidgetPreview() {
     GuardianTheme {

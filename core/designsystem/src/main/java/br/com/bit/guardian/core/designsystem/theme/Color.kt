@@ -49,7 +49,7 @@ internal val White = Color(0xFFFCFCFC) // Background Light
 internal val GreenContent_50 = Color(0xFFF0F6E6)
 
 // Colors Light
-internal val Purple40 = Color(0xFF452890) // Primary Light
+internal val Primary = Color(0xFF452890) // Primary Light
 internal val Gray50 = Color(0xFFF5F5F5) // OnPrimary Light
 internal val Purple100 = Color(0xFFEFEFEF) // Primary Container Light
 internal val Purple900 = Color(0xFF494949) // OnPrimary Container Light
@@ -57,7 +57,7 @@ internal val Purple900 = Color(0xFF494949) // OnPrimary Container Light
 internal val Gray = Color(0xFFCECDCD) // Secondary Light
 internal val Gray02 = Color(0xFF363636) // OnSecondary Light
 
-internal val Orange01 = Color(0xFFfe6c3b) // Tertiary Light
+internal val Orange01 = Color(0xFFE84F1A) // Tertiary Light
 internal val Gray04 = Color(0xFFF5F5F5) // OnTertiary Light
 
 internal val GrayLight01 = Color(0xFFffffff) // Surface Light
@@ -65,24 +65,24 @@ internal val GrayLight02 = Color(0xFFD9D6D6) // Background Light
 internal val GrayLight03 = Color(0xFF343435) // OnBackground Light
 
 internal val IconActiveColorLight = Color(0xFF452890)
-internal val IconInactiveColorLight = Color(0x80452890)
+internal val IconInactiveColorLight = Color(0xA6452890)
 internal val IconActiveContainerLight = Color(0x339771FA)
 
 internal val LightColorSuccess = Color(0xFF27AE60)
-internal val LightColorWarning = Color(0xFFE2B93B)
+internal val LightColorWarning = Color(0xFFB8901A)
 internal val LightColorError = Color(0xFFEB5757)
 internal val LightColorDisable = Gray400
 
 internal val TextTitleLight = Color(0xFF000000)
 internal val TextSubtitleLight = Color(0xE6000000)
 internal val TextBodyLight = Color(0xCC000000)
-internal val TextDisableLight = Color(0x73000000)
+internal val TextDisableLight = Color(0x8C000000)
 internal val TextInverseLight = Color(0xFFE0E0E0)
 
 // Colors Dark
-internal val Purple40Dark = Purple40 // Primary Dark
+internal val PrimaryDark = Color(0xFF9771FA) // Primary Dark
 internal val Gray50Dark = Color(0xFFF5F5F5) // OnPrimary Dark
-internal val Purple100Dark = Color(0xFF181818) // Primary Container Dark
+internal val PrimaryContainer = Color(0xFF313036) // Primary Container Dark
 internal val Purple900Dark = Color(0xFFA2A2A3) // OnPrimary Container Dark
 
 internal val GrayDark = Color(0xFF232323) // Secondary Dark
@@ -91,8 +91,8 @@ internal val Gray02Dark = Color(0xFFC0C0C0) // OnSecondary Dark
 internal val Orange01Dark = Color(0xFFfe6c3b) // Tertiary Dark
 internal val Gray04Dark = Color(0xFFF5F5F5) // OnTertiary Dark
 
-internal val GrayLight01Dark = Black // Surface Dark
-internal val GrayLight02Dark = Color(0xFF0E0D0E) // Background Dark
+internal val SurfaceDark = Color(0xFF1C191C) // Surface Dark
+internal val BackgroundDark = Color(0xFF0B0912) // Background Dark
 internal val GrayLight03Dark = Color(0xFFE3E3E6) // OnBackground
 
 internal val IconActiveColorDark = Color(0xFFF4F4F5) // IconActiveColor Dark
@@ -106,7 +106,7 @@ internal val TextDisableDark = Color(0x73FFFFFF)
 internal val TextInverseDark = Color(0xFF242424)
 
 val GuardianLightColorScheme = lightColorScheme(
-    primary = Purple40,
+    primary = Primary,
     onPrimary = White,
     primaryContainer = Purple100,
     onPrimaryContainer = Purple900,
@@ -131,9 +131,9 @@ val GuardianLightColorScheme = lightColorScheme(
 )
 
 val GuardianDarkColorScheme = darkColorScheme(
-    primary = Purple40Dark,
+    primary = Primary,
     onPrimary = Gray50Dark,
-    primaryContainer = Purple100Dark,
+    primaryContainer = PrimaryContainer,
     onPrimaryContainer = Purple900Dark,
 
     secondary = GrayDark,
@@ -147,10 +147,10 @@ val GuardianDarkColorScheme = darkColorScheme(
     errorContainer = Red300,
     onErrorContainer = Red200,
 
-    background = GrayLight02Dark,
+    background = BackgroundDark,
     onBackground = White,
 
-    surface = GrayLight01Dark,
+    surface = SurfaceDark,
     onSurface = GrayDark,
     outline = LightColorDisable
 )

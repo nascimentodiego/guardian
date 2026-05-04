@@ -1,5 +1,11 @@
 package br.com.bit.guardian.app.ui.home
 
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.only
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
@@ -28,10 +34,7 @@ fun GuardianNavigationSuiteScaffold(
 
     val adaptiveInfo = currentWindowAdaptiveInfo()
     val navigationType = with(adaptiveInfo) {
-        if (windowPosture.isTabletop ||
-            windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.EXPANDED ||
-            windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.MEDIUM
-        ) {
+        if (windowPosture.isTabletop || windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.EXPANDED || windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.MEDIUM) {
             NavigationSuiteType.NavigationRail
         } else {
             NavigationSuiteType.NavigationBar
@@ -40,30 +43,22 @@ fun GuardianNavigationSuiteScaffold(
     Surface {
         if (navigationType == NavigationSuiteType.NavigationRail) {
             GuardianRailLayout(
-                modifier = modifier,
-                navRail = {
+                modifier = modifier.padding(
+                    WindowInsets.navigationBars.only(WindowInsetsSides.End)
+                        .asPaddingValues()
+                ), navRail = {
                     GuardianNavRail(
-                        initialDestination = currentDestination,
-                        modifier = modifier,
-                        entries = AppDestinations.entries
+                        initialDestination = currentDestination, entries = AppDestinations.entries
                     ) { currentDestination = it }
-                },
-                content = {
+                }, content = {
                     content(currentDestination)
-                }
-            )
+                })
         } else {
-            GuardianBottomBarLayout(
-                modifier = modifier.navigationBarPaddingOnly(),
-                bottomBar = {
-                    GuardianNavbar(
-                        modifier = Modifier,
-                        initialDestination = currentDestination,
-                        entries = AppDestinations.entries
-                    ) { currentDestination = it }
-                },
-                content = { content(currentDestination) }
-            )
+            GuardianBottomBarLayout(modifier = modifier.navigationBarPaddingOnly(), bottomBar = {
+                GuardianNavbar(
+                    initialDestination = currentDestination, entries = AppDestinations.entries
+                ) { currentDestination = it }
+            }, content = { content(currentDestination) })
         }
     }
 }
