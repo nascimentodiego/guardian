@@ -11,6 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
+    env:
+      GRADLE_CACHE_USER: ${{ secrets.GRADLE_CACHE_USER }}
+      GRADLE_CACHE_PASS: ${{ secrets.GRADLE_CACHE_PASS }}
+      GRADLE_CACHE_PUSH: false
     steps:
       - name: Cache Git LFS objects
         uses: actions/cache@v4
@@ -47,7 +51,7 @@ jobs:
 
       - name: Run ktlint
         id: ktlint
-        run: ./gradlew ktlintCheck
+        run: ./gradlew ktlintCheck --build-cache
         continue-on-error: true
 
       - name: Upload ktlint reports
@@ -114,6 +118,10 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
+    env:
+      GRADLE_CACHE_USER: ${{ secrets.GRADLE_CACHE_USER }}
+      GRADLE_CACHE_PASS: ${{ secrets.GRADLE_CACHE_PASS }}
+      GRADLE_CACHE_PUSH: false
     steps:
       - name: Cache Git LFS objects
         uses: actions/cache@v4
@@ -150,7 +158,7 @@ jobs:
 
       - name: Run detekt
         id: detekt
-        run: ./gradlew detekt
+        run: ./gradlew detekt --build-cache
         continue-on-error: true
 
       - name: Upload detekt reports
@@ -215,6 +223,10 @@ jobs:
     name: Build
     needs: detekt
     runs-on: ubuntu-latest
+    env:
+      GRADLE_CACHE_USER: ${{ secrets.GRADLE_CACHE_USER }}
+      GRADLE_CACHE_PASS: ${{ secrets.GRADLE_CACHE_PASS }}
+      GRADLE_CACHE_PUSH: true
     steps:
       - name: Cache Git LFS objects
         uses: actions/cache@v4
@@ -250,7 +262,7 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Build
-        run: ./gradlew assembleDebug
+        run: ./gradlew assembleDebug --build-cache
 
   unit-tests:
     name: Unit Tests
@@ -258,6 +270,10 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
+    env:
+      GRADLE_CACHE_USER: ${{ secrets.GRADLE_CACHE_USER }}
+      GRADLE_CACHE_PASS: ${{ secrets.GRADLE_CACHE_PASS }}
+      GRADLE_CACHE_PUSH: false
     steps:
       - name: Cache Git LFS objects
         uses: actions/cache@v4
@@ -296,7 +312,7 @@ jobs:
         id: unit_tests
         run: |
           set -o pipefail
-          ./gradlew test 2>&1 | tee unit_test_output.txt
+          ./gradlew test --build-cache 2>&1 | tee unit_test_output.txt
         continue-on-error: true
 
       - name: Upload unit test reports
@@ -374,6 +390,10 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
+    env:
+      GRADLE_CACHE_USER: ${{ secrets.GRADLE_CACHE_USER }}
+      GRADLE_CACHE_PASS: ${{ secrets.GRADLE_CACHE_PASS }}
+      GRADLE_CACHE_PUSH: false
     steps:
       - name: Cache Git LFS objects
         uses: actions/cache@v4
@@ -410,7 +430,7 @@ jobs:
 
       - name: Validate Screenshot Tests
         id: screenshot_validation
-        run: ./gradlew validateDebugScreenshotTest
+        run: ./gradlew validateDebugScreenshotTest --build-cache
         continue-on-error: true
 
       - name: Upload screenshot diffs
