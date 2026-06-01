@@ -6,6 +6,22 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+
+buildCache {
+    local {
+        isEnabled = true
+    }
+    remote<HttpBuildCache> {
+        url = uri("https://gradle-cache-worker.guardianapp.workers.dev/cache/")
+        isPush = System.getenv("GRADLE_CACHE_PUSH").toBoolean()
+        credentials {
+            username = System.getenv("GRADLE_CACHE_USER") ?: ""
+            password = System.getenv("GRADLE_CACHE_PASS") ?: ""
+        }
+        isAllowUntrustedServer = false
+    }
+}
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
