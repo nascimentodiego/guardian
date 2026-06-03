@@ -17,6 +17,7 @@ class AndroidLibraryTestConventionPlugin : Plugin<Project> {
             extensions.configure<LibraryExtension> {
                 testOptions {
                     unitTests.isReturnDefaultValues = true
+                    unitTests.isIncludeAndroidResources = true
                 }
             }
 
