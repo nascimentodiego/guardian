@@ -312,7 +312,7 @@ jobs:
         id: unit_tests
         run: |
           set -o pipefail
-          ./gradlew jacocoIntegratedTestReport --build-cache 2>&1 | tee unit_test_output.txt
+          ./gradlew jacocoIntegratedTestReport --no-build-cache 2>&1 | tee unit_test_output.txt
         continue-on-error: true
 
       - name: Upload JaCoCo reports (para o job Sonar)
