@@ -1,5 +1,6 @@
 plugins {
     id("guardian.android.library")
+    id("org.jetbrains.kotlin.plugin.compose")
 }
 
 android {
@@ -7,6 +8,12 @@ android {
 }
 
 dependencies {
-    api(libs.junit4)
+    implementation(project(":core:ui"))
+    implementation(project(":core:designsystem"))
+
+//    api(libs.junit4)
     api(libs.kotlinx.coroutines.test)
+    api(libs.robolectric)
+    // Compose testing
+    implementation(libs.androidx.compose.ui.test.junit4)
 }

@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import br.com.bit.guardian.core.common.ExcludeFromGeneratedReport
 import br.com.bit.guardian.core.designsystem.extension.handleScreenBySize
 import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
 import br.com.bit.guardian.core.designsystem.theme.LocalWindowSizeClass
@@ -26,10 +27,12 @@ fun LoginScreen(
     )
 }
 
+
 @Composable
 @Preview
 @Suppress("EmptyFunctionBlock")
-fun LoginExpandedScreenPreview(
+@ExcludeFromGeneratedReport
+fun LoginScreenPreview(
     @PreviewParameter(LoginScreenProvider::class) uiState: LoginUiState
 ) {
     GuardianTheme {

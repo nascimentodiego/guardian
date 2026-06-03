@@ -16,5 +16,5 @@ android {
 dependencies {
     implementation(project(":core:ui"))
     implementation(project(":core:data:datasource"))
-    testImplementation(libs.robolectric)
+    testImplementation(project(":core:test"))
 }
