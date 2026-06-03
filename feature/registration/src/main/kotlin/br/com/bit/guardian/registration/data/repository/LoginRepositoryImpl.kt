@@ -65,9 +65,4 @@ class LoginRepositoryImpl @Inject constructor(
         val result = dataSource.isUserLogged().first()
         emit(result)
     }.flowOn(Dispatchers.IO).handleNetworkError()
-
-    fun sum() {
-
-    }
-
 }
