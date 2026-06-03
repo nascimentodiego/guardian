@@ -86,7 +86,7 @@ internal fun Project.configureJacoco(
             executionData.setFrom(
                 files(
                     "$buildDir/jacoco/$testTaskName.exec",
-                    "$buildDir/outputs/unit_test_code_coverage/${variantName}UnitTest/$testTaskName.exec",
+                    "$buildDir/outputs/unit_test_code_coverage/${variant.name}UnitTest/$testTaskName.exec",
                     "$buildDir/outputs/code_coverage/connected/*coverage.ec"
                 )
             )
