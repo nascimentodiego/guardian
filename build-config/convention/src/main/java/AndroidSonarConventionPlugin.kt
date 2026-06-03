@@ -8,6 +8,23 @@ class AndroidSonarConventionPlugin : Plugin<Project> {
         with(target) {
             pluginManager.apply("org.sonarqube")
 
+            // Modules to skip entirely from Sonar analysis — these contain no
+            // production code (testing infrastructure, convention plugins, etc.)
+            val skippedModules = setOf(
+                ":core:test",
+                ":build-config:convention"
+            )
+
+            subprojects {
+                if (path in skippedModules) {
+                    pluginManager.withPlugin("org.sonarqube") {
+                        extensions.configure<SonarExtension> {
+                            isSkipProject = true
+                        }
+                    }
+                }
+            }
+
             extensions.configure<SonarExtension> {
                 properties {
                     property("sonar.projectKey", "nascimentodiego_guardian")
@@ -15,6 +32,9 @@ class AndroidSonarConventionPlugin : Plugin<Project> {
                     property("sonar.host.url", "https://sonarcloud.io")
 
                     property("sonar.androidVariant", "debug")
+
+                    // Disable Android Lint import — project uses Detekt + Ktlint instead
+                    property("sonar.androidLint.reportPaths", "")
 
                     property(
                         "sonar.coverage.jacoco.xmlReportPaths",
