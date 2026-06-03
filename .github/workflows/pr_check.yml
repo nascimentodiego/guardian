@@ -38,7 +38,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v6
 
       - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
+        uses: android-actions/setup-android@v4
 
       - name: Install Android SDK Platform 36
         run: sdkmanager "platforms;android-36"
@@ -145,7 +145,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v6
 
       - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
+        uses: android-actions/setup-android@v4
 
       - name: Install Android SDK Platform 36
         run: sdkmanager "platforms;android-36"
@@ -250,7 +250,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v6
 
       - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
+        uses: android-actions/setup-android@v4
 
       - name: Install Android SDK Platform 36
         run: sdkmanager "platforms;android-36"
@@ -297,7 +297,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v6
 
       - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
+        uses: android-actions/setup-android@v4
 
       - name: Install Android SDK Platform 36
         run: sdkmanager "platforms;android-36"
@@ -433,7 +433,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v6
 
       - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
+        uses: android-actions/setup-android@v4
 
       - name: Install Android SDK Platform 36
         run: sdkmanager "platforms;android-36"
