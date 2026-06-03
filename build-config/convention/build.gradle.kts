@@ -11,7 +11,7 @@ dependencies {
     compileOnly(libs.ksp.gradlePlugin)
     compileOnly(libs.ktlint.gradlePlugin)
     compileOnly(libs.deteKt.gradlePlugin)
-    compileOnly(libs.sonarqube.gradlePlugin)
+    implementation(libs.sonarqube.gradlePlugin)
 }
 
 gradlePlugin {
@@ -62,7 +62,7 @@ gradlePlugin {
             implementationClass = "AndroidLibraryJacocoConventionPlugin"
         }
 
-        register("androidHilt"){
+        register("androidHilt") {
             id = "guardian.android.hilt"
             implementationClass = "AndroidHiltConventionPlugin"
         }

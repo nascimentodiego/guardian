@@ -19,5 +19,5 @@ plugins {
     alias(libs.plugins.googleServices) apply false
     alias(libs.plugins.compose.compiler) apply false
     alias(libs.plugins.screenshot) apply false
-    id("guardian.android.sonar") apply false
+    id("guardian.android.sonar")
 }
