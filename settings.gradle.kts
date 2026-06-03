@@ -13,6 +13,7 @@ buildCache {
     }
     remote<HttpBuildCache> {
         url = uri("https://gradle-cache-worker.guardianapp.workers.dev/cache/")
+        isEnabled = System.getenv("CI") != null
         isPush = System.getenv("GRADLE_CACHE_PUSH").toBoolean()
         credentials {
             username = System.getenv("GRADLE_CACHE_USER") ?: ""
