@@ -533,14 +533,14 @@ jobs:
 
       # Baixa os relatórios JaCoCo gerados pelo job unit-tests
       - name: Download JaCoCo reports
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: jacoco-reports
           path: .
 
       # Baixa os resultados dos testes unitários
       - name: Download unit test results
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: unit-test-results
           path: .
