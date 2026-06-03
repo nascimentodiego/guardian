@@ -24,6 +24,11 @@ private val coverageExclusions = listOf(
     "**/*\$*Preview*",            // lambdas dentro de previews
     "**/ComposableSingletons*",
     "**/*ComposableSingletons*",
+    // Test source sets (defensive — should not appear in main compiled classes)
+    "**/test/**",
+    "**/androidTest/**",
+    "**/screenshotTest/**",
+    "**/screenshotTestDebug/**",
 )
 
 internal fun Project.configureJacoco(

@@ -549,8 +549,23 @@ jobs:
           name: unit-test-results
           path: .
 
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v6
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v4
+
+      - name: Install Android SDK Platform 36
+        run: sdkmanager "platforms;android-36"
+
+      - name: Decode google-services.json
+        run: echo "${{ secrets.GOOGLE_SERVICES_JSON }}" | base64 --decode > app/google-services.json
+
+      - name: Grant Gradle permissions
+        run: chmod +x ./gradlew
+
       - name: SonarQube Scan
-        uses: sonarsource/sonarqube-scan-action@v8
+        run: ./gradlew sonar --info
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
