@@ -9,6 +9,9 @@ import org.gradle.kotlin.dsl.getByType
 class AndroidLibraryTestConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
+
+            pluginManager.apply("guardian.android.library.jacoco")
+            
             extensions.getByType<LibraryExtension>()
                 .experimentalProperties["android.experimental.enableScreenshotTest"] = true
 
