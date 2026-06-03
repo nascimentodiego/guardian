@@ -64,7 +64,7 @@ jobs:
 
       - name: Comment PR on ktlint failure
         if: steps.ktlint.outcome == 'failure'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             const marker = '<!-- ktlint-failure -->';
@@ -171,7 +171,7 @@ jobs:
 
       - name: Comment PR on detekt failure
         if: steps.detekt.outcome == 'failure'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             const marker = '<!-- detekt-failure -->';
@@ -341,7 +341,7 @@ jobs:
 
       - name: Comment PR on unit test failure
         if: steps.unit_tests.outcome == 'failure'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             const fs = require('fs');
@@ -459,7 +459,7 @@ jobs:
 
       - name: Comment PR on screenshot failure
         if: steps.screenshot_validation.outcome == 'failure'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             const marker = '<!-- screenshot-failure -->';
