@@ -1,30 +1,25 @@
 package br.com.bit.guardian.registration.ui.login.composable
 
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
-import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
+import br.com.bit.guardian.core.test.ParameterizedComposeScreenTest
 import br.com.bit.guardian.registration.ui.login.LoginListener
 import br.com.bit.guardian.registration.ui.login.model.LoginIntent
 import br.com.bit.guardian.registration.ui.login.model.LoginUiState
 import br.com.bit.guardian.registration.ui.login.model.UserView
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
+import org.robolectric.ParameterizedRobolectricTestRunner
 import org.robolectric.annotation.Config
 
-@RunWith(RobolectricTestRunner::class)
-@Config(sdk = [34], qualifiers = "xlarge-port")
-class LoginScreenTest {
-
-    @get:Rule
-    val composeRule = createComposeRule()
+@RunWith(ParameterizedRobolectricTestRunner::class)
+@Config(sdk = [34])
+class LoginScreenTest(qualifier: String) : ParameterizedComposeScreenTest(qualifier) {
 
     private fun setContent(
         uiState: LoginUiState? = LoginUiState.Idle(UserView.Empty),
@@ -34,10 +29,8 @@ class LoginScreenTest {
         val listener = object : LoginListener {
             override fun onCreateUserClickListener() = onCreateUserClick()
         }
-        composeRule.setContent {
-            MaterialTheme {
-                LoginScreen(uiState = uiState, intent = intent, callbacks = listener)
-            }
+        setScreenContent {
+            LoginScreen(uiState = uiState, intent = intent, callbacks = listener)
         }
     }
 
@@ -122,5 +115,11 @@ class LoginScreenTest {
     fun `LoginScreen does not display form when state is null`() {
         setContent(uiState = null)
         composeRule.onNodeWithText("E-mail").assertDoesNotExist()
+    }
+
+    companion object {
+        @JvmStatic
+        @ParameterizedRobolectricTestRunner.Parameters(name = "{0}")
+        fun qualifiers(): Collection<Array<Any>> = defaultQualifiers()
     }
 }

@@ -18,7 +18,12 @@ private val coverageExclusions = listOf(
     "**/R.class",
     "**/R\$*.class",
     "**/BuildConfig.*",
-    "**/Manifest*.*"
+    "**/Manifest*.*",
+    // Compose & previews
+    "**/*Preview*",
+    "**/*\$*Preview*",            // lambdas dentro de previews
+    "**/ComposableSingletons*",
+    "**/*ComposableSingletons*",
 )
 
 internal fun Project.configureJacoco(
@@ -73,13 +78,15 @@ internal fun Project.configureJacoco(
             classDirectories.setFrom(
                 fileTree("$buildDir/tmp/kotlin-classes/${variantName}") {
                     exclude(coverageExclusions)
+                    exclude("**/*\$*Preview*\$*.class")
+                    exclude("**/*Preview\$*.class")
                 }
             )
 
             executionData.setFrom(
                 files(
                     "$buildDir/jacoco/$testTaskName.exec",
-                    "$buildDir/outputs/unit_test_code_coverage/${variantName}UnitTest/$testTaskName.exec",
+                    "$buildDir/outputs/unit_test_code_coverage/${variant.name}UnitTest/$testTaskName.exec",
                     "$buildDir/outputs/code_coverage/connected/*coverage.ec"
                 )
             )

@@ -9,6 +9,9 @@ import org.gradle.kotlin.dsl.getByType
 class AndroidLibraryTestConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
+
+            pluginManager.apply("guardian.android.library.jacoco")
+            
             extensions.getByType<LibraryExtension>()
                 .experimentalProperties["android.experimental.enableScreenshotTest"] = true
 
@@ -25,8 +28,12 @@ class AndroidLibraryTestConventionPlugin : Plugin<Project> {
             dependencies {
                 add("testImplementation", libs.findLibrary("junit4").get())
                 add("testImplementation", libs.findLibrary("kotlinx-coroutines-test").get())
+                add("testImplementation", libs.findLibrary("robolectric").get())
                 add("testImplementation", project(":core:test"))
-                add("screenshotTestImplementation", libs.findLibrary("screenshot-validation-api").get())
+                add(
+                    "screenshotTestImplementation",
+                    libs.findLibrary("screenshot-validation-api").get()
+                )
                 add("screenshotTestImplementation", libs.findLibrary("androidx-ui-tooling").get())
             }
         }
