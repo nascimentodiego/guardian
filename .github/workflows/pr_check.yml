@@ -56,7 +56,7 @@ jobs:
 
       - name: Upload ktlint reports
         if: steps.ktlint.outcome == 'failure'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ktlint-reports
           path: '**/build/reports/ktlint/**'
@@ -163,7 +163,7 @@ jobs:
 
       - name: Upload detekt reports
         if: steps.detekt.outcome == 'failure'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: detekt-reports
           path: '**/build/reports/detekt/**'
@@ -317,7 +317,7 @@ jobs:
 
       - name: Upload JaCoCo reports (para o job Sonar)
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: jacoco-reports
           path: '**/build/reports/coverage/jacoco/**/*.xml'
@@ -325,7 +325,7 @@ jobs:
 
       - name: Upload unit test results (para o job Sonar)
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: unit-test-results
           path: '**/build/test-results/**/TEST-*.xml'
@@ -333,7 +333,7 @@ jobs:
 
       - name: Upload unit test reports
         if: steps.unit_tests.outcome == 'failure'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: unit-test-reports
           path: '**/build/reports/tests/**'
@@ -451,7 +451,7 @@ jobs:
 
       - name: Upload screenshot diffs
         if: steps.screenshot_validation.outcome == 'failure'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: screenshot-diffs
           path: '**/build/reports/screenshotTest/**'
