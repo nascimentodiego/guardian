@@ -25,6 +25,8 @@ class AndroidSonarConventionPlugin : Plugin<Project> {
                         "**/build/test-results/**/TEST-*.xml",
                     )
 
+                    // ── Source exclusions ─────────────────────────────────
+                    // Test source sets are NOT counted as production code at all
                     property(
                         "sonar.exclusions",
                         listOf(
@@ -43,9 +45,16 @@ class AndroidSonarConventionPlugin : Plugin<Project> {
                             "**/databinding/**",
                             "**/di/module/**",
                             "**/build-config/**",
+                            // Test source sets
+                            "**/src/test/**",
+                            "**/src/androidTest/**",
+                            "**/src/screenshotTest/**",
+                            "**/src/screenshotTestDebug/**",
                         ).joinToString(","),
                     )
 
+                    // ── Coverage exclusions ────────────────────────────────
+                    // Code that should not be measured for test coverage
                     property(
                         "sonar.coverage.exclusions",
                         listOf(
@@ -61,18 +70,38 @@ class AndroidSonarConventionPlugin : Plugin<Project> {
                             "**/*Component*",
                             "**/databinding/**",
                             "**/di/module/**",
-                            "**/test/**",
-                            "**/androidTest/**",
                             "**/build-config/**",
+                            // Test source sets
+                            "**/src/test/**",
+                            "**/src/androidTest/**",
+                            "**/src/screenshotTest/**",
+                            "**/src/screenshotTestDebug/**",
                         ).joinToString(","),
                     )
 
+                    // ── Test inclusions ───────────────────────────────────
+                    // Tells Sonar where test files live (for proper categorization)
+                    property(
+                        "sonar.tests",
+                        listOf(
+                            "src/test",
+                            "src/androidTest",
+                            "src/screenshotTest",
+                            "src/screenshotTestDebug",
+                        ).joinToString(","),
+                    )
+
+                    // ── Duplication exclusions ────────────────────────────
                     property(
                         "sonar.cpd.exclusions",
                         listOf(
                             "**/databinding/**",
                             "**/*Binding.*",
                             "**/build-config/**",
+                            "**/src/test/**",
+                            "**/src/androidTest/**",
+                            "**/src/screenshotTest/**",
+                            "**/src/screenshotTestDebug/**",
                         ).joinToString(","),
                     )
 
