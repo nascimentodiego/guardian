@@ -81,7 +81,7 @@ internal fun Project.configureJacoco(
             }
 
             classDirectories.setFrom(
-                fileTree("$buildDir/tmp/kotlin-classes/${variantName}") {
+                fileTree("$buildDir/tmp/kotlin-classes/${variant.name}") {
                     exclude(coverageExclusions)
                     exclude("**/*\$*Preview*\$*.class")
                     exclude("**/*Preview\$*.class")
