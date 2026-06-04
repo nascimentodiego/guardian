@@ -27,7 +27,6 @@ fun LoginScreen(
     )
 }
 
-
 @Composable
 @Preview
 @Suppress("EmptyFunctionBlock")
