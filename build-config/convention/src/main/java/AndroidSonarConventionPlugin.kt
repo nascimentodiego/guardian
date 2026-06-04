@@ -92,17 +92,7 @@ class AndroidSonarConventionPlugin : Plugin<Project> {
                             "**/src/screenshotTestDebug/**",
                         ).joinToString(","),
                     )
-
-                    property(
-                        "sonar.tests",
-                        listOf(
-                            "src/test",
-                            "src/androidTest",
-                            "src/screenshotTest",
-                            "src/screenshotTestDebug",
-                        ).joinToString(","),
-                    )
-
+                    
                     property(
                         "sonar.cpd.exclusions",
                         listOf(
