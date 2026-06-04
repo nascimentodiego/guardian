@@ -22,6 +22,15 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                 configureLintAndroid(this)
                 defaultConfig.targetSdk = 36
 
+                // Allow modules to use src/main/kotlin in addition to the default src/main/java.
+                // Required for tools like SonarQube to detect Kotlin source files in modules
+                // that don't follow the AGP default layout.
+                sourceSets {
+                    getByName("main") {
+                        java.srcDirs("src/main/java", "src/main/kotlin")
+                    }
+                }
+
 //                configureFlavors(this)
             }
         }

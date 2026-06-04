@@ -23,6 +23,15 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
             extensions.configure<LibraryExtension> {
                 configureKotlinAndroid(this)
                 defaultConfig.targetSdk = 36
+
+                // Allow modules to use src/main/kotlin in addition to the default src/main/java.
+                // Required for tools like SonarQube to detect Kotlin source files in modules
+                // that don't follow the AGP default layout (e.g. :feature:registration).
+                sourceSets {
+                    getByName("main") {
+                        java.srcDirs("src/main/java", "src/main/kotlin")
+                    }
+                }
             }
 
             val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
