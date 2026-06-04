@@ -12,14 +12,40 @@ class AndroidSonarConventionPlugin : Plugin<Project> {
             // production code (testing infrastructure, convention plugins, etc.)
             val skippedModules = setOf(
                 ":core:test",
-                ":build-config:convention"
+                ":build-config:convention",
             )
 
             subprojects {
+                // Skip configured modules entirely
                 if (path in skippedModules) {
                     pluginManager.withPlugin("org.sonarqube") {
                         extensions.configure<SonarExtension> {
                             isSkipProject = true
+                        }
+                    }
+                    return@subprojects
+                }
+
+                // Configure sonar.sources per Android submodule to support both
+                // src/main/java (default AGP) and src/main/kotlin (used in some modules
+                // like :feature:registration). Without this, modules with sources only
+                // in src/main/kotlin show up as "no coverage" in the dashboard because
+                // Sonar can't find the source files to associate with JaCoCo data.
+                pluginManager.withPlugin("com.android.library") {
+                    pluginManager.withPlugin("org.sonarqube") {
+                        extensions.configure<SonarExtension> {
+                            properties {
+                                property("sonar.sources", "src/main/java,src/main/kotlin")
+                            }
+                        }
+                    }
+                }
+                pluginManager.withPlugin("com.android.application") {
+                    pluginManager.withPlugin("org.sonarqube") {
+                        extensions.configure<SonarExtension> {
+                            properties {
+                                property("sonar.sources", "src/main/java,src/main/kotlin")
+                            }
                         }
                     }
                 }
@@ -36,6 +62,9 @@ class AndroidSonarConventionPlugin : Plugin<Project> {
                     // Disable Android Lint import — project uses Detekt + Ktlint instead
                     property("sonar.androidLint.reportPaths", "")
 
+                    // Paths are relative to each submodule — Sonar applies them per-module.
+                    // Avoid glob patterns like "**/build/..." here, as they can produce
+                    // unexpected results in multi-module projects.
                     property(
                         "sonar.coverage.jacoco.xmlReportPaths",
                         "build/reports/coverage/jacoco/debug.xml",
@@ -44,8 +73,6 @@ class AndroidSonarConventionPlugin : Plugin<Project> {
                         "sonar.junit.reportPaths",
                         "build/test-results/testDebugUnitTest",
                     )
-                    
-                    property("sonar.sources", "src/main/java,src/main/kotlin")
 
                     property(
                         "sonar.exclusions",
