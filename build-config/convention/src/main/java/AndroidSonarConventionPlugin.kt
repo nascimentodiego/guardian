@@ -38,12 +38,14 @@ class AndroidSonarConventionPlugin : Plugin<Project> {
 
                     property(
                         "sonar.coverage.jacoco.xmlReportPaths",
-                        "**/build/reports/coverage/jacoco/**/*.xml",
+                        "build/reports/coverage/jacoco/debug.xml",
                     )
                     property(
                         "sonar.junit.reportPaths",
-                        "**/build/test-results/**/TEST-*.xml",
+                        "build/test-results/testDebugUnitTest",
                     )
+                    
+                    property("sonar.sources", "src/main/java,src/main/kotlin")
 
                     property(
                         "sonar.exclusions",
