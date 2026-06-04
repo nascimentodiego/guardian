@@ -44,6 +44,8 @@ class AndroidSonarConventionPlugin : Plugin<Project> {
                         "sonar.junit.reportPaths",
                         "build/test-results/testDebugUnitTest",
                     )
+                    
+                    property("sonar.sources", "src/main/java,src/main/kotlin")
 
                     property(
                         "sonar.exclusions",
