@@ -11,7 +11,7 @@ dependencies {
     compileOnly(libs.ksp.gradlePlugin)
     compileOnly(libs.ktlint.gradlePlugin)
     compileOnly(libs.deteKt.gradlePlugin)
-    implementation(libs.sonarqube.gradlePlugin)
+    compileOnly(libs.sonarqube.gradlePlugin)
 }
 
 gradlePlugin {
