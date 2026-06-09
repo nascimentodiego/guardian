@@ -4,7 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import br.com.bit.guardian.core.common.ExcludeFromGeneratedReport
 import br.com.bit.guardian.core.designsystem.component.LoadingComponent
 import br.com.bit.guardian.core.designsystem.icon.GuardianIcon
 import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
@@ -44,10 +46,13 @@ fun HomeReportsWidget(
     }
 }
 
-@Preview(showBackground = true)
 @Composable
-fun HomeReportsWidgetPreview() {
+@Preview(showBackground = true)
+@ExcludeFromGeneratedReport
+fun HomeReportsWidgetPreview(
+    @PreviewParameter(HomeReportsWidgetProvider::class) uiState: ReportsUiState
+) {
     GuardianTheme {
-        HomeReportsWidget(uiState = Success(listOf()))
+        HomeReportsWidget(uiState = uiState)
     }
 }
