@@ -29,7 +29,7 @@ jobs:
 
       # fetch-depth: 0 is required — Sonar needs the full Git history
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
           lfs: true

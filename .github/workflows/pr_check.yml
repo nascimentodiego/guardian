@@ -23,7 +23,7 @@ jobs:
           restore-keys: lfs-${{ runner.os }}-
 
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           lfs: true
 
@@ -130,7 +130,7 @@ jobs:
           restore-keys: lfs-${{ runner.os }}-
 
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           lfs: true
 
@@ -235,7 +235,7 @@ jobs:
           restore-keys: lfs-${{ runner.os }}-
 
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           lfs: true
 
@@ -282,7 +282,7 @@ jobs:
           restore-keys: lfs-${{ runner.os }}-
 
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           lfs: true
 
@@ -424,7 +424,7 @@ jobs:
           restore-keys: lfs-${{ runner.os }}-
 
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           lfs: true
 
@@ -526,7 +526,7 @@ jobs:
     steps:
       # fetch-depth: 0 obrigatório — o Sonar precisa do histórico Git completo
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
