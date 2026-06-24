@@ -16,7 +16,7 @@ jobs:
       GRADLE_CACHE_PUSH: false
     steps:
       - name: Cache Git LFS objects
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: .git/lfs
           key: lfs-${{ runner.os }}-${{ hashFiles('**/*.png') }}
@@ -123,7 +123,7 @@ jobs:
       GRADLE_CACHE_PUSH: false
     steps:
       - name: Cache Git LFS objects
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: .git/lfs
           key: lfs-${{ runner.os }}-${{ hashFiles('**/*.png') }}
@@ -228,7 +228,7 @@ jobs:
       GRADLE_CACHE_PUSH: true
     steps:
       - name: Cache Git LFS objects
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: .git/lfs
           key: lfs-${{ runner.os }}-${{ hashFiles('**/*.png') }}
@@ -275,7 +275,7 @@ jobs:
       GRADLE_CACHE_PUSH: false
     steps:
       - name: Cache Git LFS objects
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: .git/lfs
           key: lfs-${{ runner.os }}-${{ hashFiles('**/*.png') }}
@@ -417,7 +417,7 @@ jobs:
       GRADLE_CACHE_PUSH: false
     steps:
       - name: Cache Git LFS objects
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: .git/lfs
           key: lfs-${{ runner.os }}-${{ hashFiles('**/*.png') }}
