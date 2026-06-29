@@ -37,3 +37,6 @@ google-services.json
 
  # IA
 .claude/
+
+# OS
+*.DS_Store
