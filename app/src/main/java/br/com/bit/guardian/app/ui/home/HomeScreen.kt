@@ -3,7 +3,6 @@ package br.com.bit.guardian.app.ui.home
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -16,30 +15,21 @@ import br.com.bit.guardian.core.ui.composable.layout.AdaptiveContent
 @Composable
 fun HomeScreen() {
     GuardianTheme {
-        AdaptiveContent(
-            expandedContent = {
-                Row(
-                    modifier = Modifier
-                        .padding(
-                            start = GuardianTheme.dimens.spacingM,
-                            end = GuardianTheme.dimens.spacingM,
-                            top = GuardianTheme.dimens.spacingM
-                        )
-                        .statusBarsPadding(),
-                    horizontalArrangement = Arrangement.spacedBy(GuardianTheme.dimens.spacingM)
-                ) {
-                    HomeExpanded()
-                }
-            },
-            compactContent = {
+        AdaptiveContent(expandedContent = {
+            Row(
+                modifier = Modifier.statusBarsPadding(),
+                horizontalArrangement = Arrangement.spacedBy(GuardianTheme.dimens.spacingM)
+            ) {
+                HomeExpanded()
+            }
+        }, compactContent = {
                 Row(
                     modifier = Modifier.navigationBarsPadding(),
                     horizontalArrangement = Arrangement.spacedBy(GuardianTheme.dimens.spacingM)
                 ) {
                     HomeCompact()
                 }
-            }
-        )
+            })
     }
 }
 
