@@ -1,22 +1,22 @@
 package br.com.bit.guardian.registration.ui.register.model
 
-import android.os.Parcelable
 import androidx.annotation.StringRes
-import kotlinx.parcelize.Parcelize
 import br.com.bit.guardian.feature.registration.R
+import kotlinx.serialization.Serializable
 
+@Serializable
 sealed class RegisterUiState(val ruleState: RegistrationRuleState) {
-    @Parcelize
-    data class Idle(val state: RegistrationRuleState) : RegisterUiState(state), Parcelable
+    @Serializable
+    data class Idle(val state: RegistrationRuleState) : RegisterUiState(state)
 
-    @Parcelize
-    data class Success(val state: RegistrationRuleState) : RegisterUiState(state), Parcelable
+    @Serializable
+    data class Success(val state: RegistrationRuleState) : RegisterUiState(state)
 
-    @Parcelize
-    data class Loading(val state: RegistrationRuleState) : RegisterUiState(state), Parcelable
+    @Serializable
+    data class Loading(val state: RegistrationRuleState) : RegisterUiState(state)
 }
 
-@Parcelize
+@Serializable
 data class RegistrationRuleState(
     val email: String,
     val password: String,
@@ -26,7 +26,7 @@ data class RegistrationRuleState(
     val invalidConfPass: Boolean,
     val enableButton: Boolean,
     val listOfPassError: List<PasswordRuleItem>
-) : Parcelable {
+) {
 
     fun mustEnableButton() = copy(
         enableButton = !invalidEmail &&
@@ -57,5 +57,5 @@ data class RegistrationRuleState(
     }
 }
 
-@Parcelize
-data class PasswordRuleItem(@StringRes val textRes: Int, val isSuccess: Boolean) : Parcelable
+@Serializable
+data class PasswordRuleItem(@StringRes val textRes: Int, val isSuccess: Boolean)

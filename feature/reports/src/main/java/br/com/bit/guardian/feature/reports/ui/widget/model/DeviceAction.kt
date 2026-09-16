@@ -1,7 +1,9 @@
 package br.com.bit.guardian.feature.reports.ui.widget.model
 
 import br.com.bit.guardian.feature.reports.R
+import kotlinx.serialization.Serializable
 
+@Serializable
 enum class DeviceAction(val resourceName: Int) {
     OPEN_CLOSE(R.string.reports_device_open_close_action),
     ALARM(R.string.reports_device_alarm_action),

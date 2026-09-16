@@ -18,7 +18,7 @@ fun overlappingRowMeasurePolicy(overlapFactor: Float) = MeasurePolicy { measurab
     val width = (
         placeables.subList(1, placeables.size)
             .sumOf { it.width } * overlapFactor + placeables[0].width
-        ).toInt()
+    ).toInt()
     layout(width, height) {
         var xPos = 0
         for (placeable in placeables) {

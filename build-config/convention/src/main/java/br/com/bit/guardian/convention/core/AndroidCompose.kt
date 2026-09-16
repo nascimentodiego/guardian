@@ -13,7 +13,7 @@ import java.io.File
  * Configure Compose-specific options
  */
 internal fun Project.configureAndroidCompose(
-    commonExtension: CommonExtension<*, *, *, *, *, *>
+    commonExtension: CommonExtension
 ) {
     val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
@@ -24,7 +24,7 @@ internal fun Project.configureAndroidCompose(
     }
 
     commonExtension.apply {
-        buildFeatures {
+        buildFeatures.apply {
             compose = true
         }
 
@@ -82,15 +82,15 @@ internal fun Project.configureAndroidCompose(
                 libs.findLibrary("androidx-activity-compose").get()
             )
             add(
-                "testApi",
+                "testImplementation",
                 libs.findLibrary("androidx-compose-ui-test").get()
             )
             add(
-                "androidTestApi",
+                "androidTestImplementation",
                 libs.findLibrary("androidx-compose-ui-test").get()
             )
             add(
-                "androidTestApi",
+                "androidTestImplementation",
                 libs.findLibrary("androidx-test-espresso-core").get()
             )
             add(

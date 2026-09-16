@@ -118,7 +118,7 @@ jobs:
         uses: android-actions/setup-android@v4
 
       - name: Install Android SDK Platform 36
-        run: sdkmanager "platforms;android-36"
+        run: sdkmanager "platforms;android-37"
 
       # ── 6. Decode google-services.json de homolog ──
       # Aponta para o projeto bit-ioT-homolog (Firebase separado de produção)

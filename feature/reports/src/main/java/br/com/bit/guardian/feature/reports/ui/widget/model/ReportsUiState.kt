@@ -1,15 +1,15 @@
 package br.com.bit.guardian.feature.reports.ui.widget.model
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
+@Serializable
 sealed class ReportsUiState {
-    @Parcelize
-    data object Error : ReportsUiState(), Parcelable
+    @Serializable
+    data object Error : ReportsUiState()
 
-    @Parcelize
-    data class Success(val data: List<ActivityLog>) : ReportsUiState(), Parcelable
+    @Serializable
+    data class Success(val data: List<ActivityLog>) : ReportsUiState()
 
-    @Parcelize
-    data object Loading : ReportsUiState(), Parcelable
+    @Serializable
+    data object Loading : ReportsUiState()
 }

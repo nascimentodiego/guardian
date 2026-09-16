@@ -10,7 +10,6 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
         with(target) {
             with(pluginManager) {
                 apply("com.android.application")
-                apply("org.jetbrains.kotlin.android")
                 apply("guardian.android.application.ktlint")
                 apply("guardian.android.application.jacoco")
                 apply("guardian.android.application.detekt")
@@ -20,7 +19,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
             extensions.configure<ApplicationExtension> {
                 configureKotlinAndroid(this)
                 configureLintAndroid(this)
-                defaultConfig.targetSdk = 36
+                defaultConfig.targetSdk = 37
 
                 // Allow modules to use src/main/kotlin in addition to the default src/main/java.
                 // Required for tools like SonarQube to detect Kotlin source files in modules
@@ -30,8 +29,6 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                         java.srcDirs("src/main/java", "src/main/kotlin")
                     }
                 }
-
-//                configureFlavors(this)
             }
         }
     }

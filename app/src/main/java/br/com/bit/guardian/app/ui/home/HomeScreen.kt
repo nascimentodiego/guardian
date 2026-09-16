@@ -23,13 +23,13 @@ fun HomeScreen() {
                 HomeExpanded()
             }
         }, compactContent = {
-                Row(
-                    modifier = Modifier.navigationBarsPadding(),
-                    horizontalArrangement = Arrangement.spacedBy(GuardianTheme.dimens.spacingM)
-                ) {
-                    HomeCompact()
-                }
-            })
+            Row(
+                modifier = Modifier.navigationBarsPadding(),
+                horizontalArrangement = Arrangement.spacedBy(GuardianTheme.dimens.spacingM)
+            ) {
+                HomeCompact()
+            }
+        })
     }
 }
 

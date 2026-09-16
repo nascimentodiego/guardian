@@ -41,7 +41,7 @@ jobs:
         uses: android-actions/setup-android@v4
 
       - name: Install Android SDK Platform 36
-        run: sdkmanager "platforms;android-36"
+        run: sdkmanager "platforms;android-37"
 
       - name: Decode google-services.json
         run: echo "${{ secrets.GOOGLE_SERVICES_JSON }}" | base64 --decode > app/google-services.json
@@ -148,7 +148,7 @@ jobs:
         uses: android-actions/setup-android@v4
 
       - name: Install Android SDK Platform 36
-        run: sdkmanager "platforms;android-36"
+        run: sdkmanager "platforms;android-37"
 
       - name: Decode google-services.json
         run: echo "${{ secrets.GOOGLE_SERVICES_JSON }}" | base64 --decode > app/google-services.json
@@ -253,7 +253,7 @@ jobs:
         uses: android-actions/setup-android@v4
 
       - name: Install Android SDK Platform 36
-        run: sdkmanager "platforms;android-36"
+        run: sdkmanager "platforms;android-37"
 
       - name: Decode google-services.json
         run: echo "${{ secrets.GOOGLE_SERVICES_JSON }}" | base64 --decode > app/google-services.json
@@ -300,7 +300,7 @@ jobs:
         uses: android-actions/setup-android@v4
 
       - name: Install Android SDK Platform 36
-        run: sdkmanager "platforms;android-36"
+        run: sdkmanager "platforms;android-37"
 
       - name: Decode google-services.json
         run: echo "${{ secrets.GOOGLE_SERVICES_JSON }}" | base64 --decode > app/google-services.json
@@ -442,7 +442,7 @@ jobs:
         uses: android-actions/setup-android@v4
 
       - name: Install Android SDK Platform 36
-        run: sdkmanager "platforms;android-36"
+        run: sdkmanager "platforms;android-37"
 
       - name: Decode google-services.json
         run: echo "${{ secrets.GOOGLE_SERVICES_JSON }}" | base64 --decode > app/google-services.json
@@ -558,7 +558,7 @@ jobs:
         uses: android-actions/setup-android@v4
 
       - name: Install Android SDK Platform 36
-        run: sdkmanager "platforms;android-36"
+        run: sdkmanager "platforms;android-37"
 
       - name: Decode google-services.json
         run: echo "${{ secrets.GOOGLE_SERVICES_JSON }}" | base64 --decode > app/google-services.json

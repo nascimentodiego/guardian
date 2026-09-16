@@ -8,22 +8,19 @@ import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.project
 
 internal fun Project.configureFeatureDependence(
-    commonExtension: CommonExtension<*, *, *, *, *, *>
+    commonExtension: CommonExtension
 ) {
-    commonExtension.apply {
-        val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
+    val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
-        dependencies {
+    dependencies {
+        add("implementation", project(":core:common"))
+        add("implementation", project(":core:data:network"))
+        add("implementation", project(":core:data:repository"))
+        add("implementation", project(":core:domain"))
+        add("implementation", project(":core:designsystem"))
+        add("implementation", project(":core:ui"))
 
-            add("implementation", project(":core:common"))
-            add("implementation", project(":core:data:network"))
-            add("implementation", project(":core:data:repository"))
-            add("implementation", project(":core:domain"))
-            add("implementation", project(":core:designsystem"))
-            add("implementation", project(":core:ui"))
-
-            add("implementation", platform(libs.findLibrary("firebase-plataform-bom").get()))
-            add("api", platform(libs.findLibrary("firebase-auth-ktx").get()))
-        }
+        add("implementation", platform(libs.findLibrary("firebase-plataform-bom").get()))
+        add("api", platform(libs.findLibrary("firebase-auth-ktx").get()))
     }
 }

@@ -1,9 +1,8 @@
 plugins {
     id("guardian.android.feature")
     id("guardian.android.library.test")
-    id("kotlin-parcelize")
     id("org.jetbrains.kotlin.plugin.compose")
-    kotlin("plugin.serialization")
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {

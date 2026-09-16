@@ -4,7 +4,6 @@ import com.android.build.api.variant.AndroidComponentsExtension
 import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.api.tasks.testing.Test
-import org.gradle.configurationcache.extensions.capitalized
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.register
@@ -30,6 +29,8 @@ private val coverageExclusions = listOf(
     "**/screenshotTest/**",
     "**/screenshotTestDebug/**",
 )
+
+private fun String.capitalized(): String = replaceFirstChar { it.uppercase() }
 
 internal fun Project.configureJacoco(
     androidComponentsExtension: AndroidComponentsExtension<*, *, *>,

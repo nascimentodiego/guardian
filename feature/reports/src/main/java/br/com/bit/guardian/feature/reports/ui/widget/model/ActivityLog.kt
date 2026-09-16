@@ -1,10 +1,9 @@
 package br.com.bit.guardian.feature.reports.ui.widget.model
 
-import android.os.Parcelable
 import androidx.compose.runtime.Stable
-import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
-@Parcelize
+@Serializable
 data class ActivityLog(
     val key: String,
     val date: String,
@@ -12,7 +11,7 @@ data class ActivityLog(
     val deviceName: String,
     val deviceType: DeviceType,
     val action: DeviceAction
-) : Parcelable {
+) {
     companion object {
         fun empty() = ActivityLog(
             "-1",
@@ -26,9 +25,10 @@ data class ActivityLog(
 }
 
 @Stable
-@Parcelize
-data class ListStableOfString(val list: List<String> = emptyList()) : Parcelable
+@Serializable
+data class ListStableOfString(val list: List<String> = emptyList())
 
+@Serializable
 enum class DeviceType {
     BIT_GARAGE, BIT_PIR, BIT_CAM, UNKNOWN
 }

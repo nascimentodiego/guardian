@@ -1,6 +1,6 @@
 plugins {
     id("guardian.android.library")
-    kotlin("plugin.serialization")
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {

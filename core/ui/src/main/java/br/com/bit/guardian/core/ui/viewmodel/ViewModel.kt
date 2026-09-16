@@ -10,9 +10,12 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.json.Json
 
-abstract class ViewModel<UiState, Event>(
-    protected val savedStateHandle: SavedStateHandle
+abstract class ViewModel<UiState : Any, Event>(
+    protected val savedStateHandle: SavedStateHandle,
+    private val stateSerializer: KSerializer<UiState>
 ) : ViewModel() {
     private val savedHandleKey = this@ViewModel::class.java.simpleName
     private val _uiState = MutableStateFlow<UiState?>(null)
@@ -33,19 +36,20 @@ abstract class ViewModel<UiState, Event>(
     }
 
     protected fun saveState(uiState: UiState) {
-        savedStateHandle[savedHandleKey] = uiState
+        savedStateHandle[savedHandleKey] = Json.encodeToString(stateSerializer, uiState)
     }
 
     protected fun restoreState(): Boolean {
         if (hasScreenState()) {
-            savedStateHandle.get<UiState>(savedHandleKey)?.let { publish(it) }
+            getSavedHandleState()?.let { publish(it) }
         }
         return hasScreenState()
     }
 
     protected open fun hasScreenState() = savedStateHandle.contains(savedHandleKey)
 
-    protected fun getSavedHandleState() = savedStateHandle.get<UiState>(savedHandleKey)
+    protected fun getSavedHandleState(): UiState? =
+        savedStateHandle.get<String>(savedHandleKey)?.let { Json.decodeFromString(stateSerializer, it) }
 
     protected fun StateFlow<UiState?>.withData(func: (UiState) -> Unit) {
         if (hasData()) {

@@ -1,5 +1,5 @@
 import br.com.bit.guardian.convention.core.configureFeatureDependence
-import com.android.build.gradle.LibraryExtension
+import com.android.build.api.dsl.LibraryExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -15,7 +15,6 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
             }
 
             extensions.configure<LibraryExtension> {
-//                configureFlavors(this)
                 configureFeatureDependence(this)
 
                 defaultConfig {

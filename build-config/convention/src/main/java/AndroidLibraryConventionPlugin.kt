@@ -1,12 +1,11 @@
 import br.com.bit.guardian.convention.core.configureKotlinAndroid
-import com.android.build.gradle.LibraryExtension
+import com.android.build.api.dsl.LibraryExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
-import org.gradle.kotlin.dsl.kotlin
 
 class AndroidLibraryConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
@@ -14,7 +13,6 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
 
             with(pluginManager) {
                 apply("com.android.library")
-                apply("org.jetbrains.kotlin.android")
                 apply("guardian.android.application.ktlint")
                 apply("guardian.android.application.detekt")
                 apply("guardian.android.hilt")
@@ -22,7 +20,6 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
 
             extensions.configure<LibraryExtension> {
                 configureKotlinAndroid(this)
-                defaultConfig.targetSdk = 36
 
                 // Allow modules to use src/main/kotlin in addition to the default src/main/java.
                 // Required for tools like SonarQube to detect Kotlin source files in modules
@@ -52,8 +49,8 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
                 add("api", libs.findLibrary("androidx-datastore-datastore").get())
                 add("api", libs.findLibrary("firebase-database-ktx").get())
 
-                add("testImplementation", kotlin("test"))
-                add("androidTestImplementation", kotlin("test"))
+                add("testImplementation", libs.findLibrary("junit4").get())
+                add("androidTestImplementation", libs.findLibrary("junit4").get())
 
             }
         }

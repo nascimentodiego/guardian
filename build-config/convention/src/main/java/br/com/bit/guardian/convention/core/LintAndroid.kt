@@ -4,10 +4,10 @@ import com.android.build.api.dsl.CommonExtension
 import org.gradle.api.Project
 
 internal fun Project.configureLintAndroid(
-    commonExtension: CommonExtension<*, *, *, *, *, *>,
+    commonExtension: CommonExtension,
 ) {
     commonExtension.apply {
-        lint {
+        lint.apply {
             // Turns off checks for the issue IDs you specify.
             disable += "TypographyFractions" + "TypographyQuotes"
 

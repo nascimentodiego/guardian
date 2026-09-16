@@ -46,7 +46,7 @@ Extend `br.com.bit.guardian.core.ui.viewmodel.ViewModel<UiState, Event>`:
 class FooViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val useCase: FooUseCase
-) : ViewModel<FooUiState, FooEvent>(savedStateHandle) {
+) : ViewModel<FooUiState, FooEvent>(savedStateHandle, FooUiState.serializer()) {
     init {
         if (!restoreState()) publish(FooUiState.Loading)
     }
@@ -62,13 +62,15 @@ class FooViewModel @Inject constructor(
 
 ### UiState
 
-`sealed class` with `Parcelable` on each subclass (required for `SavedStateHandle` serialization):
+`sealed class` with `@Serializable` on each subclass (kotlinx.serialization; state is stored as a JSON
+string in `SavedStateHandle`, so the `ViewModel` constructor needs the matching `KSerializer`):
 
 ```kotlin
+@Serializable
 sealed class FooUiState(val data: FooData) {
-    @Parcelize data class Idle(val d: FooData) : FooUiState(d), Parcelable
-    @Parcelize data class Loading(val d: FooData) : FooUiState(d), Parcelable
-    @Parcelize data class Success(val d: FooData) : FooUiState(d), Parcelable
+    @Serializable data class Idle(val d: FooData) : FooUiState(d)
+    @Serializable data class Loading(val d: FooData) : FooUiState(d)
+    @Serializable data class Success(val d: FooData) : FooUiState(d)
 }
 ```
 
@@ -132,7 +134,7 @@ Feature modules automatically get: `core:common`, `core:data:network`, `core:dat
 - Test ViewModels with `Fake*` implementations (not mocks) — see `feature/registration/util/fakes/`
 - Fake pattern: implement the UseCase interface, expose a `var result` field to control behavior
 - Screenshot tests live in `src/screenshotTest/` — annotate with `@PreviewScreenshotTest`
-- Use `rememberGuardianWindowSizeFromConfig()` from `core:test` for adaptive UI tests
+- Use `rememberAdaptiveLayoutStateFromConfig()` from `core:test` for adaptive UI tests
 
 ## Do Not
 
@@ -140,4 +142,4 @@ Feature modules automatically get: `core:common`, `core:data:network`, `core:dat
 - Do not add core dependencies directly in a feature `build.gradle.kts` — the feature convention plugin already provides them
 - Do not mock UseCases in ViewModel tests — implement a `Fake*` class instead
 - Do not create a new module without a matching or existing convention plugin
-- Do not skip `@Parcelize` on UiState subclasses — state restoration will silently fail
+- Do not skip `@Serializable` on UiState subclasses — state restoration will silently fail

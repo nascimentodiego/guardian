@@ -25,7 +25,7 @@ class LoginViewModel @Inject constructor(
     private val checkInputUseCase: CheckLogInInputValidUseCase,
     private val logInUseCase: LogInUseCase,
     private val isUseLoggedUseCase: IsUserLoggedUseCase
-) : ViewModel<LoginUiState, LoginEvent>(savedStateHandle) {
+) : ViewModel<LoginUiState, LoginEvent>(savedStateHandle, LoginUiState.serializer()) {
     init {
         if (!restoreState()) {
             publish(LoginUiState.Loading)

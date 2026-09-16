@@ -181,13 +181,13 @@ fun IdleState(
                     { passwordVisible = !passwordVisible }
                 )
             }, expandedScreen = {
-                    RegisterExpandedScreen(
-                        state,
-                        intent,
-                        passwordVisible,
-                        { passwordVisible = !passwordVisible }
-                    )
-                })
+                RegisterExpandedScreen(
+                    state,
+                    intent,
+                    passwordVisible,
+                    { passwordVisible = !passwordVisible }
+                )
+            })
         }
     }
 }

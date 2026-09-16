@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace = "br.com.bit.guardian.appdscatalog"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "br.com.bit.guardian.app_ds_catalog"
         minSdk = 29
-        targetSdk = 36
+        targetSdk = 37
         versionCode = 1
         versionName = "1.0"
 

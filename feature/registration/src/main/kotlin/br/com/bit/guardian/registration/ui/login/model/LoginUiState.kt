@@ -1,25 +1,24 @@
 package br.com.bit.guardian.registration.ui.login.model
 
-import android.os.Parcelable
 import br.com.bit.guardian.registration.ui.login.model.UserView.Companion.Empty
-import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
+@Serializable
 sealed class LoginUiState(val userView: UserView = Empty) {
-    @Parcelize
-    data class Idle(val user: UserView) : LoginUiState(user), Parcelable
+    @Serializable
+    data class Idle(val user: UserView) : LoginUiState(user)
 
-    @Parcelize
-    data object Loading : LoginUiState(), Parcelable
+    @Serializable
+    data object Loading : LoginUiState()
 }
 
-@Parcelize
+@Serializable
 data class UserView(
     val email: String,
     val password: String,
     val isButtonEnabled: Boolean,
     val isButtonLoading: Boolean
-) :
-    Parcelable {
+) {
     companion object {
         val Empty = UserView(
             email = "",

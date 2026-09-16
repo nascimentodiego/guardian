@@ -1,39 +1,39 @@
 package br.com.bit.guardian.settings.ui.profile.model
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
+@Serializable
 sealed class SettingsUiState {
-    @Parcelize
-    data object Loading : SettingsUiState(), Parcelable
+    @Serializable
+    data object Loading : SettingsUiState()
 
-    @Parcelize
+    @Serializable
     data class Success(
         val avatar: Avatar,
         val nickname: NickName,
         val permissions: List<Permission>,
         val appVersion: String
-    ) : SettingsUiState(), Parcelable
+    ) : SettingsUiState()
 
-    @Parcelize
-    data object Error : SettingsUiState(), Parcelable
+    @Serializable
+    data object Error : SettingsUiState()
     companion object
 }
 
-@Parcelize
-data class Permission(val label: String, val key: String, val isChecked: Boolean) : Parcelable
+@Serializable
+data class Permission(val label: String, val key: String, val isChecked: Boolean)
 
-@Parcelize
+@Serializable
 data class Avatar(
     val icon: Int,
     val isLoading: Boolean = false,
     val isError: Boolean = false
-) : Parcelable
+)
 
-@Parcelize
+@Serializable
 data class NickName(
     val text: String,
     val newValue: String = "",
     val isLoading: Boolean = false,
     val isError: Boolean = false
-) : Parcelable
+)

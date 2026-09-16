@@ -55,7 +55,7 @@ android {
             applicationIdSuffix = GuardianBuildType.RELEASE.applicationIdSuffix
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
 
             // To publish on the Play store a private signing key is required, but to allow anyone

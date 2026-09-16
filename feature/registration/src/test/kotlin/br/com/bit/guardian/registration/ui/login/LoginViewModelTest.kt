@@ -12,6 +12,7 @@ import br.com.bit.guardian.registration.util.fakes.FakeLogInUseCase
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
+import kotlinx.serialization.json.Json
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -75,7 +76,12 @@ class LoginViewModelTest {
             result = kotlinx.coroutines.flow.flow { callCount++; emit(false) }
         }
         viewModel = LoginViewModel(
-            savedStateHandle = SavedStateHandle(mapOf("LoginViewModel" to viewModel.uiState.value)),
+            savedStateHandle = SavedStateHandle(
+                mapOf(
+                    "LoginViewModel" to
+                        Json.encodeToString(LoginUiState.serializer(), viewModel.uiState.value!!)
+                )
+            ),
             checkInputUseCase = fakeCheckInput,
             logInUseCase = fakeLogIn,
             isUseLoggedUseCase = repositoryWithCount

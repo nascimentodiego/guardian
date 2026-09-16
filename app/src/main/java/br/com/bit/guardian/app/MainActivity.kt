@@ -58,7 +58,7 @@ class MainActivity : ComponentActivity() {
                                 it.reports.forEach { report ->
                                     Text(
                                         text =
-                                        "${report.date} - ${report.user} -  ${report.device}",
+                                            "${report.date} - ${report.user} -  ${report.device}",
                                         style = GuardianTheme.typography.bodyMedium
                                     )
                                     Spacer(modifier = Modifier.height(16.dp))

@@ -27,7 +27,7 @@ class RegisterViewModel @Inject constructor(
     private val useCase: CreateUserUseCase,
     private val emailUseCase: EmailValidationUseCase,
     private val passwordUseCase: PasswordValidationUseCase
-) : ViewModel<RegisterUiState, RegistrationEvent>(savedStateHandle) {
+) : ViewModel<RegisterUiState, RegistrationEvent>(savedStateHandle, RegisterUiState.serializer()) {
     init {
         if (!restoreState()) {
             publish(RegisterUiState.Idle(Empty))

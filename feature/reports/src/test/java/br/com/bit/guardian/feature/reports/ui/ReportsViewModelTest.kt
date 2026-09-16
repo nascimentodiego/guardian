@@ -8,6 +8,7 @@ import br.com.bit.guardian.feature.reports.util.fakes.FakeReportsUseCase
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
+import kotlinx.serialization.json.Json
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -104,7 +105,10 @@ class ReportsViewModelTest {
 
         viewModel = ReportsViewModel(
             savedStateHandle = SavedStateHandle(
-                mapOf("ReportsViewModel" to viewModel.uiState.value)
+                mapOf(
+                    "ReportsViewModel" to
+                        Json.encodeToString(ReportsUiState.serializer(), viewModel.uiState.value!!)
+                )
             ),
             useCase = countingUseCase
         )
@@ -114,10 +118,14 @@ class ReportsViewModelTest {
 
     @Test
     fun `init restores saved state when available`() {
-        val savedState = viewModel.uiState.value
+        val savedState = viewModel.uiState.value!!
 
         val restoredViewModel = ReportsViewModel(
-            savedStateHandle = SavedStateHandle(mapOf("ReportsViewModel" to savedState)),
+            savedStateHandle = SavedStateHandle(
+                mapOf(
+                    "ReportsViewModel" to Json.encodeToString(ReportsUiState.serializer(), savedState)
+                )
+            ),
             useCase = FakeReportsUseCase()
         )
 

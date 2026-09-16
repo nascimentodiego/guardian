@@ -30,7 +30,7 @@ class SettingsViewModel @Inject constructor(
     private val saveAvatarUseCase: SaveAvatarUseCase,
     private val saveNicknameUseCase: SaveNicknameUseCase,
     private val signOutUseCase: SignOutUseCase
-) : ViewModel<SettingsUiState, SettingsEvent>(savedStateHandle) {
+) : ViewModel<SettingsUiState, SettingsEvent>(savedStateHandle, SettingsUiState.serializer()) {
     init {
         if (!restoreState()) {
             fetchSettings()

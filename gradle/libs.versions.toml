@@ -1,9 +1,9 @@
 [versions]
-androidGradlePlugin = "8.9.3"
+androidGradlePlugin = "9.1.1"
 screenshot = "0.0.1-alpha14"
 androidDesugarJdkLibs = "2.0.4"
 kotlinxCollectionsImmutable = "0.3.8"
-ksp = "1.8.0-1.0.9"
+ksp = "2.2.10-2.0.2"
 androidxActivity = "1.10.1"
 androidxAppCompat = "1.7.1"
 androidxCore = "1.16.0"
@@ -24,9 +24,9 @@ kotlin = "2.2.10"
 kotlinxCoroutines = "1.7.3"
 kotlinxDatetime = "0.6.1"
 kotlinxSerializationJson = "1.7.3"
-ktlintVersion = "11.3.2"
-deteKtVersion = "1.23.7"
-hilt = "2.56.2"
+ktlintVersion = "14.2.0"
+deteKtVersion = "2.0.0-alpha.6"
+hilt = "2.60.1"
 hiltNavigation = "1.2.0"
 junit = "1.2.1"
 material = "1.12.0"
@@ -97,7 +97,7 @@ android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", ver
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
 ktlint-gradlePlugin = { group = "org.jlleitschuh.gradle.ktlint", name = "org.jlleitschuh.gradle.ktlint.gradle.plugin", version.ref = "ktlintVersion" }
-deteKt-gradlePlugin = { group = "io.gitlab.arturbosch.detekt", name = "io.gitlab.arturbosch.detekt.gradle.plugin", version.ref = "deteKtVersion" }
+deteKt-gradlePlugin = { group = "dev.detekt", name = "dev.detekt.gradle.plugin", version.ref = "deteKtVersion" }
 sonarqube-gradlePlugin = { group = "org.sonarsource.scanner.gradle", name = "sonarqube-gradle-plugin", version.ref = "sonarqube" }
 junit = { group = "androidx.test.ext", name = "junit", version.ref = "junit" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
@@ -117,8 +117,7 @@ android-test = { id = "com.android.test", version.ref = "androidGradlePlugin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintVersion" }
-deteKt = { id = "io.gitlab.arturbosch.detekt", version.ref = "deteKtVersion" }
-kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+deteKt = { id = "dev.detekt", version.ref = "deteKtVersion" }
 secrets = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secrets" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 googleServices = { id = "com.google.gms.google-services", version.ref = "googleService" }

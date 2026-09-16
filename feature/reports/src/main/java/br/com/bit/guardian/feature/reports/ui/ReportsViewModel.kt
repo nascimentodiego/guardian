@@ -19,7 +19,7 @@ import javax.inject.Inject
 class ReportsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val useCase: ReportsUseCase
-) : ViewModel<ReportsUiState, Event>(savedStateHandle) {
+) : ViewModel<ReportsUiState, Event>(savedStateHandle, ReportsUiState.serializer()) {
     init {
         if (!restoreState()) {
             fetchReports()

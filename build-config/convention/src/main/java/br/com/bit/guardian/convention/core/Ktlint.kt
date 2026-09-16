@@ -10,7 +10,12 @@ internal fun Project.configureKtLint(
     commonExtension.apply{
         android.set(true)
         ignoreFailures.set(false)
-        disabledRules.set(setOf("final-newline","import-ordering"))
+        additionalEditorconfig.set(
+            mapOf(
+                "ktlint_standard_final-newline" to "disabled",
+                "ktlint_standard_import-ordering" to "disabled",
+            )
+        )
         reporters {
             reporter(ReporterType.PLAIN)
             reporter(ReporterType.CHECKSTYLE)

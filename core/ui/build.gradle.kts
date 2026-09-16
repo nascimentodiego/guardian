@@ -9,4 +9,5 @@ android {
 dependencies {
     implementation(project(":core:designsystem"))
     implementation(libs.androidx.material3.adaptive.navigation.suite.android)
+    api(libs.kotlinx.serialization.json)
 }
