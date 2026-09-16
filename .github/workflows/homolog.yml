@@ -1,0 +1,234 @@
+name: Homologação
+
+on:
+  # PR release/* → main: aberto, sincronizado ou reaberto
+  pull_request:
+    types: [ opened, synchronize, reopened ]
+    branches:
+      - main
+
+  # Push direto em release/* (ex: hotfix commitado direto na branch)
+  push:
+    branches:
+      - 'release/**'
+    paths-ignore:
+      - '**.md'
+
+# Garante que apenas um run por branch release/* execute por vez.
+# Se um novo push chegar enquanto o build anterior ainda está rodando,
+# o anterior é cancelado e o novo (com todos os fixes integrados) assume.
+concurrency:
+  group: homolog-${{ github.event_name == 'pull_request' && github.base_ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  homolog:
+    name: Build & Deploy Homolog
+    # Garante que só roda para branches release/*
+    # — no pull_request, a head branch deve começar com release/
+    # — no push, o ref já é release/** pelo trigger acima
+    if: |
+      (github.event_name == 'push' && startsWith(github.ref, 'refs/heads/release/')) ||
+      (github.event_name == 'pull_request' && startsWith(github.head_ref, 'release/'))
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: read
+    env:
+      GRADLE_CACHE_USER: ${{ secrets.GRADLE_CACHE_USER }}
+      GRADLE_CACHE_PASS: ${{ secrets.GRADLE_CACHE_PASS }}
+      GRADLE_CACHE_PUSH: false
+
+    steps:
+      # ── 1. Checkout com histórico completo ──
+      - name: Cache Git LFS objects
+        uses: actions/cache@v5
+        with:
+          path: .git/lfs
+          key: lfs-${{ runner.os }}-${{ hashFiles('**/*.png') }}
+          restore-keys: lfs-${{ runner.os }}-
+
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          lfs: true
+
+      # ── 2. Extrair versão da branch e calcular versionCode ──
+      # Estratégia: Major(3 casas) + Minor(3 casas) + Patch(3 casas)
+      # Exemplos:
+      #   release/1.0.0       → versionCode = 1000000   | versionName = 1.0.0-homolog
+      #   release/4.5.999     → versionCode = 4005999   | versionName = 4.5.999-homolog
+      #   release/99.99.999   → versionCode = 99099999  | versionName = 99.99.999-homolog
+      #   release/999.999.999 → versionCode = 999999999 | versionName = 999.999.999-homolog
+      # Ordenação numérica sempre correta — 3 casas fixas em cada segmento eliminam ambiguidade.
+      # Mesmo versionCode usado em homolog e produção — garante consistência e rastreabilidade.
+      # Escala: máximo 999.999.999 → 999999999 (9 dígitos, abaixo do limite de 2.100.000.000).
+      - name: Extract version info
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BRANCH="${{ github.head_ref }}"
+          else
+            BRANCH="${{ github.ref_name }}"
+          fi
+
+          # Extrai x.y.z de release/x.y.z
+          VERSION_NAME=$(echo "$BRANCH" | sed 's|release/||')
+
+          # Separa Major, Minor e Patch
+          MAJOR=$(echo "$VERSION_NAME" | cut -d. -f1)
+          MINOR=$(echo "$VERSION_NAME" | cut -d. -f2)
+          PATCH=$(echo "$VERSION_NAME" | cut -d. -f3)
+
+          # versionCode: Major(3) + Minor(3) + Patch(3) → ex: 4.5.999 = 4005999
+          VERSION_CODE=$(printf "%03d%03d%03d" "$MAJOR" "$MINOR" "$PATCH")
+
+          # SHA curto do commit (7 caracteres) — identifica exatamente o que entrou no build
+          SHORT_SHA=$(git rev-parse --short=7 HEAD)
+
+          # versionName de homolog: x.y.z-SHA-homolog  ex: 1.0.0-a3f9c12-homolog
+          # Produção usará o mesmo versionCode com versionName = x.y.z (sem sufixo)
+          FULL_VERSION="${VERSION_NAME}-${SHORT_SHA}-homolog"
+
+          echo "branch=$BRANCH"             >> $GITHUB_OUTPUT
+          echo "version_name=$VERSION_NAME" >> $GITHUB_OUTPUT
+          echo "version_code=$VERSION_CODE" >> $GITHUB_OUTPUT
+          echo "short_sha=$SHORT_SHA"       >> $GITHUB_OUTPUT
+          echo "full_version=$FULL_VERSION" >> $GITHUB_OUTPUT
+
+          echo "📦 Branch      : $BRANCH"
+          echo "📦 versionName : $FULL_VERSION"
+          echo "📦 versionCode : $VERSION_CODE"
+          echo "📦 SHA         : $SHORT_SHA"
+
+      # ── 3. Setup JDK ──
+      - name: Setup JDK 21
+        uses: actions/setup-java@v5
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      # ── 4. Setup Gradle ──
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v6
+
+      # ── 5. Setup Android SDK ──
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v4
+
+      - name: Install Android SDK Platform 36
+        run: sdkmanager "platforms;android-36"
+
+      # ── 6. Decode google-services.json de homolog ──
+      # Aponta para o projeto bit-ioT-homolog (Firebase separado de produção)
+      - name: Decode google-services.json (homolog)
+        run: echo "${{ secrets.GOOGLE_SERVICES_JSON_HOMOLOG }}" | base64 --decode > app/google-services.json
+
+      # ── 7. Decode keystore de homolog ──
+      # Salvo em runner.temp — fora do workspace, não vaza em artefatos
+      - name: Decode homolog keystore
+        run: echo "${{ secrets.HOMOLOG_KEYSTORE_BASE64 }}" | base64 --decode > ${{ runner.temp }}/homolog.keystore
+
+      # ── 8. Permissões Gradle ──
+      - name: Grant Gradle permissions
+        run: chmod +x ./gradlew
+
+      # ── 9. Build do APK homolog assinado ──
+      # O build.gradle.kts lê HOMOLOG_KEYSTORE_PATH e demais env vars via System.getenv()
+      # para montar o signingConfig. versionCode e versionName são injetados via -P
+      # (findProperty no defaultConfig do build.gradle.kts).
+      - name: Build homolog APK
+        env:
+          HOMOLOG_KEYSTORE_PATH: ${{ runner.temp }}/homolog.keystore
+          HOMOLOG_KEYSTORE_PASSWORD: ${{ secrets.HOMOLOG_STORE_PASSWORD }}
+          HOMOLOG_KEY_ALIAS: ${{ secrets.HOMOLOG_KEY_ALIAS }}
+          HOMOLOG_KEY_PASSWORD: ${{ secrets.HOMOLOG_KEY_PASSWORD }}
+        run: |
+          ./gradlew assembleHomolog \
+            --build-cache \
+            -PversionCode=${{ steps.version.outputs.version_code }} \
+            -PversionName=${{ steps.version.outputs.full_version }}
+
+      # ── 10. Localizar e renomear o APK gerado ──
+      # Nome final: guardian-x.y.z-SHA-homolog.apk
+      # ex: guardian-1.0.0-a3f9c12-homolog.apk
+      - name: Locate and rename APK
+        id: apk
+        run: |
+          APK_PATH=$(find app/build/outputs/apk/homolog -name "*.apk" | head -1)
+          APK_DIR=$(dirname "$APK_PATH")
+          APK_NAME="guardian-${{ steps.version.outputs.full_version }}.apk"
+          mv "$APK_PATH" "$APK_DIR/$APK_NAME"
+          echo "path=$APK_DIR/$APK_NAME" >> $GITHUB_OUTPUT
+          echo "🔍 APK: $APK_DIR/$APK_NAME"
+
+      # ── 11. Upload para Firebase App Distribution ──
+      - name: Upload to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{ secrets.FIREBASE_APP_ID_HOMOLOG }}
+          serviceCredentialsFileContent: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
+          groups: qa-team
+          file: ${{ steps.apk.outputs.path }}
+          releaseNotes: |
+            🏷️ Versão     : ${{ steps.version.outputs.full_version }}
+            🔢 versionCode: ${{ steps.version.outputs.version_code }}
+            🌿 Branch     : ${{ steps.version.outputs.branch }}
+            📝 Commit     : ${{ github.sha }}
+            🔗 ${{ github.event_name == 'pull_request' && format('PR #{0}', github.event.pull_request.number) || format('Push em {0}', steps.version.outputs.branch) }}
+
+      # ── 12. Limpar keystore do disco (sempre, mesmo se o build falhar) ──
+      - name: Cleanup keystore
+        if: always()
+        run: rm -f ${{ runner.temp }}/homolog.keystore
+
+      # ── 13. Comentar no PR com resultado (só em eventos pull_request) ──
+      - name: Comment on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v9
+        with:
+          script: |
+            const marker = '<!-- homolog-deploy -->';
+            const version = '${{ steps.version.outputs.full_version }}';
+            const versionCode = '${{ steps.version.outputs.version_code }}';
+            const runUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+
+            const body = [
+              marker,
+              '## ✅ Build de Homologação Enviado',
+              '',
+              '| | |',
+              '|---|---|',
+              `| 📦 **versionName** | \`${version}\` |`,
+              `| 🔢 **versionCode** | \`${versionCode}\` |`,
+              `| 🚀 **Destino** | Firebase App Distribution → grupo \`qa-team\` |`,
+              '',
+              'O time de QA já pode baixar o APK pelo Firebase.',
+              '',
+              `**[📎 Ver execução completa](${runUrl})**`,
+            ].join('\n');
+
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+
+            const existing = comments.find(c => c.body.includes(marker));
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body,
+              });
+            }
