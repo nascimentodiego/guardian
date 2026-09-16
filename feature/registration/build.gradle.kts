@@ -14,7 +14,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:ui"))
     implementation(project(":core:data:datasource"))
     testImplementation(project(":core:test"))
 }

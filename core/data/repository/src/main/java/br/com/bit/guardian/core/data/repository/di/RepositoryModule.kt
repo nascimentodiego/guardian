@@ -1,7 +1,7 @@
 package br.com.bit.guardian.core.data.repository.di
 
-import br.com.bit.guardian.core.data.repository.shared.device.DeviceRepository
 import br.com.bit.guardian.core.data.repository.shared.device.DeviceRepositoryImpl
+import br.com.bit.guardian.core.domain.repository.DeviceRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
