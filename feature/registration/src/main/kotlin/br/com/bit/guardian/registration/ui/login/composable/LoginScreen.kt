@@ -5,9 +5,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import br.com.bit.guardian.core.common.ExcludeFromGeneratedReport
+import br.com.bit.guardian.core.designsystem.adaptive.LocalAdaptiveLayout
 import br.com.bit.guardian.core.designsystem.extension.handleScreenBySize
 import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
-import br.com.bit.guardian.core.designsystem.theme.LocalWindowSizeClass
 import br.com.bit.guardian.registration.ui.login.LoginListener
 import br.com.bit.guardian.registration.ui.login.composable.compact.LoginCompactScreen
 import br.com.bit.guardian.registration.ui.login.composable.expanded.LoginExpandedScreen
@@ -21,7 +21,7 @@ fun LoginScreen(
     intent: (events: LoginIntent) -> Unit,
     callbacks: LoginListener
 ) {
-    LocalWindowSizeClass.current.handleScreenBySize(
+    LocalAdaptiveLayout.current.handleScreenBySize(
         compactScreen = { LoginCompactScreen(modifier, uiState, intent, callbacks) },
         expandedScreen = { LoginExpandedScreen(modifier, uiState, intent, callbacks) }
     )

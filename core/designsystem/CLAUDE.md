@@ -198,7 +198,7 @@ LoadingComponent(roundSize = 8.dp, height = 64.dp)
 
 ### Error — `component/SimpleError.kt`
 
-Adaptive error state component (auto-switches layout based on `WindowWidthSizeClass`).
+Adaptive error state component (auto-switches layout based on `LayoutMode`).
 
 ```kotlin
 SimpleError(
@@ -270,31 +270,34 @@ Background shape drawables: `ds_bg_polygon`, `ds_bg_circle`.
 
 ## Adaptive Layout
 
-### `LocalWindowSizeClass`
+Built on `androidx.compose.material3.adaptive` (`WindowAdaptiveInfo`/`currentWindowAdaptiveInfoV2`) and `androidx.window.core.layout.WindowSizeClass` — see `adaptive/AdaptiveLayout.kt`.
 
-Provides `GuardianWindowSize(widthSizeClass, heightSizeClass)`. Injected by `GuardianTheme`.
+### `LocalAdaptiveLayout`
 
-**Extension:** `GuardianWindowSize.handleScreenBySize(compactScreen, expandedScreen)`
-- Compact: width is `Compact` OR height is `Expanded` (tall phones)
-- Expanded: everything else (tablets, foldables)
+Provides `AdaptiveLayoutState(mode, posture)`. Injected by `GuardianTheme`.
+
+- `LayoutMode`: `Compact` (narrow width), `WideShort` (wide but short — landscape phone), `WideTall` (wide and tall — tablet/foldable/desktop)
+- `FoldPosture`: `Flat`, `Tabletop` (horizontal hinge), `Book` (vertical hinge)
+
+Compute it directly with `rememberAdaptiveLayoutState()` when you're not inside `GuardianTheme`'s tree (e.g. before `setContent` picks a top-level branch).
+
+**Extension:** `AdaptiveLayoutState.handleScreenBySize(compactScreen, expandedScreen)`
+- Compact: `mode == LayoutMode.Compact`
+- Expanded: everything else (`WideShort`, `WideTall`)
 
 ```kotlin
-LocalWindowSizeClass.current.handleScreenBySize(
+LocalAdaptiveLayout.current.handleScreenBySize(
     compactScreen = { MyCompactLayout(uiState, intent) },
     expandedScreen = { MyExpandedLayout(uiState, intent) }
 )
 ```
 
-**`BoxWithConstraintsScope` helpers** (for inline adaptive sizing):
+**`BoxWithConstraintsScope` helpers** (for inline, container-based adaptive sizing — unrelated to window-size-class detection):
 ```kotlin
 isWidthCompact()   // maxWidth < 600dp
 isWidthMedium()    // 400dp < maxWidth < 840dp
 isWidthExpanded()  // maxWidth > 840dp
 ```
-
-### `LocalAdaptiveContent`
-
-Provides `WindowWidthSizeClass`. Use when only width-driven layout changes are needed (e.g., nav rail vs. bottom bar decisions at app level).
 
 ---
 

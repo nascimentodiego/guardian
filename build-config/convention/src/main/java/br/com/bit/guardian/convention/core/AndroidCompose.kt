@@ -97,10 +97,6 @@ internal fun Project.configureAndroidCompose(
                 "api",
                 libs.findLibrary("androidx-window").get()
             )
-            add(
-                "api",
-                libs.findLibrary("androidx-compose-material3-windowSizeClass").get()
-            )
         }
     }
 }

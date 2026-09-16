@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.v2.createComposeRule
-import br.com.bit.guardian.core.designsystem.theme.LocalWindowSizeClass
+import br.com.bit.guardian.core.designsystem.adaptive.LocalAdaptiveLayout
 import org.junit.Before
 import org.junit.Rule
 import org.robolectric.RuntimeEnvironment
@@ -53,13 +53,13 @@ abstract class ParameterizedComposeScreenTest(
     }
 
     /**
-     * Sets the test content wrapped in [MaterialTheme] with [LocalWindowSizeClass]
+     * Sets the test content wrapped in [MaterialTheme] with [LocalAdaptiveLayout]
      * computed from the current qualifier.
      */
     protected fun setScreenContent(content: @Composable () -> Unit) {
         composeRule.setContent {
-            val windowSize = rememberGuardianWindowSizeFromConfig()
-            CompositionLocalProvider(LocalWindowSizeClass provides windowSize) {
+            val layoutState = rememberAdaptiveLayoutStateFromConfig()
+            CompositionLocalProvider(LocalAdaptiveLayout provides layoutState) {
                 MaterialTheme {
                     content()
                 }

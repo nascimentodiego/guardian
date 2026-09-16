@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
-
 package br.com.bit.guardian.core.designsystem.theme
 
 import android.app.Activity
@@ -7,10 +5,6 @@ import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Typography
-import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
-import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
-import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -21,7 +15,11 @@ import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-import androidx.window.core.layout.WindowWidthSizeClass as WindowSize
+import br.com.bit.guardian.core.designsystem.adaptive.AdaptiveLayoutState
+import br.com.bit.guardian.core.designsystem.adaptive.FoldPosture
+import br.com.bit.guardian.core.designsystem.adaptive.LayoutMode
+import br.com.bit.guardian.core.designsystem.adaptive.LocalAdaptiveLayout
+import br.com.bit.guardian.core.designsystem.adaptive.rememberAdaptiveLayoutState
 
 object GuardianTheme {
     val colors: AppColors
@@ -62,34 +60,17 @@ fun GuardianTheme(
         }
     }
 
-    val guardianWindowSize = if (!view.isInEditMode) {
-        val windowWidthSizeClass = calculateWindowSizeClass((view.context as Activity))
-        GuardianWindowSize(
-            windowWidthSizeClass.widthSizeClass,
-            windowWidthSizeClass.heightSizeClass
-        )
+    val layoutState = if (!view.isInEditMode) {
+        rememberAdaptiveLayoutState()
     } else {
-        GuardianWindowSize.Compact
-    }
-
-    val adaptiveInfo = currentWindowAdaptiveInfo()
-    val localAdaptiveContent = with(adaptiveInfo) {
-        if (windowPosture.isTabletop ||
-            windowSizeClass.windowWidthSizeClass == WindowSize.EXPANDED ||
-            windowSizeClass.windowWidthSizeClass == WindowSize.MEDIUM
-        ) {
-            WindowWidthSizeClass.Expanded
-        } else {
-            WindowWidthSizeClass.Compact
-        }
+        AdaptiveLayoutState(LayoutMode.Compact, FoldPosture.Flat)
     }
 
     CompositionLocalProvider(
         LocalAppColors provides colorScheme,
         LocalAppDimens provides AppDims,
         LocalAppTypography provides Typography,
-        LocalWindowSizeClass provides guardianWindowSize,
-        LocalAdaptiveContent provides localAdaptiveContent
+        LocalAdaptiveLayout provides layoutState
     ) {
         MaterialTheme(
             colorScheme = colorScheme.materialColors,

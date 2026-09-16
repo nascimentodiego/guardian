@@ -43,12 +43,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import br.com.bit.guardian.core.designsystem.adaptive.LocalAdaptiveLayout
 import br.com.bit.guardian.core.designsystem.component.TextTitleMedium
 import br.com.bit.guardian.core.designsystem.component.TextTitleSmall
 import br.com.bit.guardian.core.designsystem.extension.handleScreenBySize
 import br.com.bit.guardian.core.designsystem.icon.GuardianIcon
 import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
-import br.com.bit.guardian.core.designsystem.theme.LocalWindowSizeClass
 import br.com.bit.guardian.feature.registration.R
 import br.com.bit.guardian.registration.ui.register.composable.compact.RegisterCompactScreen
 import br.com.bit.guardian.registration.ui.register.composable.components.CheckDetailItem
@@ -173,7 +173,7 @@ fun IdleState(
         ) {
             var passwordVisible by rememberSaveable { mutableStateOf(false) }
 
-            LocalWindowSizeClass.current.handleScreenBySize(compactScreen = {
+            LocalAdaptiveLayout.current.handleScreenBySize(compactScreen = {
                 RegisterCompactScreen(
                     state,
                     intent,

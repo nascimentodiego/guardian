@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
-import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -15,12 +14,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.window.core.layout.WindowWidthSizeClass
 import br.com.bit.guardian.app.ui.destination.AppDestinations
 import br.com.bit.guardian.app.ui.home.navbar.GuardianNavbar
 import br.com.bit.guardian.app.ui.home.navbar.layout.GuardianBottomBarLayout
 import br.com.bit.guardian.app.ui.home.navbar.layout.GuardianRailLayout
 import br.com.bit.guardian.app.ui.home.navrail.GuardianNavRail
+import br.com.bit.guardian.core.designsystem.adaptive.FoldPosture
+import br.com.bit.guardian.core.designsystem.adaptive.LayoutMode
+import br.com.bit.guardian.core.designsystem.adaptive.rememberAdaptiveLayoutState
 import br.com.bit.guardian.core.designsystem.modifier.navigationBarPaddingOnly
 
 @Composable
@@ -32,16 +33,12 @@ fun GuardianNavigationSuiteScaffold(
         mutableStateOf(AppDestinations.HOME)
     }
 
-    val adaptiveInfo = currentWindowAdaptiveInfo()
-    val navigationType = with(adaptiveInfo) {
-        if (windowPosture.isTabletop ||
-            windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.EXPANDED ||
-            windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.MEDIUM
-        ) {
-            NavigationSuiteType.NavigationRail
-        } else {
-            NavigationSuiteType.NavigationBar
-        }
+    val layout = rememberAdaptiveLayoutState()
+    val isExpanded = layout.mode != LayoutMode.Compact || layout.posture == FoldPosture.Tabletop
+    val navigationType = if (isExpanded) {
+        NavigationSuiteType.NavigationRail
+    } else {
+        NavigationSuiteType.NavigationBar
     }
     Surface {
         if (navigationType == NavigationSuiteType.NavigationRail) {

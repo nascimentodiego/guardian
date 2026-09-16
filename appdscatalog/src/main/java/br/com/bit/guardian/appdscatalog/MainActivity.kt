@@ -26,8 +26,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
-import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
-import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -41,15 +39,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.bit.guardian.appdscatalog.model.Tab
 import br.com.bit.guardian.appdscatalog.model.tabs
+import br.com.bit.guardian.core.designsystem.adaptive.rememberAdaptiveLayoutState
 import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
 
 class MainActivity : ComponentActivity() {
-    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val widthSizeClass = calculateWindowSizeClass(this).widthSizeClass
-            DsGuardiansApp(widthSizeClass)
+            val layoutMode = rememberAdaptiveLayoutState().mode
+            DsGuardiansApp(layoutMode)
         }
     }
 }

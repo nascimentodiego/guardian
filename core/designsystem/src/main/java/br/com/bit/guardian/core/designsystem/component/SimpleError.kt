@@ -14,7 +14,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,22 +22,23 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import br.com.bit.guardian.core.designsystem.R
+import br.com.bit.guardian.core.designsystem.adaptive.LayoutMode
+import br.com.bit.guardian.core.designsystem.adaptive.LocalAdaptiveLayout
 import br.com.bit.guardian.core.designsystem.extension.GuardianThemePreviews
 import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
-import br.com.bit.guardian.core.designsystem.theme.LocalWindowSizeClass
 
 @Composable
 fun SimpleError(
     modifier: Modifier = Modifier,
     backgroundColor: Color = GuardianTheme.colors.background,
-    widthSizeClass: WindowWidthSizeClass? = null,
+    layoutMode: LayoutMode? = null,
     @StringRes titleRes: Int? = R.string.ds_simple_error_title,
     @StringRes descriptionRes: Int? = R.string.ds_simple_error_description,
     @StringRes buttonLabelRes: Int = R.string.ds_button_try_again,
     onClickListener: () -> Unit
 ) {
-    val widthSize = widthSizeClass ?: LocalWindowSizeClass.current.widthSizeClass
-    val align = if (widthSize == WindowWidthSizeClass.Compact) {
+    val mode = layoutMode ?: LocalAdaptiveLayout.current.mode
+    val align = if (mode == LayoutMode.Compact) {
         Alignment.CenterHorizontally
     } else {
         Alignment.End
@@ -56,7 +56,7 @@ fun SimpleError(
             ),
         horizontalAlignment = align
     ) {
-        if (widthSize == WindowWidthSizeClass.Compact) {
+        if (mode == LayoutMode.Compact) {
             SimpleErrorCompact(
                 titleRes,
                 descriptionRes,
@@ -168,7 +168,7 @@ private fun SimpleErrorExpanded(
 fun SimpleErrorPreview() {
     GuardianTheme {
         SimpleError(
-            widthSizeClass = WindowWidthSizeClass.Compact,
+            layoutMode = LayoutMode.Compact,
             titleRes = R.string.ds_simple_error_title,
             descriptionRes = R.string.ds_simple_error_description
         ) {

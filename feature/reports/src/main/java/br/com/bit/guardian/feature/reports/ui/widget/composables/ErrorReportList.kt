@@ -3,11 +3,11 @@ package br.com.bit.guardian.feature.reports.ui.widget.composables
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import br.com.bit.guardian.core.designsystem.R
+import br.com.bit.guardian.core.designsystem.adaptive.LayoutMode
 import br.com.bit.guardian.core.designsystem.component.SimpleError
 import br.com.bit.guardian.core.designsystem.extension.GuardianThemePreviews
 import br.com.bit.guardian.core.designsystem.theme.GuardianTheme
@@ -21,7 +21,7 @@ fun ErrorReportList(modifier: Modifier = Modifier, retry: () -> Unit) {
     ) {
         SimpleError(
             backgroundColor = GuardianTheme.colors.primaryContainer,
-            widthSizeClass = WindowWidthSizeClass.Compact,
+            layoutMode = LayoutMode.Compact,
             titleRes = R.string.ds_simple_error_title,
             descriptionRes = R.string.ds_simple_error_description
         ) {

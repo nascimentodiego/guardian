@@ -1,31 +1,28 @@
 package br.com.bit.guardian.core.test
 
-import androidx.compose.material3.windowsizeclass.WindowHeightSizeClass
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalConfiguration
-import br.com.bit.guardian.core.designsystem.theme.GuardianWindowSize
+import androidx.window.core.layout.WindowSizeClass
+import br.com.bit.guardian.core.designsystem.adaptive.AdaptiveLayoutState
+import br.com.bit.guardian.core.designsystem.adaptive.FoldPosture
+import br.com.bit.guardian.core.designsystem.adaptive.toLayoutMode
 
 /**
- * Computes the current [GuardianWindowSize] from [LocalConfiguration], allowing
+ * Computes the current [AdaptiveLayoutState] from [LocalConfiguration], allowing
  * tests with different Robolectric qualifiers to produce the correct window
- * sizes without relying on experimental APIs.
+ * sizes without a real Activity/WindowManager. Fold posture is always [FoldPosture.Flat] —
+ * Robolectric can't simulate hinges.
  */
 @Composable
-fun rememberGuardianWindowSizeFromConfig(): GuardianWindowSize {
+fun rememberAdaptiveLayoutStateFromConfig(): AdaptiveLayoutState {
     val configuration = LocalConfiguration.current
     return remember(configuration.screenWidthDp, configuration.screenHeightDp) {
-        val widthClass = when {
-            configuration.screenWidthDp < 600 -> WindowWidthSizeClass.Compact
-            configuration.screenWidthDp < 840 -> WindowWidthSizeClass.Medium
-            else -> WindowWidthSizeClass.Expanded
-        }
-        val heightClass = when {
-            configuration.screenHeightDp < 480 -> WindowHeightSizeClass.Compact
-            configuration.screenHeightDp < 900 -> WindowHeightSizeClass.Medium
-            else -> WindowHeightSizeClass.Expanded
-        }
-        GuardianWindowSize(widthClass, heightClass)
+        @Suppress("DEPRECATION")
+        val mode = WindowSizeClass.compute(
+            dpWidth = configuration.screenWidthDp.toFloat(),
+            dpHeight = configuration.screenHeightDp.toFloat()
+        ).toLayoutMode()
+        AdaptiveLayoutState(mode, FoldPosture.Flat)
     }
 }

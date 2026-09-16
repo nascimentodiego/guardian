@@ -1,23 +1,16 @@
 package br.com.bit.guardian.core.designsystem.extension
 
-import androidx.compose.material3.windowsizeclass.WindowHeightSizeClass
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import br.com.bit.guardian.core.designsystem.theme.GuardianWindowSize
+import br.com.bit.guardian.core.designsystem.adaptive.AdaptiveLayoutState
+import br.com.bit.guardian.core.designsystem.adaptive.LayoutMode
 
 @Composable
-inline fun GuardianWindowSize.handleScreenBySize(
+inline fun AdaptiveLayoutState.handleScreenBySize(
     compactScreen: @Composable () -> Unit,
     expandedScreen: @Composable () -> Unit
 ) {
-    val widthSize = this.widthSizeClass
-    val heightSize = this.heightSizeClass
-
-    val isWidthCompact = widthSize == WindowWidthSizeClass.Compact
-    val isHeightExpanded = heightSize == WindowHeightSizeClass.Expanded
-
-    if (isWidthCompact || isHeightExpanded) {
+    if (mode == LayoutMode.Compact) {
         compactScreen.invoke()
     } else {
         expandedScreen.invoke()

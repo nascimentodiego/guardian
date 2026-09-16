@@ -9,5 +9,5 @@ android {
 
 dependencies {
     api(libs.shimmer)
-    implementation(libs.androidx.adaptive.android)
+    api(libs.androidx.adaptive.android)
 }
