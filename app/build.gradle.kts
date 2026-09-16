@@ -16,12 +16,27 @@ android {
 
     defaultConfig {
         applicationId = "br.com.bit.guardian.app"
-        versionCode = 1
-        versionName = "1.0.0-beta1" // X.Y.Z; X = Major, Y = minor, Z = Patch level
+
+        versionCode = (findProperty("versionCode") as String?)?.toInt() ?: 1
+        versionName = (findProperty("versionName") as String?) ?: "1.0.0-beta1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
+        }
+    }
+
+    // The homolog keystore only exists in CI (decoded from a GitHub secret). Locally, developers
+    // don't have it, so the homolog build type falls back to the debug signing key.
+    val homologKeystorePath = System.getenv("HOMOLOG_KEYSTORE_PATH")
+    signingConfigs {
+        if (!homologKeystorePath.isNullOrBlank()) {
+            create("homolog") {
+                storeFile = file(homologKeystorePath)
+                storePassword = System.getenv("HOMOLOG_KEYSTORE_PASSWORD")
+                keyAlias = System.getenv("HOMOLOG_KEY_ALIAS")
+                keyPassword = System.getenv("HOMOLOG_KEY_PASSWORD")
+            }
         }
     }
 
@@ -36,6 +51,7 @@ android {
 
         val release by getting {
             isMinifyEnabled = true
+            isShrinkResources = true
             applicationIdSuffix = GuardianBuildType.RELEASE.applicationIdSuffix
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -46,6 +62,19 @@ android {
             // who clones the code to sign and run the release variant, use the debug signing key.
             // TODO: Abstract the signing configuration to a separate file to avoid hardcoding this.
             signingConfig = signingConfigs.getByName("debug")
+        }
+
+        create("homolog") {
+            initWith(release)
+            applicationIdSuffix = GuardianBuildType.HOMOLOG.applicationIdSuffix
+            versionNameSuffix = GuardianBuildType.HOMOLOG.applicationIdSuffix
+
+            // Library modules only declare debug/release build types, so homolog resolves
+            // their release variant.
+            matchingFallbacks += listOf("release")
+
+            signingConfig =
+                signingConfigs.findByName("homolog") ?: signingConfigs.getByName("debug")
         }
     }
 
